@@ -6,9 +6,16 @@
   li {
     @apply p-4
   }
+  body{
+  
+    @apply bg-slate-900
+  }
 
   button {
     @apply text-white border bg-indigo-600 border-indigo-600
     hover:bg-transparent hover:text-white rounded-md
   }
 }
+
+/* openweather api get data for today,tommorrow and later api url the api key is 232454xr34t3t */
+/* https://api.openweathermap.org/data/2.5/onecall?lat=51.5074&lon=0.1278&exclude=hourly,minutely&appid=232454xr34t3t */
