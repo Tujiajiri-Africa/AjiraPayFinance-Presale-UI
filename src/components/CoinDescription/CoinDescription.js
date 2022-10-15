@@ -62,7 +62,7 @@ const CoinDescription = () => {
               {/* account profile and balcnce here  */}
               <div className="justify-center">
                 <BsCurrencyBitcoin className="text-6xl text-indigo-600" />
-                <p className="text-2xl font-bold">Account Profile</p>
+                <p className="text-2xl font-bold text-white uppercase py-5">Account Profile</p>
                 <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                   Connect Wallet
                 </button>

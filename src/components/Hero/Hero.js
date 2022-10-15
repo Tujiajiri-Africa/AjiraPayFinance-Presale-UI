@@ -16,12 +16,13 @@ const Hero = () => {
     >
       <div className="grid md:grid-cols-2  m-auto">
         <div className="flex flex-col justify-center md:items-start w-full px-2 py-8">
-          <p className="text-2xl text-white">Ajira Pay</p>
+          {/* <p className="text-2xl text-white">Ajira Pay</p> */}
           <h1 className="py-3 text-5xl md:text-7xl font-bold text-white">
-            Lorem Ipsum Here
+           Pay with Crypto, fast, securely with <span className="text-orange-600">Ajira</span> <span className="text-yellow-600">Pay</span>
+           {/* Secure onchain crypto payments protocol for Web3 */}
           </h1>
-          <p className="text-2xl text-white">This is our Tech brand.</p>
-          <button className="py-3 px-6 my-4 bg-transparent">Get Started</button>
+          <p className="text-2xl text-white">A Decentralized web3 protocol for secure and seamless crypto payments.</p>
+          <button className="py-3 px-6 my-4 bg-transparent">Buy Token</button>
         </div>
         <div>
           <img className="w-full object-fill" src={bgImg} alt="/" />
