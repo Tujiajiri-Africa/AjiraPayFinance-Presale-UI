@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
+//import PresaleContext  from '../context/PresaleContext';
 
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const Navbar = () => {
+  //const { isConnected, connectWallet } = useContext(PresaleContext);
+
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
 
