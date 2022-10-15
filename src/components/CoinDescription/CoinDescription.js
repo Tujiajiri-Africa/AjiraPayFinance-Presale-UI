@@ -12,7 +12,7 @@ const CoinDescription = () => {
           <div className="text-center">
             <h2 className="text-5xl font-bold text-orange-600">Ajira Pay Finance Token(AJP) ICO</h2>
             <br></br>
-            <p className="text-3xl py-2 text-white">
+            <p className="text-1xl py-2 text-white">
               To help fund the project, we humbly invite you to take part in our first ICO by purchasing some $AJP tokens
             </p>
           </div>
