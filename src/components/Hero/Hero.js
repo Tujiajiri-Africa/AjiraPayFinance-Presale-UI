@@ -18,10 +18,15 @@ const Hero = () => {
         <div className="flex flex-col justify-center md:items-start w-full px-2 py-8">
           {/* <p className="text-2xl text-white">Ajira Pay</p> */}
           <h1 className="py-3 text-5xl md:text-7xl font-bold text-white">
+            {/* Your #1 decentralized web3 protocol in defi for secure crypto payments */}
            Pay with Crypto, fast, securely with <span className="text-orange-600">Ajira</span> <span className="text-yellow-600">Pay</span>
            {/* Secure onchain crypto payments protocol for Web3 */}
           </h1>
-          <p className="text-2xl text-white">A Decentralized web3 protocol for secure and seamless crypto payments.</p>
+          <p className="text-2xl text-white">
+            {/* We leverage on the power of blockchain technology and decentralization to power crypto payments  */}
+            {/* A decentralized web3 protocol for secure and seamless crypto payments. */}
+            A decentralized Web3.0 protocol for secure and seamless crypto payments
+            </p>
           <button className="py-3 px-6 my-4 bg-transparent">Buy Token</button>
         </div>
         <div>
