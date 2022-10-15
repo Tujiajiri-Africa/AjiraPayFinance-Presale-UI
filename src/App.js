@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import CoinDescription from "./components/CoinDescription/CoinDescription";
 // import CountDown from "./components/CoinDescription/CountDown";
 import Footer from "./components/Footer/Footer";
