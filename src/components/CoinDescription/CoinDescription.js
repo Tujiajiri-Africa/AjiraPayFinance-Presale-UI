@@ -73,6 +73,7 @@ const CoinDescription = () => {
                 <p></p>
                 <hr></hr>
                 <p className="text-white">Tokens Purchased: 50000 AJP</p>
+                <p className="text-white">Total BNB Spent: x BNB</p>
                 <p></p>
                 <br></br>
                 <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
