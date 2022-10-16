@@ -21,7 +21,7 @@ const CoinDescription = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-1 px-2 text-center">
-            <div className="border py-12 m-5 rounded-xl shadow-xl h-96">
+            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               {/* card with countdown timer */}
               <div className="countdown-timer-card">
                 <div>
@@ -34,20 +34,23 @@ const CoinDescription = () => {
                 </div>
               </div>
             </div>
-            <div className="border py-12 m-5 rounded-xl shadow-xl h-96">
+            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               {/* text to say token calculation  and then on next line show that the BNB  and then on next line we have an input field to calculate the token and have a button  to calculate it*/}
               <div className="countdown-timer-card">
                 <div>
-                  <h2 className="text-3xl font-bold uppercase py-5 text-white">
+                  <h2 className="text-3xl font-bold uppercase py-1 text-white">
                     Buy Token
                   </h2>
+                  <p className="text-white">Minimum Contribution: X USD</p>
+                  <p className="text-white">Maximum Contribution: X USD</p>
                   <p className="text-white">Presale Rate: 1 AJP = 0.3 USD</p>
                   <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.5 USD</p>
+
                   <hr></hr>
                   <br></br>
-                  <p>
-                    <span className="text-2xl font-bold text-white">BNB ={" "}</span>
-                    <span className="text-2xl font-bold text-white">AJP</span>
+                  <p className="py-1">
+                    <span className="text-2xl font-bold text-white">X BNB ={" "}</span>
+                    <span className="text-2xl font-bold text-white">X AJP</span>
                   </p>
                 </div>
               </div>
@@ -85,14 +88,14 @@ const CoinDescription = () => {
               </div>
             </div>
 
-            <div className="border py-8 m-5 rounded-xl shadow-xl h-96">
+            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               {/* account profile and balcnce here  */}
               <div className="justify-center">
                 <AiFillDollarCircle className="text-6xl text-indigo-600" />
                 <p className="text-2xl font-bold text-white uppercase py-5">My Contribution</p>
                 <p></p>
                 <hr></hr>
-                <p className="text-white py-2">Tokens Purchased: { isConnected && <span>50000 AJP</span> }</p>
+                <p className="text-white py-2">Tokens Purchased: { isConnected && <span>X AJP</span> }</p>
                 <p className="text-white py-2">Total BNB Spent: { isConnected && <span>X BNB</span>}</p>
                 <p></p>
                 <br></br>
