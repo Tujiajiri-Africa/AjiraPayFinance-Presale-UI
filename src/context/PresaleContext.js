@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
 import { Web3Provider } from "@ethersproject/providers";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
-import WalletConnect from "@walletconnect/web3-provider";
-import Web3Modal from "web3modal";
+//import CoinbaseWalletSDK   from "@coinbase/wallet-sdk";
+import { WalletLinkConnector } from "@web3-react/walletlink-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { InjectedConnector } from "@web3-react/injected-connector";
+//import { WalletConnect }   from "@walletconnect/web3-provider";
+import Web3Modal  from "web3modal";
 
-require('dotenv').config();
+//require('dotenv').config();
 
 export const PresaleContext = React.createContext();
 
@@ -21,24 +24,47 @@ export const PresaleContextProvider = ({ children }) => {
     const [account, setAccount] = useState();
     const [network, setNetwork] = useState();
     
+    const { activate, deactivate } = useWeb3React();
+
+    const CoinbaseWallet = new WalletLinkConnector({
+        url: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a}`,
+        appName: "Web3-react Demo",
+        darkMode: true,
+        supportedChainIds: [1, 3, 4, 5, 42, 56],
+    });
+       
+    const WalletConnect = new WalletConnectConnector({
+        rpcUrl: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a}`,
+        bridge: "https://bridge.walletconnect.org",
+        qrcode: true,
+    });
+       
+    const Injected = new InjectedConnector({
+        supportedChainIds: [1, 3, 4, 5, 42, 56],
+
+    });
+
     const providerOptions = {
         coinbasewallet: {
-          package: CoinbaseWalletSDK, 
+          package: CoinbaseWallet, 
           options: {
             appName: "Ajira Pay Presale",
-            infuraId: process.env.INFURA_KEY 
+            infuraId: '4420f3851225491b923a06948965929a'//process.env.INFURA_KEY 
           }
         },
         walletconnect: {
           package: WalletConnect, 
           options: {
-            infuraId: process.env.INFURA_KEY 
+            infuraId: '4420f3851225491b923a06948965929a'//process.env.INFURA_KEY 
           }
-        }
+        },
     }
 
     const web3Modal = new Web3Modal({
-        providerOptions 
+        cacheProvider: true, // very important
+        providerOptions,
+        network: 'mainnet' ,
+        disableInjectedProvider: false,
       });
 
     const connectWallet = async() =>{
@@ -52,14 +78,21 @@ export const PresaleContextProvider = ({ children }) => {
             setAccount(accounts[0]);
             setNetwork(network);
             setConnected(true);
+            console.log(account)
           } catch (error) {
             console.error(error);
         }
     }
 
-    const disconnectWallet = async() => {
-
-    }
+    const refreshState = () => {
+        setConnected(false);
+        //setAccount("");
+      };
+      
+      const disconnectWallet = async () => {
+        await web3Modal.clearCachedProvider();
+        refreshState();
+      };
 
     const getActiveAccount = async() => {
 

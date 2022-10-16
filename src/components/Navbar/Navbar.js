@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
-//import PresaleContext  from '../context/PresaleContext';
+import { PresaleContext }  from '../../context/PresaleContext';
 
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const Navbar = () => {
-  //const { isConnected, connectWallet } = useContext(PresaleContext);
+  const { isConnected, connectWallet, disconnectWallet } = useContext(PresaleContext);
 
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
@@ -41,9 +41,15 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="hidden md:flex pr-4">
-          <button className="border bg-transparent px-2 py-2 text-white mr-4">
+          { !isConnected ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
             Connect Wallet
           </button>
+          :
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
+            Disonnect Wallet
+          </button>
+        }
         </div>
         <div className="md:hidden mr-4" onClick={handleClick}>
           {!nav ? <MenuIcon className="w-5" /> : <XIcon className="w-5" />}
@@ -90,7 +96,15 @@ const Navbar = () => {
           </Link>
         </li>
         <div className="flex flex-col my-4">
-          <button className="px-8 py-3 bg-slate-900">Connect Wallet</button>
+        { !isConnected ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
+            Connect Wallet
+          </button>
+          :
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
+            Disonnect Wallet
+          </button>
+        }
         </div>
       </ul>
     </div>
