@@ -25,7 +25,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="about" smooth={true} offset={-200} duration={500}>
-                About
+                Presale
               </Link>
             </li>
             <li>
@@ -36,6 +36,11 @@ const Navbar = () => {
             <li>
               <Link to="about" smooth={true} offset={-200} duration={500}>
                 Airdrop
+              </Link>
+            </li>
+            <li>
+              <Link to="about" smooth={true} offset={-200} duration={500}>
+                Staking
               </Link>
             </li>
           </ul>
@@ -70,7 +75,7 @@ const Navbar = () => {
             offset={-200}
             duration={500}
           >
-            About
+            Presale
           </Link>
         </li>
         <li className="w-full text-black">
@@ -93,6 +98,17 @@ const Navbar = () => {
             duration={500}
           >
             Airdrop
+          </Link>
+        </li>
+        <li className="w-full text-black">
+          <Link
+            onClick={handleClose}
+            to="about"
+            smooth={true}
+            offset={-200}
+            duration={500}
+          >
+            Staking
           </Link>
         </li>
         <div className="flex flex-col my-4">
