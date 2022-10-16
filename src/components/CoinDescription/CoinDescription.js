@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 // import CountDown from "./CountDown";
 import { BsCurrencyBitcoin } from "react-icons/bs";
 import { AiFillDollarCircle } from "react-icons/ai";
 import TimeComponent from "../Timer/TimeComponent";
+import { PresaleContext }  from '../../context/PresaleContext';
 
 const CoinDescription = () => {
+  const { isConnected, connectWallet, disconnectWallet } = useContext(PresaleContext);
+
   return (
     <>
       <div name="about" className="w-full bg-slate-900">
@@ -76,14 +79,22 @@ const CoinDescription = () => {
                 <p className="text-white">Total BNB Spent: x BNB</p>
                 <p></p>
                 <br></br>
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                {/* <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                   Connect Wallet
-                </button>
+                </button> */}
                 <br></br>
                 <br></br>
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
-                  Claim Contribution
-                </button>
+                {
+                  isConnected ?
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                      Claim Contribution
+                    </button>
+                  :
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
+                      Connect Wallet
+                  </button>
+                }
+                
               </div>
             </div>
           </div>
