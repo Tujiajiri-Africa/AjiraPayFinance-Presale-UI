@@ -70,13 +70,13 @@ const CoinDescription = () => {
                   {
                     isConnected ?
                     <p className="py-3">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                       Contribute
                     </button>
                     </p>
                     :
                     <p className="py-3">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={connectWallet}>
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
                       Connect Wallet To Buy
                     </button>
                     </p>
