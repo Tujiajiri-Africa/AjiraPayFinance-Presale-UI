@@ -6,20 +6,28 @@ import reportWebVitals from './reportWebVitals';
 import { PresaleContextProvider } from './context/PresaleContext';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from "@ethersproject/providers";
+import { ethers } from 'ethers';
+import { ChakraProvider } from "@chakra-ui/react";
 
 function getLibrary(provider) {
-  return new Web3Provider(provider);
+  //return new Web3Provider(provider);
+  const library = new ethers.providers.Web3Provider(provider);
+  library.pollingInterval = 8000; // frequency provider is polling
+  return library;
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Web3ReactProvider getLibrary={getLibrary}>
-    <PresaleContextProvider >
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
-  </PresaleContextProvider>
-</Web3ReactProvider>
+  // <ChakraProvider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <PresaleContextProvider >
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </PresaleContextProvider>
+    </Web3ReactProvider>
+  // </ChakraProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

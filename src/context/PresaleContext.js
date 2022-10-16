@@ -8,7 +8,16 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { InjectedConnector } from "@web3-react/injected-connector";
 //import { WalletConnect }   from "@walletconnect/web3-provider";
 import Web3Modal  from "web3modal";
-
+import {
+    VStack,
+    useDisclosure,
+    Button,
+    Text,
+    HStack,
+    Select,
+    Input,
+    Box
+  } from "@chakra-ui/react";
 //require('dotenv').config();
 
 export const PresaleContext = React.createContext();
@@ -103,7 +112,8 @@ export const PresaleContextProvider = ({ children }) => {
     }
     
     useEffect(() => {
-        //add functions here
+        // const provider = window.localStorage.getItem("provider");
+        // if (provider) connectWallet();
     }, []);
 
     return (
