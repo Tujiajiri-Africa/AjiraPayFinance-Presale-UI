@@ -25,7 +25,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="about" smooth={true} offset={-200} duration={500}>
-                Presale
+                Buy AJP Token
               </Link>
             </li>
             <li>
@@ -75,7 +75,7 @@ const Navbar = () => {
             offset={-200}
             duration={500}
           >
-            Presale
+            Buy AJP Token
           </Link>
         </li>
         <li className="w-full text-black">

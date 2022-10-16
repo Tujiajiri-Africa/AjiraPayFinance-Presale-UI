@@ -45,10 +45,9 @@ const CoinDescription = () => {
                   <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.5 USD</p>
                   <hr></hr>
                   <br></br>
-                  <br></br>
                   <p>
                     <span className="text-2xl font-bold text-white">BNB ={" "}</span>
-                    <span className="text-2xl font-bold text-white">Token</span>
+                    <span className="text-2xl font-bold text-white">AJP</span>
                   </p>
                 </div>
               </div>
@@ -60,6 +59,14 @@ const CoinDescription = () => {
                     placeholder="Enter BNB Amount"
                     className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                   />
+                  
+                  <input
+                    type="number"
+                    placeholder="AJP Amount"
+                    className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
+                    disabled
+                  />
+                  
                   {
                     isConnected ?
                     <p className="py-3">
