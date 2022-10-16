@@ -47,7 +47,7 @@ const CoinDescription = () => {
                   <br></br>
                   <br></br>
                   <p>
-                    <span className="text-2xl font-bold text-white">BNB</span> ={" "}
+                    <span className="text-2xl font-bold text-white">BNB ={" "}</span>
                     <span className="text-2xl font-bold text-white">Token</span>
                   </p>
                 </div>
@@ -60,10 +60,20 @@ const CoinDescription = () => {
                     placeholder="Enter BNB Amount"
                     className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                   />
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {/* Calculate */}
-                    Contribute
-                  </button>
+                  {
+                    isConnected ?
+                    <p className="py-3">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      Contribute
+                    </button>
+                    </p>
+                    :
+                    <p className="py-3">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={connectWallet}>
+                      Connect Wallet To Buy
+                    </button>
+                    </p>
+                  }
                 </div>
               </div>
             </div>
@@ -75,8 +85,8 @@ const CoinDescription = () => {
                 <p className="text-2xl font-bold text-white uppercase py-5">My Contribution</p>
                 <p></p>
                 <hr></hr>
-                <p className="text-white">Tokens Purchased: 50000 AJP</p>
-                <p className="text-white">Total BNB Spent: x BNB</p>
+                <p className="text-white py-2">Tokens Purchased: { isConnected && <span>50000 AJP</span> }</p>
+                <p className="text-white py-2">Total BNB Spent: { isConnected && <span>X BNB</span>}</p>
                 <p></p>
                 <br></br>
                 {/* <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
@@ -91,7 +101,7 @@ const CoinDescription = () => {
                     </button>
                   :
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
-                      Connect Wallet
+                      Connect Wallet To Claim
                   </button>
                 }
                 
