@@ -18,7 +18,7 @@ const Hero = () => {
       <div className="grid md:grid-cols-2  m-auto">
         <div className="flex flex-col justify-center md:items-start w-full px-2 py-8">
           <p className="text-2xl text-white"></p>
-          <h1 className="py-3 text-5xl md:text-7xl font-bold text-white">
+          <h1 className="py-8 text-5xl md:text-7xl font-bold text-white">
             {/* Your #1 decentralized web3 protocol in defi for secure crypto payments */}
            Pay with Crypto, fast, securely with <span className="text-orange-600">Ajira</span> <span className="text-yellow-600">Pay</span>
            {/* Secure onchain crypto payments protocol for Web3 */}

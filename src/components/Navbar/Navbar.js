@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
+import {  animateScroll as scroll } from "react-scroll";
 import { PresaleContext }  from '../../context/PresaleContext';
+import { Link } from "react-router-dom";
 
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
@@ -17,29 +18,29 @@ const Navbar = () => {
       <div className="px-2 flex justify-between items-center w-full h-full">
         <div className="flex items-center">
           <h1 className="text-3xl font-bold mr-4 sm:text-4xl"><span className="text-orange-600">AJIRA</span> <span className="text-yellow-600">PAY</span></h1>
-          <ul className="hidden md:flex">
+          <ul className="hidden md:flex cursor-pointer">
             <li>
-              <Link to="home" smooth={true} duration={500}>
+              <Link to="/" smooth={true} duration={500}>
                 Home
               </Link>
             </li>
             <li>
-              <Link to="about" smooth={true} offset={-200} duration={500}>
+              <Link to="/" smooth={true} offset={-200} duration={500}>
                 Buy AJP Token
               </Link>
             </li>
             <li>
-              <Link to="about" smooth={true} offset={-200} duration={500}>
+              <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
                 Tokenomics
               </Link>
             </li>
             <li>
-              <Link to="about" smooth={true} offset={-200} duration={500}>
+              <Link to="/" smooth={true} offset={-200} duration={500}>
                 Airdrop
               </Link>
             </li>
             <li>
-              <Link to="about" smooth={true} offset={-200} duration={500}>
+              <Link to="/" smooth={true} offset={-200} duration={500}>
                 Staking
               </Link>
             </li>
@@ -61,16 +62,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      <ul className={!nav ? "hidden" : "absolute bg-zinc-200 w-full px-8"}>
-        <li className="w-full text-black">
-          <Link onClick={handleClose} to="home" smooth={true} duration={500}>
+      <ul className={!nav ? "hidden" : "absolute bg-slate-900 w-full px-8"}>
+        <li className="w-full text-black cursor-pointer">
+          <Link onClick={handleClose} to="/" smooth={true} duration={500}>
             Home
           </Link>
         </li>
-        <li className="w-full text-black">
+        <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="about"
+            to="/"
             smooth={true}
             offset={-200}
             duration={500}
@@ -78,10 +79,10 @@ const Navbar = () => {
             Buy AJP Token
           </Link>
         </li>
-        <li className="w-full text-black">
+        <li className="w-full ttext-white">
           <Link
             onClick={handleClose}
-            to="about"
+            to="/tokenomics"
             smooth={true}
             offset={-200}
             duration={500}
@@ -89,10 +90,10 @@ const Navbar = () => {
             Tokenomics
           </Link>
         </li>
-        <li className="w-full text-black">
+        <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="about"
+            to="/"
             smooth={true}
             offset={-200}
             duration={500}
@@ -100,10 +101,10 @@ const Navbar = () => {
             Airdrop
           </Link>
         </li>
-        <li className="w-full text-black">
+        <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="about"
+            to="/"
             smooth={true}
             offset={-200}
             duration={500}
