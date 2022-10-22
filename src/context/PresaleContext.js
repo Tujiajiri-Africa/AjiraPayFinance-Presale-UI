@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
-import { Web3Provider } from "@ethersproject/providers";
+// import { Web3Provider } from "@ethersproject/providers";
 //import CoinbaseWalletSDK   from "@coinbase/wallet-sdk";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { InjectedConnector } from "@web3-react/injected-connector";
 //import { WalletConnect }   from "@walletconnect/web3-provider";
 import Web3Modal  from "web3modal";
-import {
-    VStack,
-    useDisclosure,
-    Button,
-    Text,
-    HStack,
-    Select,
-    Input,
-    Box
-  } from "@chakra-ui/react";
+// import {
+//     VStack,
+//     useDisclosure,
+//     Button,
+//     Text,
+//     HStack,
+//     Select,
+//     Input,
+//     Box
+//   } from "@chakra-ui/react";
 //require('dotenv').config();
 
 export const PresaleContext = React.createContext();
 
-const getContract = async() => {
+// const getContract = async() => {
 
-}
+// }
 
 export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
@@ -33,7 +33,7 @@ export const PresaleContextProvider = ({ children }) => {
     const [account, setAccount] = useState();
     const [network, setNetwork] = useState();
     
-    const { activate, deactivate } = useWeb3React();
+    // const { activate, deactivate } = useWeb3React();
 
     const CoinbaseWallet = new WalletLinkConnector({
         url: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a}`,
@@ -48,10 +48,10 @@ export const PresaleContextProvider = ({ children }) => {
         qrcode: true,
     });
        
-    const Injected = new InjectedConnector({
-        supportedChainIds: [1, 3, 4, 5, 42, 56],
+    // const Injected = new InjectedConnector({
+    //     supportedChainIds: [1, 3, 4, 5, 42, 56],
 
-    });
+    // });
 
     const providerOptions = {
         coinbasewallet: {

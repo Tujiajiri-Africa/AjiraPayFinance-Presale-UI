@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import {  animateScroll as scroll } from "react-scroll";
 import { PresaleContext }  from '../../context/PresaleContext';
 import { Link } from "react-router-dom";
 

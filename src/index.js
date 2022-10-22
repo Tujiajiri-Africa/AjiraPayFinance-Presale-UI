@@ -1,13 +1,13 @@
-import React, {Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { PresaleContextProvider } from './context/PresaleContext';
 import { Web3ReactProvider } from '@web3-react/core';
-import { Web3Provider } from "@ethersproject/providers";
+// import { Web3Provider } from "@ethersproject/providers";
 import { ethers } from 'ethers';
-import { ChakraProvider } from "@chakra-ui/react";
+// import { ChakraProvider } from "@chakra-ui/react";
 import {BrowserRouter} from 'react-router-dom';
 
 function getLibrary(provider) {
