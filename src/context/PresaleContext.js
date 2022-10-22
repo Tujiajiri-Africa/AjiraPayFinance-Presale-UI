@@ -7,17 +7,8 @@ import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { InjectedConnector } from "@web3-react/injected-connector";
 //import { WalletConnect }   from "@walletconnect/web3-provider";
+//import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal  from "web3modal";
-import {
-    VStack,
-    useDisclosure,
-    Button,
-    Text,
-    HStack,
-    Select,
-    Input,
-    Box
-  } from "@chakra-ui/react";
 //require('dotenv').config();
 
 export const PresaleContext = React.createContext();
@@ -30,20 +21,21 @@ export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
     const [provider, setProvider] = useState();
     const [library, setLibrary] = useState();
-    const [account, setAccount] = useState();
+    const [connectedAccount, setConnectedAccount] = useState();
     const [network, setNetwork] = useState();
     
-    const { activate, deactivate } = useWeb3React();
+    //const { active, account, library, connector, activate, deactivate } = useWeb3React()
+    const { active, connector, activate, deactivate } = useWeb3React()
 
     const CoinbaseWallet = new WalletLinkConnector({
-        url: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a}`,
+        url: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a`,
         appName: "Web3-react Demo",
         darkMode: true,
         supportedChainIds: [1, 3, 4, 5, 42, 56],
     });
        
     const WalletConnect = new WalletConnectConnector({
-        rpcUrl: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a}`,
+        rpcUrl: `https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a`,
         bridge: "https://bridge.walletconnect.org",
         qrcode: true,
     });
@@ -58,22 +50,24 @@ export const PresaleContextProvider = ({ children }) => {
           package: CoinbaseWallet, 
           options: {
             appName: "Ajira Pay Presale",
-            infuraId: '4420f3851225491b923a06948965929a'//process.env.INFURA_KEY 
+            infuraId: 'https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a'
           }
         },
         walletconnect: {
           package: WalletConnect, 
           options: {
-            infuraId: '4420f3851225491b923a06948965929a'//process.env.INFURA_KEY 
+            infuraId: 'https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a'
           }
         },
     }
 
     const web3Modal = new Web3Modal({
-        cacheProvider: true, // very important
+        cacheProvider: false,
         providerOptions,
         network: 'mainnet' ,
         disableInjectedProvider: false,
+        theme: 'dark',
+        accentColor: 'blackWhite'
       });
 
     const connectWallet = async() =>{
@@ -82,12 +76,13 @@ export const PresaleContextProvider = ({ children }) => {
             const library = new ethers.providers.Web3Provider(provider);
             const accounts = await library.listAccounts();
             const network = await library.getNetwork();
+            setConnected(true);
+            setConnectedAccount(accounts[0]);
             setProvider(provider);
             setLibrary(library);
-            setAccount(accounts[0]);
             setNetwork(network);
-            setConnected(true);
-            console.log(account)
+            localStorage.setItem('isWalletConnected', true)
+            console.log(connectedAccount)
           } catch (error) {
             console.error(error);
         }
@@ -99,8 +94,9 @@ export const PresaleContextProvider = ({ children }) => {
       };
       
       const disconnectWallet = async () => {
-        await web3Modal.clearCachedProvider();
+        web3Modal.clearCachedProvider();
         refreshState();
+        localStorage.setItem('isWalletConnected', false)
       };
 
     const getActiveAccount = async() => {
@@ -111,14 +107,23 @@ export const PresaleContextProvider = ({ children }) => {
 
     }
     
+    const connectWalletOnPageLoad = async () => {
+      if (localStorage?.getItem('isWalletConnected') === 'true') {
+        try {
+          setConnected(true);
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+    }
+
     useEffect(() => {
-        // const provider = window.localStorage.getItem("provider");
-        // if (provider) connectWallet();
+      connectWalletOnPageLoad()
     }, []);
 
     return (
         <PresaleContext.Provider value={{
-            isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library, account, network
+            isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library, connectedAccount, network
         }}>
             {children}
         </PresaleContext.Provider>

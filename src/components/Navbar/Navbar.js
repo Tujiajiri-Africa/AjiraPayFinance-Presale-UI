@@ -52,7 +52,7 @@ const Navbar = () => {
           </button>
           :
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
-            Disonnect Wallet
+            Disconnect Wallet
           </button>
         }
         </div>
