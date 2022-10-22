@@ -1,4 +1,5 @@
 import React from "react";
+import Chart from "./Chart";
 
 const TokenomicsDescription = () => {
   return (
@@ -16,16 +17,15 @@ const TokenomicsDescription = () => {
               the mobile and web apps upon release.
             </p>
           </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-slate-900 p-4 rounded-xl shadow-xl">
+          <div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-xl">
               <h2 className="text-3xl font-bold text-white">AJP Token allocation</h2>
               <br></br>
               <p className="text-1xl py-2 text-white">
               AJP Token Allocation(%)
               </p>
-              <div>
-              {/* pie charrt */}
-
+              <div className="py-4">
+              <Chart />
               </div>
             </div>
             <div class="bg-slate-900 p-4 rounded-xl shadow-xl">
