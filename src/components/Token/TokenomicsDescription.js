@@ -12,7 +12,7 @@ const TokenomicsDescription = () => {
             </h2>
             <br></br>
             <p className="text-1xl py-2 text-white">
-              The AJP token acts both as the governance and utility token for
+              The AJP token acts as the utility token for
               the Ajira Pay Protocol. AJP holders get platform discounts on both
               the mobile and web apps upon release.
             </p>
