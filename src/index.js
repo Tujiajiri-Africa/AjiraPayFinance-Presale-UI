@@ -7,6 +7,7 @@ import { PresaleContextProvider } from './context/PresaleContext';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from "@ethersproject/providers";
 import { ethers } from 'ethers';
+import {BrowserRouter} from 'react-router-dom';
 
 function getLibrary(provider) {
   //return new Web3Provider(provider);
@@ -20,7 +21,9 @@ root.render(
     <Web3ReactProvider getLibrary={getLibrary}>
       <PresaleContextProvider >
         <React.StrictMode>
+          <BrowserRouter>
           <App />
+          </BrowserRouter>
         </React.StrictMode>
       </PresaleContextProvider>
     </Web3ReactProvider>

@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import CoinDescription from "./components/CoinDescription/CoinDescription";
-// import CountDown from "./components/CoinDescription/CountDown";
 import Footer from "./components/Footer/Footer";
-import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
-import Spacing from "./components/Spacing/Spacing";
-import TimeComponent from "./components/Timer/TimeComponent";
+import Home from './pages/Home';
+import {  Switch, Route } from "react-router-dom";
+import Tokenomics from './pages/Tokenomics';
 
 function App() {
   return (
     <>
-  
     <Navbar />
-    <Hero />
-    {/* <Spacing /> */}
-    {/* <CountDown /> */}
-    <CoinDescription />
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/tokenomics" component={Tokenomics} />
+    </Switch>
     <Footer />
     </>
   );
