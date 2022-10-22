@@ -17,9 +17,10 @@ const ExpiredNotice = () => {
     return (
       <div className="show-counter">
         <a
-          target="_blank"
+          href="https://www.youtube.com/watch?v=Q7AOvWpIVHU"
           rel="noopener noreferrer"
           className="countdown-link"
+          
         >
           <DateTimeDisplay value={days} type={'Days'} isDanger={days <= 3} />
           <p>:</p>

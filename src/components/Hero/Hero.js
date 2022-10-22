@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  CloudUploadIcon,
-  DatabaseIcon,
-  PaperAirplaneIcon,
-  ServerIcon,
-} from "@heroicons/react/solid";
 //import PresaleContext  from '/src/context/PresaleContext';
 
 import bgImg from "../../assets/cyber-bg.png";

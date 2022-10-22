@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
-import { Web3Provider } from "@ethersproject/providers";
+// import { Web3Provider } from "@ethersproject/providers";
 //import CoinbaseWalletSDK   from "@coinbase/wallet-sdk";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -13,9 +13,9 @@ import Web3Modal  from "web3modal";
 
 export const PresaleContext = React.createContext();
 
-const getContract = async() => {
+// const getContract = async() => {
 
-}
+// }
 
 export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
@@ -40,10 +40,10 @@ export const PresaleContextProvider = ({ children }) => {
         qrcode: true,
     });
        
-    const Injected = new InjectedConnector({
-        supportedChainIds: [1, 3, 4, 5, 42, 56],
+    // const Injected = new InjectedConnector({
+    //     supportedChainIds: [1, 3, 4, 5, 42, 56],
 
-    });
+    // });
 
     const providerOptions = {
         coinbasewallet: {

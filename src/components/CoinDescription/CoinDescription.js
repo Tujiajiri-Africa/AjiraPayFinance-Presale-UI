@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, {  useContext } from "react";
 // import CountDown from "./CountDown";
-import { BsCurrencyBitcoin } from "react-icons/bs";
 import { AiFillDollarCircle } from "react-icons/ai";
 import TimeComponent from "../Timer/TimeComponent";
 import { PresaleContext }  from '../../context/PresaleContext';
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet, disconnectWallet } = useContext(PresaleContext);
+  const { isConnected, connectWallet } = useContext(PresaleContext);
 
   return (
     <>
