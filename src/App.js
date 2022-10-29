@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from './pages/Home';
 import {  Switch, Route } from "react-router-dom";
 import Tokenomics from './pages/Tokenomics';
+import Staking from './pages/Staking';
+import Airdrop from './pages/Airdrop';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/tokenomics" component={Tokenomics} />
+      <Route exact path='/staking' component={Staking} />
+      <Route exact path='/airdrop' component={Airdrop} />
     </Switch>
     <Footer />
     </>

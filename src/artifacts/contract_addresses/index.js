@@ -1,0 +1,3 @@
+export const ajiraPayTokenV1ContractAddress = '0x3B140061125157fC18EED40C1dd775880E98154d'
+export const ajiraPayPresaleV1ContractAddress = '0x1a5466172183Bb5cb993756c4CE49538442393F7'
+export const ajiraPayV1AirdropDistributorContractAddress = '0xe15b22713f5292548D6ac603241d17198574908F'

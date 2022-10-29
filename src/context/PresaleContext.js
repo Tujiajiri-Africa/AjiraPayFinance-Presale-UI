@@ -11,7 +11,16 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
 
+import { ajiraPayTokenV1ContractAddress, 
+    ajiraPayPresaleV1ContractAddress, 
+    ajiraPayV1AirdropDistributorContractAddress } from '../artifacts/contract_addresses';
+
+  
 export const PresaleContext = React.createContext();
+
+const ajiraPayPresaleV1Abi = require('../artifacts/abis/AjiraPayV1PrivateSale.json');
+const ajiraPayTokenV1Abi = require('../artifacts/abis/AjiraPayV1Token.json');
+const ajiraPayV1AirdropDistributorAbi = require('../artifacts/abis/AjiraPayV1AirdropDistributor.json');
 
 // const getContract = async() => {
 
@@ -19,10 +28,11 @@ export const PresaleContext = React.createContext();
 
 export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
-    const [provider, setProvider] = useState();
-    const [library, setLibrary] = useState();
+    const [web3Provider, setProvider] = useState();
+    const [web2Library, setLibrary] = useState();
     const [connectedAccount, setConnectedAccount] = useState();
     const [network, setNetwork] = useState();
+    const [web3Signer, setSigner] = useState();
     
     //const { active, account, library, connector, activate, deactivate } = useWeb3React()
     const { active, connector, activate, deactivate } = useWeb3React()
@@ -72,10 +82,16 @@ export const PresaleContextProvider = ({ children }) => {
 
     const connectWallet = async() =>{
         try {
+            //const ALCHEMY_API_KEY = "gFLRjM9BHzU4eIcqDpqu4ue2EcKTBU5O"
+
+            //const provider = new ethers.providers.AlchemyProvider("optimism",ALCHEMY_API_KEY); 
             const provider = await web3Modal.connect();
+            
             const library = new ethers.providers.Web3Provider(provider);
             const accounts = await library.listAccounts();
             const network = await library.getNetwork();
+            //const signer = await provider.getSigner();
+            //setSigner(signer)
             setConnected(true);
             setConnectedAccount(accounts[0]);
             setProvider(provider);
@@ -83,11 +99,16 @@ export const PresaleContextProvider = ({ children }) => {
             setNetwork(network);
             localStorage.setItem('isWalletConnected', true)
             console.log(connectedAccount)
+            const ajiraPayv1TokenContract = new ethers.Contract(ajiraPayTokenV1ContractAddress, ajiraPayTokenV1Abi, library);
+            const ajiraPayv1TokenPresaleContract = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, library);
+            const ajiraPayv1TokenAirdropContract = new ethers.Contract(ajiraPayV1AirdropDistributorContractAddress, ajiraPayV1AirdropDistributorAbi, library);
+
+            console.log(await ajiraPayv1TokenContract.name());
           } catch (error) {
             console.error(error);
         }
     }
-
+    
     const refreshState = () => {
         setConnected(false);
         //setAccount("");
@@ -123,7 +144,7 @@ export const PresaleContextProvider = ({ children }) => {
 
     return (
         <PresaleContext.Provider value={{
-            isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library, connectedAccount, network
+            isConnected, web3Provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, web2Library, connectedAccount, network
         }}>
             {children}
         </PresaleContext.Provider>

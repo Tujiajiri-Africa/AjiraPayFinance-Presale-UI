@@ -24,7 +24,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" smooth={true} offset={-200} duration={500}>
+              <Link to="/ico" smooth={true} offset={-200} duration={500}>
                 Buy AJP Token
               </Link>
             </li>
@@ -34,12 +34,12 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" smooth={true} offset={-200} duration={500}>
+              <Link to="/airdrop" smooth={true} offset={-200} duration={500}>
                 Airdrop
               </Link>
             </li>
             <li>
-              <Link to="/" smooth={true} offset={-200} duration={500}>
+              <Link to="/staking" smooth={true} offset={-200} duration={500}>
                 Staking
               </Link>
             </li>
@@ -70,7 +70,7 @@ const Navbar = () => {
         <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="/"
+            to="/ico"
             smooth={true}
             offset={-200}
             duration={500}
@@ -92,7 +92,7 @@ const Navbar = () => {
         <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="/"
+            to="/airdrop"
             smooth={true}
             offset={-200}
             duration={500}
@@ -103,7 +103,7 @@ const Navbar = () => {
         <li className="w-full text-white">
           <Link
             onClick={handleClose}
-            to="/"
+            to="/staking"
             smooth={true}
             offset={-200}
             duration={500}
