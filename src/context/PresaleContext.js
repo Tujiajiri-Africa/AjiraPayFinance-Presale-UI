@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
 // import { Web3Provider } from "@ethersproject/providers";
-//import CoinbaseWalletSDK   from "@coinbase/wallet-sdk";
+import CoinbaseWalletSDK   from "@coinbase/wallet-sdk";
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { InjectedConnector } from "@web3-react/injected-connector";
 //import { WalletConnect }   from "@walletconnect/web3-provider";
-//import WalletConnectProvider from "@walletconnect/web3-provider";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
 
@@ -57,24 +57,25 @@ export const PresaleContextProvider = ({ children }) => {
 
     const providerOptions = {
         coinbasewallet: {
-          package: CoinbaseWallet, 
+          package: CoinbaseWalletSDK, 
           options: {
             appName: "Ajira Pay Presale",
-            infuraId: 'https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a'
+            infuraId: '4420f3851225491b923a06948965929a'
           }
         },
         walletconnect: {
-          package: WalletConnect, 
+          package: WalletConnectProvider, //WalletConnect, 
           options: {
-            infuraId: 'https://mainnet.infura.io/v3/4420f3851225491b923a06948965929a'
+            infuraId: '4420f3851225491b923a06948965929a',
+            rpc: {56: "https://bsc-dataseed.binance.org/"}
           }
         },
     }
 
     const web3Modal = new Web3Modal({
-        cacheProvider: false,
+        cacheProvider: true,
         providerOptions,
-        network: 'mainnet' ,
+        network: 'binance' ,
         disableInjectedProvider: false,
         theme: 'dark',
         accentColor: 'blackWhite'
@@ -83,9 +84,10 @@ export const PresaleContextProvider = ({ children }) => {
     const connectWallet = async() =>{
         try {
             //const ALCHEMY_API_KEY = "gFLRjM9BHzU4eIcqDpqu4ue2EcKTBU5O"
-
+            //await web3Modal.clearCachedProvider();
             //const provider = new ethers.providers.AlchemyProvider("optimism",ALCHEMY_API_KEY); 
             const provider = await web3Modal.connect();
+            addListeners(provider);
             
             const library = new ethers.providers.Web3Provider(provider);
             const accounts = await library.listAccounts();
@@ -99,11 +101,12 @@ export const PresaleContextProvider = ({ children }) => {
             setNetwork(network);
             localStorage.setItem('isWalletConnected', true)
             console.log(connectedAccount)
-            const ajiraPayv1TokenContract = new ethers.Contract(ajiraPayTokenV1ContractAddress, ajiraPayTokenV1Abi, library);
-            const ajiraPayv1TokenPresaleContract = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, library);
-            const ajiraPayv1TokenAirdropContract = new ethers.Contract(ajiraPayV1AirdropDistributorContractAddress, ajiraPayV1AirdropDistributorAbi, library);
+            console.log(accounts)
+            // const ajiraPayv1TokenContract = new ethers.Contract(ajiraPayTokenV1ContractAddress, ajiraPayTokenV1Abi, library);
+            // const ajiraPayv1TokenPresaleContract = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, library);
+            // const ajiraPayv1TokenAirdropContract = new ethers.Contract(ajiraPayV1AirdropDistributorContractAddress, ajiraPayV1AirdropDistributorAbi, library);
 
-            console.log(await ajiraPayv1TokenContract.name());
+            // console.log(await ajiraPayv1TokenContract.name());
           } catch (error) {
             console.error(error);
         }
@@ -120,6 +123,17 @@ export const PresaleContextProvider = ({ children }) => {
         localStorage.setItem('isWalletConnected', false)
       };
 
+      const addListeners = async(web3ModalProvider) => {
+        web3ModalProvider.on("accountsChanged", (accounts) => {
+            window.location.reload()
+        });
+
+        // Subscribe to chainId change
+        web3ModalProvider.on("chainChanged", (chainId) => {
+          window.location.reload()
+        });
+      }
+
     const getActiveAccount = async() => {
 
     }
@@ -131,6 +145,7 @@ export const PresaleContextProvider = ({ children }) => {
     const connectWalletOnPageLoad = async () => {
       if (localStorage?.getItem('isWalletConnected') === 'true') {
         try {
+          //connectWallet();
           setConnected(true);
         } catch (ex) {
           console.log(ex)

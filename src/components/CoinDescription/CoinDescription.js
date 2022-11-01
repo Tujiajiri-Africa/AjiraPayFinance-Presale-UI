@@ -42,8 +42,9 @@ const CoinDescription = () => {
                   </h2>
                   <p className="text-white">Minimum Contribution: X USD</p>
                   <p className="text-white">Maximum Contribution: X USD</p>
-                  <p className="text-white">Presale Rate: 1 AJP = 0.3 USD</p>
-                  <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.5 USD</p>
+                  <p className="text-white">Public Sale Rate: 1 AJP = 0.2 USD</p>
+                  <p className="text-white">Private Sale Rate: 1 AJP = 0.3 USD</p>
+                  <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.4 USD</p>
 
                   <hr></hr>
                   <br></br>
