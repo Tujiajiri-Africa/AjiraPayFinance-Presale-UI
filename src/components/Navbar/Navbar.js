@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+
 const Navbar = () => {
-  const { isConnected, connectWallet, disconnectWallet } = useContext(PresaleContext);
+  const { isConnected, connectWallet, disconnectWallet, chainId, switchNetwork } = useContext(PresaleContext);
 
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
@@ -48,12 +51,18 @@ const Navbar = () => {
         <div className="hidden md:flex pr-4">
           { !isConnected ?
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
-            Connect Wallet
+           
+            <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet
           </button>
           :
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
-            Disconnect Wallet
+            <FontAwesomeIcon icon={solid('wallet')}/> Disconnect Wallet
           </button>
+        }
+        { chainId !== "97" ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Change Network</button>
+          :
+          <p>Correct Network</p>
         }
         </div>
         <div className="md:hidden mr-4" onClick={handleClick}>
@@ -114,12 +123,18 @@ const Navbar = () => {
         <div className="flex flex-col my-4">
         { !isConnected ?
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
-            Connect Wallet
+            <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet
           </button>
           :
+          
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
-            Disonnect Wallet
+            <FontAwesomeIcon icon={solid('wallet')}/> Disconnect Wallet
           </button>
+        }
+        { chainId !== 97 ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Change Network</button>
+          :
+          <p>Correct Network</p>
         }
         </div>
       </ul>

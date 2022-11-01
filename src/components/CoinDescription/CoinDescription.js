@@ -4,6 +4,9 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import TimeComponent from "../Timer/TimeComponent";
 import { PresaleContext }  from '../../context/PresaleContext';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+
 const CoinDescription = () => {
   const { isConnected, connectWallet } = useContext(PresaleContext);
 
@@ -80,7 +83,7 @@ const CoinDescription = () => {
                     :
                     <p className="py-3">
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
-                      Connect Wallet To Buy
+                    <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Buy
                     </button>
                     </p>
                   }
@@ -111,7 +114,7 @@ const CoinDescription = () => {
                     </button>
                   :
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
-                      Connect Wallet To Claim
+                      <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Claim
                   </button>
                 }
                 

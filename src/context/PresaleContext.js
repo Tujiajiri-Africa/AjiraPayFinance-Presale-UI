@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
 // import { Web3Provider } from "@ethersproject/providers";
@@ -28,11 +29,13 @@ const ajiraPayV1AirdropDistributorAbi = require('../artifacts/abis/AjiraPayV1Air
 
 export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
-    const [web3Provider, setProvider] = useState();
-    const [web2Library, setLibrary] = useState();
+    const [provider, setProvider] = useState();
+    const [library, setLibrary] = useState();
     const [connectedAccount, setConnectedAccount] = useState();
     const [network, setNetwork] = useState();
     const [web3Signer, setSigner] = useState();
+    const [chainId, setChainId] = useState();
+    const [accounts, setAccounts] = useState()
     
     //const { active, account, library, connector, activate, deactivate } = useWeb3React()
     const { active, connector, activate, deactivate } = useWeb3React()
@@ -95,9 +98,9 @@ export const PresaleContextProvider = ({ children }) => {
             //const signer = await provider.getSigner();
             //setSigner(signer)
             setConnected(true);
-            setConnectedAccount(accounts[0]);
             setProvider(provider);
             setLibrary(library);
+            if(accounts){setConnectedAccount(accounts[0]);}
             setNetwork(network);
             localStorage.setItem('isWalletConnected', true)
             console.log(connectedAccount)
@@ -112,16 +115,48 @@ export const PresaleContextProvider = ({ children }) => {
         }
     }
     
+    const switchNetwork = async () => {
+      try {
+        await library.provider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: 80001, }],//toHex(137)
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          try {
+            await library.provider.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: 97,//toHex(137),
+                  chainName: "Smart Chain - Testnet", //Polygon Mumbai Testnet //Polygon
+                  rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"], //https://rpc-mumbai.maticvigil.com/ //https://polygon-rpc.com/ //https://data-seed-prebsc-1-s1.binance.org:8545/
+                  blockExplorerUrls: ["https://testnet.bscscan.com"], //https://mumbai.polygonscan.com/ //https://polygonscan.com/
+                },
+              ],
+            });
+          } catch (addError) {
+            throw addError;
+          }
+        }
+      }
+    }; 
+
     const refreshState = () => {
-        setConnected(false);
-        //setAccount("");
+      setConnectedAccount()
+      setConnected(false);
+      setAccounts();
+      setChainId();
+      //setAccount("");
       };
       
-      const disconnectWallet = async () => {
+      const disconnectWallet = useCallback(async () => {
+        //deactivate();
         web3Modal.clearCachedProvider();
         refreshState();
         localStorage.setItem('isWalletConnected', false)
-      };
+      });
 
       const addListeners = async(web3ModalProvider) => {
         web3ModalProvider.on("accountsChanged", (accounts) => {
@@ -151,15 +186,58 @@ export const PresaleContextProvider = ({ children }) => {
           console.log(ex)
         }
       }
+      // if (web3Modal.cachedProvider) {
+      //   connectWallet();
+      // }
     }
 
     useEffect(() => {
       connectWalletOnPageLoad()
-    }, []);
+      if (provider?.on) {
+        const handleAccountsChanged = (accounts) => {
+          setAccounts(accounts);
+          setConnectedAccount(accounts[0])
+        };
+    
+        const handleChainChanged = (chainId) => {
+          setChainId(chainId);
+        };
+    
+        const handleDisconnect = () => {
+          //disconnect();
+          disconnectWallet()
+        };
+        
+        const handleNetworkChanged = (newNetwork, oldNetwork) => {
+          // When a Provider makes its initial connection, it emits a "network"
+          // event with a null oldNetwork along with the newNetwork. So, if the
+          // oldNetwork exists, it represents a changing network
+          console.log({ oldNetwork, newNetwork });
+          if (oldNetwork) {
+            window.location.reload();
+          }
+        };
+
+        provider.on("accountsChanged", handleAccountsChanged);
+        provider.on("chainChanged", handleChainChanged);
+        provider.on("disconnect", handleDisconnect);
+        provider.on('networkChanged', handleNetworkChanged)
+     
+        return () => {
+          if (provider.removeListener) {
+            provider.removeListener("accountsChanged", handleAccountsChanged);
+            provider.removeListener("chainChanged", handleChainChanged);
+            provider.removeListener("disconnect", handleDisconnect);
+            provider.removeListener("networkChanged", handleNetworkChanged);
+          }
+        };
+        }
+    }, [connectWalletOnPageLoad, disconnectWallet, provider]);
 
     return (
         <PresaleContext.Provider value={{
-            isConnected, web3Provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, web2Library, connectedAccount, network
+            isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library,
+            connectedAccount, network, switchNetwork, chainId
         }}>
             {children}
         </PresaleContext.Provider>
