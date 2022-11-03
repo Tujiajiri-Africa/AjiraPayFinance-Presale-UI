@@ -3,12 +3,11 @@ import React, {  useContext } from "react";
 import { AiFillDollarCircle } from "react-icons/ai";
 import TimeComponent from "../Timer/TimeComponent";
 import { PresaleContext }  from '../../context/PresaleContext';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet } = useContext(PresaleContext);
+  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract } = useContext(PresaleContext);
 
   return (
     <>
@@ -45,8 +44,8 @@ const CoinDescription = () => {
                   </h2>
                   <p className="text-white">Minimum Contribution: X USD</p>
                   <p className="text-white">Maximum Contribution: X USD</p>
-                  <p className="text-white">Public Sale Rate: 1 AJP = 0.2 USD</p>
-                  <p className="text-white">Private Sale Rate: 1 AJP = 0.3 USD</p>
+                  <p className="text-white">Phase 1 Sale Rate: 1 AJP = 0.2 USD</p>
+                  <p className="text-white">Phase 2 Sale Rate: 1 AJP = 0.3 USD</p>
                   <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.4 USD</p>
 
                   <hr></hr>
@@ -76,7 +75,7 @@ const CoinDescription = () => {
                   {
                     isConnected ?
                     <p className="py-3">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={buyToken}>
                       Contribute
                     </button>
                     </p>
@@ -110,7 +109,7 @@ const CoinDescription = () => {
                 {
                   isConnected ?
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
-                      Claim Contribution
+                       Claim Contribution
                     </button>
                   :
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>

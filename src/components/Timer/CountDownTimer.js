@@ -17,7 +17,7 @@ const ExpiredNotice = () => {
     return (
       <div className="show-counter">
         <a
-          href="https://www.youtube.com/watch?v=Q7AOvWpIVHU"
+          href='https://ajirapay.finance'
           rel="noopener noreferrer"
           className="countdown-link"
           
