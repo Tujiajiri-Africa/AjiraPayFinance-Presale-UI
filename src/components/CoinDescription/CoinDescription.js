@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract } = useContext(PresaleContext);
+  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount } = useContext(PresaleContext);
 
   return (
     <>
@@ -97,6 +97,9 @@ const CoinDescription = () => {
                 <p className="text-2xl font-bold text-white uppercase py-5">My Contribution</p>
                 <p></p>
                 <hr></hr>
+                <p className="text-white">
+                  { isConnected ? connectedAccount: '' }
+                </p>
                 <p className="text-white py-2">Tokens Purchased: { isConnected && <span>X AJP</span> }</p>
                 <p className="text-white py-2">Total BNB Spent: { isConnected && <span>X BNB</span>}</p>
                 <p></p>
