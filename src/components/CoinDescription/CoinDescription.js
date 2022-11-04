@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount } = useContext(PresaleContext);
+  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, truncateAddress } = useContext(PresaleContext);
 
   return (
     <>
@@ -42,17 +42,17 @@ const CoinDescription = () => {
                   <h2 className="text-3xl font-bold uppercase py-1 text-white">
                     Buy Token
                   </h2>
-                  <p className="text-white">Minimum Contribution: X USD</p>
-                  <p className="text-white">Maximum Contribution: X USD</p>
-                  <p className="text-white">Phase 1 Sale Rate: 1 AJP = 0.2 USD</p>
-                  <p className="text-white">Phase 2 Sale Rate: 1 AJP = 0.3 USD</p>
-                  <p className="text-white">Pancakeswap Listing Rate: 1 AJP = 0.4 USD</p>
+                  <p className="text-white">Minimum Contribution: $10</p>
+                  <p className="text-white">Maximum Contribution: $10,000</p>
+                  <p className="text-white">Phase 1 Sale Rate: 1 AJP = $0.2</p>
+                  <p className="text-white">Phase 2 Sale Rate: 1 AJP = $0.3</p>
+                  <p className="text-white">Pancakeswap Listing Rate: 1 AJP = $0.4</p>
 
                   <hr></hr>
                   <br></br>
                   <p className="py-1">
-                    <span className="text-2xl font-bold text-white">X BNB ={" "}</span>
-                    <span className="text-2xl font-bold text-white">X AJP</span>
+                    <span className="text-2xl font-bold text-white"> BNB ={" "}</span>
+                    <span className="text-2xl font-bold text-white"> AJP</span>
                   </p>
                 </div>
               </div>
@@ -98,10 +98,10 @@ const CoinDescription = () => {
                 <p></p>
                 <hr></hr>
                 <p className="text-white">
-                  { isConnected ? connectedAccount: '' }
+                  { isConnected && connectedAccount !== null ? truncateAddress(connectedAccount): '' }
                 </p>
-                <p className="text-white py-2">Tokens Purchased: { isConnected && <span>X AJP</span> }</p>
-                <p className="text-white py-2">Total BNB Spent: { isConnected && <span>X BNB</span>}</p>
+                <p className="text-white py-2">Tokens Purchased: { isConnected && <span> AJP</span> }</p>
+                <p className="text-white py-2">Total BNB Spent: { isConnected && <span> BNB</span>}</p>
                 <p></p>
                 <br></br>
                 {/* <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">

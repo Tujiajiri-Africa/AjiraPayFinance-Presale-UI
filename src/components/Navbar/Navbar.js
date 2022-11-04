@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 const Navbar = () => {
-  const { isConnected, connectWallet, disconnectWallet, chainId, switchNetwork, connectedAccount } = useContext(PresaleContext);
+  const { isConnected, connectWallet, disconnectWallet, 
+    chainId, switchNetwork, connectedAccount,
+    account, disconnect, toHex } = useContext(PresaleContext);
 
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
@@ -50,22 +52,24 @@ const Navbar = () => {
         </div>
         <div className="hidden md:flex pr-4">
           { !isConnected ?
-          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
-           
-            <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet
-          </button>
+          <><button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>
+
+              <FontAwesomeIcon icon={solid('wallet')} /> Connect Wallet
+            </button><>
+                
+              </></>
           :
           <>
           {/* <p>{ connectedAccount }</p> */}
-          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnect}>
               <FontAwesomeIcon icon={solid('wallet')} /> Disconnect Wallet
             </button>
           </>
         }
-        { chainId != null ?
-          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Change Network</button>
+        {  isConnected && chainId !== null  && chainId !== 56   ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Switch BSC Network</button>
           :
-          <p>{ chainId }</p>
+          <></>
         }
         </div>
         <div className="md:hidden mr-4" onClick={handleClick}>
@@ -74,7 +78,7 @@ const Navbar = () => {
       </div>
 
       <ul className={!nav ? "hidden" : "absolute bg-slate-900 w-full px-8"}>
-        <li className="w-full text-black cursor-pointer">
+        <li className="w-full text-white cursor-pointer">
           <Link onClick={handleClose} to="/" smooth={true} duration={500}>
             Home
           </Link>
@@ -130,14 +134,14 @@ const Navbar = () => {
           </button>
           :
           
-          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnectWallet}>
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={disconnect}>
             <FontAwesomeIcon icon={solid('wallet')}/> Disconnect Wallet
           </button>
         }
-         { chainId != null ?
-          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Change Network</button>
+         { isConnected && chainId !== null  && chainId !== 56 ?
+          <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Switch BSC Network</button>
           :
-          <p>{ chainId }</p>
+          <></>
         }
         </div>
       </ul>
