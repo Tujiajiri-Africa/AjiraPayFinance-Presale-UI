@@ -14,10 +14,20 @@ import { BigNumber } from 'ethers';
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
 
-import { ajiraPayTokenV1ContractAddress, 
+import 
+{ 
+    ajiraPayTokenV1ContractAddress, 
     ajiraPayPresaleV1ContractAddress, 
-    ajiraPayV1AirdropDistributorContractAddress } from '../artifacts/contract_addresses';
+    ajiraPayV1AirdropDistributorContractAddress,
+    testNetAjiraPayAddress,
+    testNetPresaleAddress,
+    testNetAirdropAddress 
+  } 
+  from '../artifacts/contract_addresses';
 
+//Testnet AJP Contract: https://testnet.bscscan.com/address/0x82F25F3BDF94Bf9b67853C1CcE074Fd58B90416a#code
+//Testnet Presale Contract: https://testnet.bscscan.com/address/0xCb3972A14B6534aC27bb173928C4855Cb1ED7bA9#code
+//Testnet Airdrop Distributor Contract: https://testnet.bscscan.com/address/0xAEc7DAFBDF10c14F9705BAB9eb8753d7544877DF#code
 
 import { networkParams } from './utils/networks'
 
@@ -27,6 +37,9 @@ const ajiraPayPresaleV1Abi = require('../artifacts/abis/AjiraPayV1PrivateSale.js
 const ajiraPayTokenV1Abi = require('../artifacts/abis/AjiraPayV1Token.json');
 const ajiraPayV1AirdropDistributorAbi = require('../artifacts/abis/AjiraPayV1AirdropDistributor.json');
 
+//Testnets
+const testNetAjiraPayABI = require('../artifacts/abis/ajiraPayTestnest.json')
+const testNetPresaleABI = require('../artifacts/abis/testnetPrivateSale.json')
 
 export const PresaleContextProvider = ({ children }) => {    
     //const [web3Signer, setSigner] = useState();
