@@ -5,9 +5,17 @@ import TimeComponent from "../Timer/TimeComponent";
 import { PresaleContext }  from '../../context/PresaleContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { ethers } from 'ethers';
 
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, truncateAddress } = useContext(PresaleContext);
+
+  const handleSubmit = async(event) => {
+    event.preventDefault()
+    const amount = event.target.amount.value;
+    const _amount = ethers.utils.formatUnits(amount.toString(),'ether')
+    buyToken(_amount);
+  }
 
   return (
     <>
@@ -50,42 +58,50 @@ const CoinDescription = () => {
 
                   <hr></hr>
                   <br></br>
-                  <p className="py-1">
+                  {/* <p className="py-1">
                     <span className="text-2xl font-bold text-white"> BNB ={" "}</span>
                     <span className="text-2xl font-bold text-white"> AJP</span>
-                  </p>
+                  </p> */}
                 </div>
               </div>
               {/*an input field and a button on the same line to calculate the token the input field and button should fit well inside the card */}
               <div className="countdown-timer-card">
                 <div className="countdown-timer-card__timer">
-                  <input
-                    type="number"
-                    placeholder="Enter BNB Amount"
-                    className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
-                  />
+                  <form onSubmit={handleSubmit}>
+                    <input
+                      type="number"
+                      name="amount"
+                      placeholder="Enter BNB Amount"
+                      className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
+                    />
+                      {
+                        isConnected &&
+                        <p className="py-3">
+                        <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                          Contribute
+                        </button>
+                        </p>
+                      }
+                      
+                  </form>
+                  {
+                        !isConnected &&
+                        <p className="py-3">
+                        <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
+                        <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Buy
+                        </button>
+                        </p>
+                      }
+                
                   
-                  <input
+                  {/* <input
                     type="number"
                     placeholder="AJP Amount"
                     className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                     disabled
-                  />
+                  /> */}
                   
-                  {
-                    isConnected ?
-                    <p className="py-3">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={buyToken}>
-                      Contribute
-                    </button>
-                    </p>
-                    :
-                    <p className="py-3">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
-                    <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Buy
-                    </button>
-                    </p>
-                  }
+                 
                 </div>
               </div>
             </div>

@@ -85,6 +85,8 @@ export const PresaleContextProvider = ({ children }) => {
           options: {
             appName: "Ajira Pay Presale",
             infuraId: '4420f3851225491b923a06948965929a',
+            chainId: 56,
+            //checkPageReload: true
             // rpc: {56: "https://l2-mainnet.wallet.coinbase.com?targetName=bsc",
             //       97: 'https://data-seed-prebsc-1-s1.binance.org:8545',
             //     }
@@ -98,6 +100,9 @@ export const PresaleContextProvider = ({ children }) => {
             //       97: 'https://data-seed-prebsc-1-s1.binance.org:8545',
             //     }
           }
+        },
+        binancechainwallet: {
+          package: true,
         },
     }
 
@@ -302,16 +307,25 @@ export const PresaleContextProvider = ({ children }) => {
       }
     }
 
-    const buyToken = async() => {
+    const buyToken = async(amount) => {
       try{
-        const contracts = await getContracts();
+        //const contracts = await getContracts();
 
-        const presaleContractInstance = contracts.presaleContract
-        const totalInvestors = await presaleContractInstance.totalInvestors()
+        //const presaleContractInstance = contracts.presaleContract
+        //
+
+        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/'
+        const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
+        const signer = provider.getSigner()
+      
+        const testAddress = signer._address
+        const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, provider);
+        const totalInvestors = await presaleContractInstance.totalInvestors() 
+
         alert(totalInvestors)
         const val = 250000000000000
-        const tx = await presaleContractInstance.contribute({
-          value: val.toString()
+        const tx = await presaleContractInstance.callStatic.contribute({
+          value: amount
         });
         await tx.wait()
         console.log(tx)
@@ -358,7 +372,7 @@ export const PresaleContextProvider = ({ children }) => {
       webModalConnection.current = new Web3Modal({
         cacheProvider: true,
         providerOptions,
-        network: 'bsc' ,
+        //network: '' ,
         disableInjectedProvider: false,
         theme: 'dark',
         accentColor: 'blue',
