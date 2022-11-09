@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React, Web3ReactProvider } from '@web3-react/core'
 // import { Web3Provider } from "@ethersproject/providers";
@@ -10,7 +10,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import WalletConnect    from "@walletconnect/web3-provider";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { FortmaticConnector } from '@web3-react/fortmatic-connector'
-
+import { BigNumber } from 'ethers';
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
 
@@ -46,6 +46,38 @@ export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
     const [connectedAccount, setConnectedAccount] = useState();
     const [error, setError] = useState("");
+
+    const webModalConnection = useRef()
+
+    const getSignerOrProvider = async() =>{
+      const connection = await webModalConnection.current.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner()
+      const accounts = provider.listAccounts();
+      const chainId = provider.getNetwork()
+      localStorage.setItem('isWalletConnected', true)
+      if (accounts){
+        setConnectedAccount(accounts[0])
+        setAccount(accounts[0]);
+        setConnected(true);
+        console.log(account)
+      } 
+      setChainId(chainId);
+      //setNetwork(network)
+      console.log(chainId)
+      // if(chainId !== 56){
+      //   alert('Please switch network to Binance Smart Chain')
+      //   throw new Error("Connected to wrong chain, please switch to Binance Smart Chain, mainnet");
+      // }
+      console.log({
+        provider,
+        signer
+      })
+      return {
+        'signer': signer,
+        'provider': provider
+      }
+    }
 
     const providerOptions = {
         coinbasewallet: {
@@ -107,13 +139,22 @@ export const PresaleContextProvider = ({ children }) => {
             //console.log(accounts)
            // loadContracts(_provider)
            // console.log(_signer)
-            const provider = await web3Modal.connect()
-            const library = new ethers.providers.Web3Provider(provider);
-            const signer = library.getSigner()
-            const accounts = await library.listAccounts();
-            const network = await library.getNetwork();
-            setProvider(provider)
-            setLibrary(library)
+            const connection = await getSignerOrProvider()
+
+            
+            //const provider = await web3Modal.connect()
+            //const library = new ethers.providers.Web3Provider(provider);
+            //const signer = library.getSigner()
+            //const accounts = await library.listAccounts();
+            //const network = await library.getNetwork();
+            const provider = connection.provider
+            const signer = connection.signer
+            const accounts = await provider.listAccounts();
+            const network = await provider.getNetwork();
+            setProvider(connection.provider)
+            setLibrary(connection.signer)
+            //setProvider(provider)
+            //setLibrary(library)
             localStorage.setItem('isWalletConnected', true)
             if (accounts){
               setConnectedAccount(accounts[0])
@@ -177,7 +218,7 @@ export const PresaleContextProvider = ({ children }) => {
     }; 
 
     const truncateAddress = (address) => {
-      if (!address) return "No Account";
+      if (!address) return "";
       const match = address.match(
         /^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
       );
@@ -242,40 +283,42 @@ export const PresaleContextProvider = ({ children }) => {
 
     }
 
+    const connectV2 = async() => {
+      await getSignerOrProvider();
+    }
+
+    const getContracts = async() => {
+      const connection = await getSignerOrProvider();
+      const signer = connection.signer;
+      const provider = connection.provider;
+      const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, signer); 
+      const tokenContractInstance = new ethers.Contract(ajiraPayTokenV1ContractAddress, ajiraPayTokenV1Abi, signer);
+      const airdropContractInstance = new ethers.Contract(ajiraPayV1AirdropDistributorContractAddress, ajiraPayV1AirdropDistributorAbi, signer);
+
+      return {
+        'presaleContract': presaleContractInstance,
+        'ajiraPayTokenContract': tokenContractInstance,
+        'airdropContract': airdropContractInstance
+      }
+    }
+
     const buyToken = async() => {
       try{
-      //   let contract;
-      //   let price;
-      //   if(isConnected){
-      //     contract =  await getPresaleContract()
-      //     price = await contract.callStatic.privateSalePricePerTokenInWei();
-      //     const formatedPrice = ethers.utils.formatEther(price)
-      //     console.log(formatedPrice)
-      //     const user = {
-      //       'from' : ethersSigner.address,
-      //       'amount' : ethers.utils.formatEther(1000000)
-      //     }
-      //     await contract.contribute({
-      //       // {'from':user['from'], 'value': user['value']}
-      //           from: user['from'],
-      //           value: ethers.utils.formatEther('1'),
-      //           gas: '1500000',
-      //           gasPrice: '30000000000'
-      //     })
-      //     //alert(formatedPrice)
-      //   }
-      //   else{
-      //     alert('Please connect Wallet')
-      //   }
-        
-      //   //const _privateSalePrice = await contract.privateSalePricePerTokenInWei();
-      //   //const price = ethers.utils.formatUnits(_privateSalePrice, 'ether')
-      //   console.log(contract)
-      //   //alert(price)
-      //  // console.log(price)
-      //alert(account)
-      alert(presaleContract.callStatic.isPresaleOpen())
+        const contracts = await getContracts();
+
+        const presaleContractInstance = contracts.presaleContract
+        const totalInvestors = await presaleContractInstance.totalInvestors()
+        alert(totalInvestors)
+        const val = 250000000000000
+        const tx = await presaleContractInstance.contribute({
+          value: val.toString()
+        });
+        await tx.wait()
+        console.log(tx)
+        //alert(await contract.callStatic.totalInvestors())
+        //TODO Install alert modal here with Error or success message
       }catch(error){
+        alert(error.message)
         setError(error);
         console.error(error);
       }
@@ -312,8 +355,19 @@ export const PresaleContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
-      listenToProvider()
-    }, []);
+      webModalConnection.current = new Web3Modal({
+        cacheProvider: true,
+        providerOptions,
+        network: 'bsc' ,
+        disableInjectedProvider: false,
+        theme: 'dark',
+        accentColor: 'blue',
+        ethereum: {
+          appName: 'web3Modal'
+        }
+      });
+      console.log(webModalConnection)
+    },[web3Modal])
 
     useEffect(() => {
       connectWalletOnPageLoad()
