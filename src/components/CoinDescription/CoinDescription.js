@@ -8,7 +8,8 @@ import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/
 import { BigNumber, ethers } from 'ethers';
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, truncateAddress } = useContext(PresaleContext);
+  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, 
+    truncateAddress, claim } = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
@@ -128,7 +129,7 @@ const CoinDescription = () => {
                 <br></br>
                 {
                   isConnected ?
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
                        Claim Contribution
                     </button>
                   :

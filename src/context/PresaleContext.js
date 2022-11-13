@@ -363,6 +363,44 @@ export const PresaleContextProvider = ({ children }) => {
       }
     }
     
+    const claim = async() => {
+      try{
+        //const contracts = await getContracts();
+
+        //const presaleContractInstance = contracts.presaleContract
+        //
+
+        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/' //testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
+        const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');// JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
+        const signer = provider.getSigner()
+      
+        const testAddress = signer._address
+        const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, provider);
+      
+        const tx = await presaleContractInstance.callStatic.claimContribution().then(async (response) => {
+          await tx.wait()
+          console.log(tx)
+          swal(response.data);
+        }).catch((error) => {
+          
+          //const errorLog = JSON.stringify(error)
+          //var keys = Object.keys(error);
+          const errorData = Object.entries(error);
+          let data = errorData.map( ([key, val]) => {
+            return `${val}`
+          });
+          console.log(data[0].toString())
+          //console.log(keys)
+          swal(data[0].toString())
+        })
+      }catch(error){
+        //alert(error.message)
+        swal(error.message)
+        setError(error);
+        console.error(error);
+      }
+    }
+
     const disconnect = async() => {
       web3Modal.clearCachedProvider();
       refreshState()
@@ -453,7 +491,7 @@ export const PresaleContextProvider = ({ children }) => {
         <PresaleContext.Provider value={{
             isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library,
             connectedAccount, network, switchNetwork, chainId, presaleContract, tokenContract, tokenAirdropContract,
-            getAjiraPayTokenContract, accounts, account, disconnect, truncateAddress, toHex
+            getAjiraPayTokenContract, accounts, account, disconnect, truncateAddress, toHex, claim
         }}>
             {children}
         </PresaleContext.Provider>
