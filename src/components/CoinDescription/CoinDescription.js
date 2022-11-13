@@ -5,7 +5,7 @@ import TimeComponent from "../Timer/TimeComponent";
 import { PresaleContext }  from '../../context/PresaleContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, truncateAddress } = useContext(PresaleContext);
@@ -13,8 +13,9 @@ const CoinDescription = () => {
   const handleSubmit = async(event) => {
     event.preventDefault()
     const amount = event.target.amount.value;
-    const _amount = ethers.utils.formatUnits(amount.toString(),'ether')
-    buyToken(_amount);
+    const _amount = BigNumber.from(parseInt(amount)).mul(10).pow(18)
+    console.log(_amount)
+    buyToken(_amount.toString());
   }
 
   return (
@@ -69,7 +70,7 @@ const CoinDescription = () => {
                 <div className="countdown-timer-card__timer">
                   <form onSubmit={handleSubmit}>
                     <input
-                      type="number"
+                      type="text"
                       name="amount"
                       placeholder="Enter BNB Amount"
                       className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"

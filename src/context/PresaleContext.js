@@ -13,7 +13,7 @@ import { FortmaticConnector } from '@web3-react/fortmatic-connector'
 import { BigNumber } from 'ethers';
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
-
+import swal from 'sweetalert';
 import 
 { 
     ajiraPayTokenV1ContractAddress, 
@@ -327,8 +327,8 @@ export const PresaleContextProvider = ({ children }) => {
         //const presaleContractInstance = contracts.presaleContract
         //
 
-        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/'
-        const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
+        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/' //testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
+        const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');// JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
         const signer = provider.getSigner()
       
         const testAddress = signer._address
@@ -338,14 +338,26 @@ export const PresaleContextProvider = ({ children }) => {
         alert(totalInvestors)
         const val = 250000000000000
         const tx = await presaleContractInstance.callStatic.contribute({
-          value: amount
-        });
-        await tx.wait()
-        console.log(tx)
-        //alert(await contract.callStatic.totalInvestors())
-        //TODO Install alert modal here with Error or success message
+          value: amount //.toString()
+        }).then(async (response) => {
+          await tx.wait()
+          console.log(tx)
+          swal(response.data);
+        }).catch((error) => {
+          
+          //const errorLog = JSON.stringify(error)
+          //var keys = Object.keys(error);
+          const errorData = Object.entries(error);
+          let data = errorData.map( ([key, val]) => {
+            return `${val}`
+          });
+          console.log(data[0].toString())
+          //console.log(keys)
+          swal(data[0].toString())
+        })
       }catch(error){
-        alert(error.message)
+        //alert(error.message)
+        swal(error.message)
         setError(error);
         console.error(error);
       }
