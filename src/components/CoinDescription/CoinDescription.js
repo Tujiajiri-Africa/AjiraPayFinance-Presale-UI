@@ -7,16 +7,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { BigNumber, ethers } from 'ethers';
 
+import { Audio, Oval, ColorRing } from  'react-loader-spinner'
+//import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, 
-    truncateAddress, claim } = useContext(PresaleContext);
+    truncateAddress, claim , isLoading} = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
     const amount = event.target.amount.value;
-    const _amount = BigNumber.from(parseInt(amount)).mul(10).pow(18)
-    console.log(_amount)
-    buyToken(_amount.toString());
+    //console.log(amount)
+    //const _amount = ethers.utils.formatEther(BigNumber.from(parseInt(amount))) //BigNumber.from(parseInt(amount)).mul(10).pow(18)
+    //const __amount = BigNumber.from(amount).toString()//ethers.utils.formatEther(parseInt(amount)) //BigNumber.from(parseInt(amount)).mul(10).pow(18)
+
+    
+    //const test_amt = BigNumber.from(amount) * 10 ** 18
+    const t = ethers.utils.parseEther(amount)
+    console.log(t)
+    buyToken(t);
   }
 
   return (
@@ -72,6 +81,8 @@ const CoinDescription = () => {
                   <form onSubmit={handleSubmit}>
                     <input
                       type="text"
+                      // min="0.002"
+                      // max="1000"
                       name="amount"
                       placeholder="Enter BNB Amount"
                       className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
@@ -128,11 +139,28 @@ const CoinDescription = () => {
                 <br></br>
                 <br></br>
                 {
-                  isConnected ?
+                  isConnected &&
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
                        Claim Contribution
                     </button>
-                  :
+                }
+                {/* {
+                  !isLoading &&
+                  <Oval
+                    height={80}
+                    width={80}
+                    color="#4fa94d"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel='oval-loading'
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                } */}
+                {
+                  !isConnected &&
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
                       <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Claim
                   </button>

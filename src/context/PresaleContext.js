@@ -14,6 +14,8 @@ import { BigNumber } from 'ethers';
 import Web3Modal  from "web3modal";
 //require('dotenv').config();
 import swal from 'sweetalert';
+import Web3 from 'web3';
+
 import 
 { 
     ajiraPayTokenV1ContractAddress, 
@@ -24,6 +26,9 @@ import
     testNetAirdropAddress 
   } 
   from '../artifacts/contract_addresses';
+
+import { Audio, Oval, ColorRing } from  'react-loader-spinner'
+//import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 //Testnet AJP Contract: https://testnet.bscscan.com/address/0x82F25F3BDF94Bf9b67853C1CcE074Fd58B90416a#code
 //Testnet Presale Contract: https://testnet.bscscan.com/address/0xCb3972A14B6534aC27bb173928C4855Cb1ED7bA9#code
@@ -40,6 +45,8 @@ const ajiraPayV1AirdropDistributorAbi = require('../artifacts/abis/AjiraPayV1Air
 //Testnets
 const testNetAjiraPayABI = require('../artifacts/abis/ajiraPayTestnest.json')
 const testNetPresaleABI = require('../artifacts/abis/testnetPrivateSale.json')
+
+const { ethereum } = window
 
 export const PresaleContextProvider = ({ children }) => {    
     //const [web3Signer, setSigner] = useState();
@@ -59,8 +66,27 @@ export const PresaleContextProvider = ({ children }) => {
     const [isConnected, setConnected] = useState(false);
     const [connectedAccount, setConnectedAccount] = useState();
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState();
 
     const webModalConnection = useRef()
+
+    const showPageLoader = async() => {
+      return (
+      <>
+      <div >
+      <ColorRing
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="blocks-loading"
+        wrapperStyle={{}}
+        wrapperClass="blocks-wrapper"
+        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+      />
+      </div>
+    </>
+      )
+    }
 
     const getSignerOrProvider = async() =>{
       const connection = await webModalConnection.current.connect();
@@ -326,27 +352,31 @@ export const PresaleContextProvider = ({ children }) => {
 
         //const presaleContractInstance = contracts.presaleContract
         //
-
-        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/' //testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
-        const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');// JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
+        console.log(window.ethereum)
+        console.log(window.web3)
+        const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/' //testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
+        const provider = new ethers.providers.Web3Provider(connection) //JsonRpcProvider('https://bsc-dataseed.binance.org/');// JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
         const signer = provider.getSigner()
+        const address = signer.getAddress()
       
         const testAddress = signer._address
-        const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, provider);
+        const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, signer);
         const totalInvestors = await presaleContractInstance.totalInvestors() 
 
         alert(totalInvestors)
         const val = 250000000000000
-        const tx = await presaleContractInstance.callStatic.contribute({
+        const tx = await presaleContractInstance.contribute({
+          //from: signer.getAddress(),
           value: amount //.toString()
-        }).then(async (response) => {
-          await tx.wait()
-          console.log(tx)
-          swal(response.data);
+          //gas///: 3000000
+        }).then((response) => {
+          //await tx.wait()
+          //console.log(tx)
+          //swal(response.data);
+          console.log(response)
+          alert(response)
         }).catch((error) => {
-          
-          //const errorLog = JSON.stringify(error)
-          //var keys = Object.keys(error);
+          console.log(error)
           const errorData = Object.entries(error);
           let data = errorData.map( ([key, val]) => {
             return `${val}`
@@ -365,36 +395,26 @@ export const PresaleContextProvider = ({ children }) => {
     
     const claim = async() => {
       try{
-        //const contracts = await getContracts();
-
-        //const presaleContractInstance = contracts.presaleContract
-        //
-
-        //const connection = await webModalConnection.current.connect();//'https://bsc-dataseed.binance.org/' //testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
         const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');// JsonRpcProvider('https://data-seed-prebsc-1-s1.binance.org:8545/') //JsonRpcProvider('https://bsc-dataseed.binance.org/') //JsonRpcProvider //WebSocketProvider
         const signer = provider.getSigner()
-      
         const testAddress = signer._address
         const presaleContractInstance = new ethers.Contract(ajiraPayPresaleV1ContractAddress, ajiraPayPresaleV1Abi, provider);
-      
         const tx = await presaleContractInstance.callStatic.claimContribution().then(async (response) => {
+          setIsLoading(true)
           await tx.wait()
           console.log(tx)
           swal(response.data);
+          setIsLoading(false)
         }).catch((error) => {
-          
-          //const errorLog = JSON.stringify(error)
-          //var keys = Object.keys(error);
+          showPageLoader()
           const errorData = Object.entries(error);
           let data = errorData.map( ([key, val]) => {
             return `${val}`
           });
           console.log(data[0].toString())
-          //console.log(keys)
           swal(data[0].toString())
         })
       }catch(error){
-        //alert(error.message)
         swal(error.message)
         setError(error);
         console.error(error);
@@ -491,7 +511,7 @@ export const PresaleContextProvider = ({ children }) => {
         <PresaleContext.Provider value={{
             isConnected, provider, connectWallet, disconnectWallet, getActiveAccount, buyToken, library,
             connectedAccount, network, switchNetwork, chainId, presaleContract, tokenContract, tokenAirdropContract,
-            getAjiraPayTokenContract, accounts, account, disconnect, truncateAddress, toHex, claim
+            getAjiraPayTokenContract, accounts, account, disconnect, truncateAddress, toHex, claim, isLoading
         }}>
             {children}
         </PresaleContext.Provider>
