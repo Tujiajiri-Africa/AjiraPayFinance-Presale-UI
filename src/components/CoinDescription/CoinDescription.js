@@ -59,11 +59,12 @@ const CoinDescription = () => {
                   <hr></hr>
                   { isConnected && 
                   <div>
-                    <h4 className="text-white uppercase">STATS</h4>
+                    <h4 className="text-white uppercase">PRESALE STATISTICS</h4>
+                    <hr className="py-3"></hr>
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
                     <p className="text-white py-1">Total Funding Raised:  { totalWeiRaised } BNB</p>
-                    <p className="text-white py-1">Phase 1 Total Token Sales: {phase1TotalTokensBought } </p>
-                    <p className="text-white py-1">Phase 2 Total Token Sales: {phase2TotalTokensBought } </p>
+                    <p className="text-white py-1">Phase #1 Total Token Sales: {phase1TotalTokensBought } </p>
+                    <p className="text-white py-1">Phase #2 Total Token Sales: {phase2TotalTokensBought } </p>
                   </div>
                 }
                 </div>
