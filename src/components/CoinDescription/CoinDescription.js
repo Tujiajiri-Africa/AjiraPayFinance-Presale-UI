@@ -11,9 +11,9 @@ import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 //import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const CoinDescription = () => {
-  const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, 
-    truncateAddress, claim , isLoading, totalTokenContributionByUser, totalWeiContributionByUser,
-    chainId, totalTokensClaimedByUser,totalWeiRaised,totalContributors} = useContext(PresaleContext);
+  const { isConnected, connectWallet, buyToken, connectedAccount, 
+    truncateAddress, claim , totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser,totalWeiRaised,totalContributors,phase2TotalTokensBought,
+    phase1TotalTokensBought} = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
@@ -62,7 +62,8 @@ const CoinDescription = () => {
                     <h4 className="text-white uppercase">STATS</h4>
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
                     <p className="text-white py-1">Total Funding Raised:  { totalWeiRaised } BNB</p>
-                    <p className="text-white py-1"></p>
+                    <p className="text-white py-1">Phase 1 Total Token Sales: {phase1TotalTokensBought } </p>
+                    <p className="text-white py-1">Phase 2 Total Token Sales: {phase2TotalTokensBought } </p>
                   </div>
                 }
                 </div>

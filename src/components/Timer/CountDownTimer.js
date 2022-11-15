@@ -7,8 +7,8 @@ import './Time.css';
 const ExpiredNotice = () => {
     return (
       <div className="expired-notice">
-        <span>Expired!!!</span>
-        <p>Please select a future date and time.</p>
+        <span>Presale Ended!!!</span>
+        <p className='text-white'>Please Visit Pancakeswap to purchase $AJP.</p>
       </div>
     );
   }

@@ -6,6 +6,8 @@ import {
   FaInstagram,
   FaTwitter,
   FaTwitch,
+  FaRegPaperPlane,
+  FaLinkedin
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -22,7 +24,7 @@ const Footer = () => {
             <li className="py-1">Platform Docs</li>
           </ul>
         </div>
-        <div>
+        {/* <div>
           <h6 className="font-bold uppercase pt-2 text-center">Navigate</h6>
           <ul className="text-center">
             <li className="py-1">Home</li>
@@ -31,7 +33,7 @@ const Footer = () => {
             <li className="py-1">Team</li>
             <li className="py-1">Contact</li>
           </ul>
-        </div>
+        </div> */}
         <div>
           <h6 className="font-bold uppercase pt-2 text-center">Contact us</h6>
           <ul className="text-center">
@@ -47,20 +49,20 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} All rights reserved
         </p>
         <div className="flex justify-between sm:w-[300px] pt-4 text-2xl">
-          <a href="https://www.facebook.com/">
+          <a href="https://www.facebook.com/ajirapay/">
             <FaFacebook />
           </a>
-          <a href="https://www.instagram.com/">
-            <FaInstagram />
-          </a>
-          <a href="https://twitter.com/">
+          <a href="https://twitter.com/ajiraPayFinance">
             <FaTwitter />
           </a>
-          <a href="http://www.twitch.tv/">
-            <FaTwitch />
-          </a>
-          <a href="http://www.github.com/">
+          <a href="https://github.com/Tujiajiri-Africa">
             <FaGithub />
+          </a>
+          <a href="https://t.me/ajiraPayOfficialChat">
+            <FaRegPaperPlane />
+          </a>
+          <a href="https://www.linkedin.com/company/ajirapay">
+            <FaLinkedin />
           </a>
         </div>
       </div>

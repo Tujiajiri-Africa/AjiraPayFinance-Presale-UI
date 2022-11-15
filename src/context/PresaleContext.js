@@ -81,6 +81,7 @@ export const PresaleContextProvider = ({ children }) => {
     const [phase2TotalTokensBought, setPhase2TotalTokensBought] = useState()
     const [totalWeiRaised, setTotalWeiRaised] = useState()
     const [totalContributors, setTotalContributors] = useState()
+    const [tokenSaleDuration, setTokenSaleDuration] = useState()
 
     const webModalConnection = useRef()
 
@@ -115,7 +116,6 @@ export const PresaleContextProvider = ({ children }) => {
       const val = Number(num);
       return "0x" + val.toString(16);
     };
-
 
     const getSignerOrProvider = async() =>{
       const connection = await webModalConnection.current.connect();
@@ -250,6 +250,10 @@ export const PresaleContextProvider = ({ children }) => {
               setTokenAirdropContract(_airdropContract)
               
               //LOAD CONTRACT DATA
+              const tokenSaleDuration = await _presaleContract.presaleDurationInSec();
+              setTokenSaleDuration(tokenSaleDuration)
+
+              //alert(tokenSaleDuration)
               const tokenAmount = await _presaleContract.totalTokenContributionsByUser(accounts[0])
               const tokenValue = ethers.utils.formatEther(tokenAmount)
               setTotalTokenContributionByUser(tokenValue)
@@ -276,7 +280,14 @@ export const PresaleContextProvider = ({ children }) => {
               const phase2PricePerToken = await _presaleContract.publicSalePricePerTokenInWei()
               const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
               setPresalePhase2Price(phase2PricePerTokenVal)
+              
+              const _phase1TokensSold = await _presaleContract.totalTokensSoldInPrivateSale()
+              const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
+              setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
 
+              const _phase2TokensSold = await _presaleContract.totalTokensSoldInPublicSale()
+              const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
+              setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
             }
           } catch (error) {
             setError(error)
@@ -473,6 +484,29 @@ export const PresaleContextProvider = ({ children }) => {
           const _totalTokensClaimedByUser = await presaleContractInstance.totalTokenContributionsClaimedByUser()
           const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
           settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
+
+          const _totalPresaleContributors = await presaleContractInstance.totalInvestors()
+          setTotalContributors(parseInt(_totalPresaleContributors))
+          
+          const totalWeiRaised = await presaleContractInstance.totalWeiRaised()
+          const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
+          setTotalWeiRaised(totalWeiRaisedVal)
+
+          const phase1PricePerToken = await presaleContractInstance.privateSalePricePerTokenInWei()
+          const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+          setPresalePhase1Price(phase1PricePerTokenVal)
+
+          const phase2PricePerToken = await presaleContractInstance.publicSalePricePerTokenInWei()
+          const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+          setPresalePhase2Price(phase2PricePerTokenVal)
+          
+          const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPrivateSale()
+          const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
+          setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
+
+          const _phase2TokensSold = await presaleContractInstance.totalTokensSoldInPublicSale()
+          const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
+          setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
     
         }catch(error){
           console.log(error)
@@ -564,7 +598,7 @@ export const PresaleContextProvider = ({ children }) => {
             connectedAccount, network, switchNetwork, chainId, presaleContract, tokenContract, tokenAirdropContract,
             accounts, account, disconnect, truncateAddress, toHex, claim, isLoading,
             totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser, totalWeiRaised, totalContributors,
-            presalePhase1Price, presalePhase2Price
+            presalePhase1Price, presalePhase2Price,tokenSaleDuration, phase1TotalTokensBought, phase2TotalTokensBought
         }}>
             {children}
         </PresaleContext.Provider>
