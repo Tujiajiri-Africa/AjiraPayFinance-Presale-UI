@@ -12,7 +12,7 @@ import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, 
-    truncateAddress, claim , isLoading} = useContext(PresaleContext);
+    truncateAddress, claim , isLoading, totalTokenContributionByUser, totalWeiContributionByUser} = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
@@ -27,6 +27,7 @@ const CoinDescription = () => {
     console.log(t)
     buyToken(t);
   }
+
 
   return (
     <>
@@ -129,8 +130,8 @@ const CoinDescription = () => {
                 <p className="text-white">
                   { isConnected && connectedAccount !== null ? truncateAddress(connectedAccount): '' }
                 </p>
-                <p className="text-white py-2">Tokens Purchased: { isConnected && <span> AJP</span> }</p>
-                <p className="text-white py-2">Total BNB Spent: { isConnected && <span> BNB</span>}</p>
+                <p className="text-white py-2">Tokens Purchased: { isConnected && totalTokenContributionByUser != null ? totalTokenContributionByUser : '' } AJP </p>
+                <p className="text-white py-2">Total BNB Spent: { isConnected && totalWeiContributionByUser != null ? totalWeiContributionByUser: 0 } BNB</p>
                 <p></p>
                 <br></br>
                 {/* <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">

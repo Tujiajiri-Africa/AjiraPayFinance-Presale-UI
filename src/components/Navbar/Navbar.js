@@ -29,11 +29,6 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/ico" smooth={true} offset={-200} duration={500}>
-                Buy AJP Token
-              </Link>
-            </li>
-            <li>
               <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
                 Tokenomics
               </Link>
@@ -83,17 +78,6 @@ const Navbar = () => {
             Home
           </Link>
         </li>
-        <li className="w-full text-white">
-          <Link
-            onClick={handleClose}
-            to="/ico"
-            smooth={true}
-            offset={-200}
-            duration={500}
-          >
-            Buy AJP Token
-          </Link>
-        </li>
         <li className="w-full ttext-white">
           <Link
             onClick={handleClose}
@@ -138,7 +122,7 @@ const Navbar = () => {
             <FontAwesomeIcon icon={solid('wallet')}/> Disconnect Wallet
           </button>
         }
-         { isConnected && chainId !== null  && chainId !== 56 ?
+         { isConnected && chainId != null  && chainId != 56 ?
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Switch BSC Network</button>
           :
           <></>
