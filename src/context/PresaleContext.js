@@ -82,6 +82,10 @@ export const PresaleContextProvider = ({ children }) => {
     const [totalWeiRaised, setTotalWeiRaised] = useState()
     const [totalContributors, setTotalContributors] = useState()
     const [tokenSaleDuration, setTokenSaleDuration] = useState()
+    const [isPresaleOpenForClaims,setIsPresaleOpenForClaims]  = useState()
+    const [isPresaleStarted,setIsPresaleStarted]  = useState()
+    const [isPresalePaused,setIsPresalePaused]  = useState()
+    const [isActiveInvestor, setIsActiveInvestor] = useState()
 
     const webModalConnection = useRef()
 
@@ -133,18 +137,18 @@ export const PresaleContextProvider = ({ children }) => {
         setConnectedAccount(await accounts[0])
         setAccount(accounts[0]);
         setConnected(true);
-        console.log(account)
-      }           
+        //console.log(account)
+      }
       //await console.log(network_connection)
      // console.log(await network_connection.chainId)
       // if(chainId !== toHex(56)){
       //   alert('Please switch network to Binance Smart Chain')
       //   throw new Error("Connected to wrong chain, please switch to Binance Smart Chain, mainnet");
       // }
-      console.log({
-        provider,
-        signer
-      })
+      // console.log({
+      //   provider,
+      //   signer
+      // })
       return {
         'signer': signer,
         'provider': provider
@@ -250,8 +254,20 @@ export const PresaleContextProvider = ({ children }) => {
               setTokenAirdropContract(_airdropContract)
               
               //LOAD CONTRACT DATA
+              const _isActiveInvestor = await _presaleContract.isActiveInvestor(accounts[0]);
+              setIsActiveInvestor(_isActiveInvestor)
+
               const tokenSaleDuration = await _presaleContract.presaleDurationInSec();
               setTokenSaleDuration(tokenSaleDuration)
+
+              const isOpenForClaims = await _presaleContract.isOpenForClaims()
+              setIsPresaleOpenForClaims(isOpenForClaims)
+    
+              const isPresaleStarted = await _presaleContract.isPresaleOpen()
+              setIsPresaleStarted(isPresaleStarted)
+              
+              const isPresalePaused = await _presaleContract.isPresalePaused()
+              setIsPresalePaused(isPresalePaused)
 
               //alert(tokenSaleDuration)
               const tokenAmount = await _presaleContract.totalTokenContributionsByUser(accounts[0])
@@ -357,13 +373,13 @@ export const PresaleContextProvider = ({ children }) => {
     const buyToken = async(amount) => {
       try{
         const presaleContractInstance = presaleContract
-        const txHash = await presaleContractInstance.contribute({value: amount}); //gasLimit: 300000
+        const txHash = await presaleContractInstance.contribute({value: amount, gasLimit: 200000}); //gasLimit: 300000
         await txHash.wait()
         const errorData = Object.entries(txHash);
         let data = errorData.map( ([key, val]) => {
           return `${val}`
         });
-        console.log(data[0])
+        //console.log(data[0])
         refreshAccountContributionData(connectedAccount)
         var htmlContent = document.createElement("button");
         var link = `<a href='https://testnet.bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
@@ -374,7 +390,7 @@ export const PresaleContextProvider = ({ children }) => {
           button: {
             confirm: true,
           },
-          title: 'Purchase Request Submitted Successfully',
+          title: 'Purchase Request Submitted Successfully!',
           dangerMode: false,
           //text: `View Progress on Explorer: ${data[0]}`,
           content: htmlContent,
@@ -382,14 +398,11 @@ export const PresaleContextProvider = ({ children }) => {
         })
         
       }catch(error){
-        
         const errorData = Object.entries(error);
           let data = errorData.map( ([key, val]) => {
             return `${val}`
           });
-          console.log(data[0])
-          console.log(errorData[0])
-           
+          
           swal({
             icon: "danger",
             success: false,
@@ -398,13 +411,10 @@ export const PresaleContextProvider = ({ children }) => {
             },
             title: 'Error: ',
             dangerMode: true,
-            text: `${data[0]}`,
-            // content: {
-            //   element: "href",
-            // },
+            text: `${data[0]}`
           })
         setError(error);
-        console.error(error);
+        console.log(error);
       }
     }
     
@@ -428,7 +438,7 @@ export const PresaleContextProvider = ({ children }) => {
           button: {
             confirm: true,
           },
-          title: 'Success',
+          title: 'Success!',
           dangerMode: false,
           //text: `View Progress on Explorer: ${data[0]}`,
           content: htmlContent
@@ -437,7 +447,21 @@ export const PresaleContextProvider = ({ children }) => {
         refreshAccountContributionData(connectedAccount)
         //const tx = await presaleContractInstance.claimContribution().then(async (response) => {
       }catch(error){
-        swal(error.message)
+        const errorData = Object.entries(error);
+        let data = errorData.map( ([key, val]) => {
+            return `${val}`
+        });
+        swal({
+          icon: "danger",
+          success: false,
+          button: {
+            confirm: true,
+          },
+          title: 'Error Sending Transaction!',
+          dangerMode: true,
+          //text: `View Progress on Explorer: ${data[0]}`,
+          text: `${data[0]}`
+        })
         setError(error);
         console.error(error);
       }
@@ -469,10 +493,21 @@ export const PresaleContextProvider = ({ children }) => {
 
     const refreshAccountContributionData = async(account) => {
       if(library !== undefined){
-        console.log(library)
         try{
           const presaleContractInstance = presaleContract
-          console.log(presaleContract)
+                
+          const _isActiveInvestor = await presaleContractInstance.isActiveInvestor(account);
+          setIsActiveInvestor(_isActiveInvestor)
+
+          const isOpenForClaims = await presaleContractInstance.isOpenForClaims()
+          setIsPresaleOpenForClaims(isOpenForClaims)
+    
+          const isPresaleStarted = await presaleContractInstance.isPresaleOpen()
+          setIsPresaleStarted(isPresaleStarted)
+              
+          const isPresalePaused = await presaleContractInstance.isPresalePaused()
+          setIsPresalePaused(isPresalePaused)
+
           const tokenAmount = await presaleContractInstance.totalTokenContributionsByUser(account)
           const tokenValue = ethers.utils.formatEther(tokenAmount)
           setTotalTokenContributionByUser(tokenValue)
@@ -573,7 +608,7 @@ export const PresaleContextProvider = ({ children }) => {
         };
 
         const handleDisconnect = () => {
-          console.log("disconnected");
+          //console.log("disconnected");
           disconnect();
         };
   
@@ -598,7 +633,8 @@ export const PresaleContextProvider = ({ children }) => {
             connectedAccount, network, switchNetwork, chainId, presaleContract, tokenContract, tokenAirdropContract,
             accounts, account, disconnect, truncateAddress, toHex, claim, isLoading,
             totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser, totalWeiRaised, totalContributors,
-            presalePhase1Price, presalePhase2Price,tokenSaleDuration, phase1TotalTokensBought, phase2TotalTokensBought
+            presalePhase1Price, presalePhase2Price,tokenSaleDuration, phase1TotalTokensBought, phase2TotalTokensBought,
+            isPresaleOpenForClaims,isPresaleStarted,isPresalePaused,isActiveInvestor
         }}>
             {children}
         </PresaleContext.Provider>

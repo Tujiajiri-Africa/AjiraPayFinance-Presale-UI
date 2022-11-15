@@ -13,7 +13,7 @@ import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken, connectedAccount, 
     truncateAddress, claim , totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser,totalWeiRaised,totalContributors,phase2TotalTokensBought,
-    phase1TotalTokensBought} = useContext(PresaleContext);
+    phase1TotalTokensBought,isPresaleOpenForClaims,isPresaleStarted,isPresalePaused,isActiveInvestor} = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
@@ -77,7 +77,7 @@ const CoinDescription = () => {
                   <h2 className="text-3xl font-bold uppercase py-1 text-white">
                     Buy Token
                   </h2>
-                  <p className="text-white">Minimum Contribution: $10</p>
+                  <p className="text-white">Minimum Contribution: $20</p>
                   <p className="text-white">Maximum Contribution: $10,000</p>
                   <p className="text-white">Phase 1 Sale Rate: 1 AJP = $0.2</p>
                   <p className="text-white">Phase 2 Sale Rate: 1 AJP = $0.3</p>
@@ -105,7 +105,7 @@ const CoinDescription = () => {
                       className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                     />
                       {
-                        isConnected && 
+                        isConnected && isPresaleStarted && !isPresalePaused &&
                         <p className="py-3">
                         <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                           Contribute
@@ -162,7 +162,7 @@ const CoinDescription = () => {
                 <br></br>
                 <br></br>
                 {
-                  isConnected && 
+                  isConnected && isPresaleStarted && isPresaleOpenForClaims && !isPresalePaused && isActiveInvestor &&
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
                        Claim Contribution
                     </button>
