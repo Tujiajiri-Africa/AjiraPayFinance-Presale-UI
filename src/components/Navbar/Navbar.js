@@ -25,7 +25,7 @@ const Navbar = () => {
           <ul className="hidden md:flex cursor-pointer">
             <li>
               <Link to="/" smooth={true} duration={500}>
-                Home
+                Presale
               </Link>
             </li>
             <li>
@@ -75,7 +75,7 @@ const Navbar = () => {
       <ul className={!nav ? "hidden" : "absolute bg-slate-900 w-full px-8"}>
         <li className="w-full text-white cursor-pointer">
           <Link onClick={handleClose} to="/" smooth={true} duration={500}>
-            Home
+          Presale
           </Link>
         </li>
         <li className="w-full ttext-white">

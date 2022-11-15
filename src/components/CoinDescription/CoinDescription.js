@@ -12,7 +12,8 @@ import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 
 const CoinDescription = () => {
   const { isConnected, connectWallet, buyToken,getAjiraPayTokenContract, connectedAccount, 
-    truncateAddress, claim , isLoading, totalTokenContributionByUser, totalWeiContributionByUser} = useContext(PresaleContext);
+    truncateAddress, claim , isLoading, totalTokenContributionByUser, totalWeiContributionByUser,
+    chainId, totalTokensClaimedByUser,totalWeiRaised,totalContributors} = useContext(PresaleContext);
 
   const handleSubmit = async(event) => {
     event.preventDefault()
@@ -26,6 +27,7 @@ const CoinDescription = () => {
     const t = ethers.utils.parseEther(amount)
     console.log(t)
     buyToken(t);
+    event.target.amount.value = ""
   }
 
 
@@ -50,8 +52,19 @@ const CoinDescription = () => {
                     Token Sale ends in
                   </p>
                 </div>
-                <div className="countdown-timer-card__timer">
+                <div className="countdown-timer-card__timer py-3">
+                  
                   <TimeComponent />
+                  <br></br>
+                  <hr></hr>
+                  { isConnected && 
+                  <div>
+                    <h4 className="text-white uppercase">STATS</h4>
+                    <p className="text-white py-1">Total Contributors: { totalContributors }</p>
+                    <p className="text-white py-1">Total Funding Raised:  { totalWeiRaised } BNB</p>
+                    <p className="text-white py-1"></p>
+                  </div>
+                }
                 </div>
               </div>
             </div>
@@ -85,11 +98,12 @@ const CoinDescription = () => {
                       // min="0.002"
                       // max="1000"
                       name="amount"
+                      required
                       placeholder="Enter BNB Amount"
                       className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                     />
                       {
-                        isConnected &&
+                        isConnected && 
                         <p className="py-3">
                         <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                           Contribute
@@ -128,22 +142,30 @@ const CoinDescription = () => {
                 <p></p>
                 <hr></hr>
                 <p className="text-white">
-                  { isConnected && connectedAccount !== null ? truncateAddress(connectedAccount): '' }
+                  Account: 
+                      { isConnected && connectedAccount !== null &&
+                      
+                      truncateAddress(connectedAccount)
+                      
+                      }
                 </p>
-                <p className="text-white py-2">Tokens Purchased: { isConnected && totalTokenContributionByUser != null ? totalTokenContributionByUser : '' } AJP </p>
-                <p className="text-white py-2">Total BNB Spent: { isConnected && totalWeiContributionByUser != null ? totalWeiContributionByUser: 0 } BNB</p>
-                <p></p>
-                <br></br>
+                
+                <p className="text-white py-1">$AJP Purchased: { isConnected && totalTokenContributionByUser != null ? totalTokenContributionByUser : '' } $AJP </p>
+                <p className="text-white py-1">$AJP Claimed: { isConnected && totalTokensClaimedByUser != null ? totalTokensClaimedByUser : '' } $AJP </p>
+                <p className="text-white py-1">BNB Spent: { isConnected && totalWeiContributionByUser != null ? totalWeiContributionByUser: '' } BNB</p>
+               
                 {/* <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                   Connect Wallet
                 </button> */}
                 <br></br>
                 <br></br>
                 {
-                  isConnected &&
+                  isConnected && 
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
                        Claim Contribution
                     </button>
+                    
+                    
                 }
                 {/* {
                   !isLoading &&

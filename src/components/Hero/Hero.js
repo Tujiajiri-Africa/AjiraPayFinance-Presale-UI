@@ -2,6 +2,7 @@ import React from "react";
 //import PresaleContext  from '/src/context/PresaleContext';
 
 import bgImg from "../../assets/cyber-bg.png";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -22,7 +23,11 @@ const Hero = () => {
             {/* A decentralized web3 protocol for secure and seamless crypto payments. */}
             A decentralized Web3.0 protocol for secure and seamless crypto payments
             </p>
-          <button className="py-3 px-6 my-4 bg-transparent">Buy Token</button>
+          
+          <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
+          <button className="py-3 px-6 my-4 bg-transparent">Tokenomics</button>
+                
+            </Link>
         </div>
         <div>
           <img className="w-full object-fill" src={bgImg} alt="/" />

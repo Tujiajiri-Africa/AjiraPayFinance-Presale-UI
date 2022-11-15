@@ -74,11 +74,13 @@ export const PresaleContextProvider = ({ children }) => {
     //Contract Specific
     const [totalTokenContributionByUser, setTotalTokenContributionByUser] = useState()
     const [totalWeiContributionByUser, setTotalWeiContributionByUser] = useState()
+    const [totalTokensClaimedByUser, settotalTokenContributionsClaimedByUser] = useState()
     const [presalePhase1Price, setPresalePhase1Price] = useState()
     const [presalePhase2Price, setPresalePhase2Price] = useState()
     const [phase1TotalTokensBought, setPhase1TotalTokensBought] = useState()
     const [phase2TotalTokensBought, setPhase2TotalTokensBought] = useState()
     const [totalWeiRaised, setTotalWeiRaised] = useState()
+    const [totalContributors, setTotalContributors] = useState()
 
     const webModalConnection = useRef()
 
@@ -252,21 +254,29 @@ export const PresaleContextProvider = ({ children }) => {
               const tokenValue = ethers.utils.formatEther(tokenAmount)
               setTotalTokenContributionByUser(tokenValue)
 
+              const _totalTokensClaimedByUser = await _presaleContract.totalTokenContributionsClaimedByUser(accounts[0])
+              const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
+              settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
+
               const bnbAmount = await _presaleContract.totalBNBInvestmentsByIUser(accounts[0])
               const bnbValue = ethers.utils.formatEther(bnbAmount)
               setTotalWeiContributionByUser(bnbValue)
 
+              const _totalPresaleContributors = await _presaleContract.totalInvestors()
+              setTotalContributors(parseInt(_totalPresaleContributors))
+              
               const totalWeiRaised = await _presaleContract.totalWeiRaised()
               const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
               setTotalWeiRaised(totalWeiRaisedVal)
 
-              const phase1PricePerToken = await _presaleContract.totalWeiRaised()
+              const phase1PricePerToken = await _presaleContract.privateSalePricePerTokenInWei()
               const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
               setPresalePhase1Price(phase1PricePerTokenVal)
 
-              const phase2PricePerToken = await _presaleContract.totalWeiRaised()
+              const phase2PricePerToken = await _presaleContract.publicSalePricePerTokenInWei()
               const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
               setPresalePhase2Price(phase2PricePerTokenVal)
+
             }
           } catch (error) {
             setError(error)
@@ -336,45 +346,52 @@ export const PresaleContextProvider = ({ children }) => {
     const buyToken = async(amount) => {
       try{
         const presaleContractInstance = presaleContract
-        const tx = await presaleContractInstance.contribute({value: amount, gasLimit: 250000}).then(async(response) => {
-          await tx.wait()
-          console.log(tx)
-          //swal(response.data);
-          //console.log(response)
-          //swal(response)
-          const errorData = Object.entries(response);
+        const txHash = await presaleContractInstance.contribute({value: amount}); //gasLimit: 300000
+        await txHash.wait()
+        const errorData = Object.entries(txHash);
+        let data = errorData.map( ([key, val]) => {
+          return `${val}`
+        });
+        console.log(data[0])
+        refreshAccountContributionData(connectedAccount)
+        var htmlContent = document.createElement("button");
+        var link = `<a href='https://testnet.bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
+        htmlContent.innerHTML = link
+        swal({
+          icon: "success",
+          success: true,
+          button: {
+            confirm: true,
+          },
+          title: 'Purchase Request Submitted Successfully',
+          dangerMode: false,
+          //text: `View Progress on Explorer: ${data[0]}`,
+          content: htmlContent,
+        
+        })
+        
+      }catch(error){
+        
+        const errorData = Object.entries(error);
           let data = errorData.map( ([key, val]) => {
             return `${val}`
           });
           console.log(data[0])
-          var link= document.createElement('a');
-          link.href =  data[0] 
+          console.log(errorData[0])
+           
           swal({
-            icon: "success",
-            success: true,
+            icon: "danger",
+            success: false,
             button: {
               confirm: true,
             },
-            title: 'Purchase Request Submitted Successfully',
-            dangerMode: false,
-            text: `View Progress on Explorer: ${data[0]}`,
-            content: {
-              element: "href",
-            },
+            title: 'Error: ',
+            dangerMode: true,
+            text: `${data[0]}`,
+            // content: {
+            //   element: "href",
+            // },
           })
-        }).catch((error) => {
-          console.log(error)
-          const errorData = Object.entries(error);
-          let data = errorData.map( ([key, val]) => {
-            return `${val}`
-          });
-          console.log(data[0])
-          
-          swal(data[0])
-        })
-      }catch(error){
-        
-        swal(error.message)
         setError(error);
         console.error(error);
       }
@@ -383,34 +400,31 @@ export const PresaleContextProvider = ({ children }) => {
     const claim = async() => {
       try{
         const presaleContractInstance = presaleContract
-        const tx = await presaleContractInstance.claimContribution().then(async (response) => {
-          const errorData = Object.entries(response);
-          let data = errorData.map( ([key, val]) => {
+        var htmlContent = document.createElement("button");
+        
+        const tx = await presaleContractInstance.claimContribution()
+        const errorData = Object.entries(tx);
+        let data = errorData.map( ([key, val]) => {
             return `${val}`
-          });
-          swal({
-            icon: "success",
-            success: true,
-            button: {
-              confirm: true,
-            },
-            title: 'Claim Request Submitted Successfully',
-            dangerMode: false,
-            text: `View Progress on Explorer: ${data[0]}`,
-            content: {
-              element: "href",
-            },
-          })
-          
-        }).catch((error) => {
-          
-          const errorData = Object.entries(error);
-          let data = errorData.map( ([key, val]) => {
-            return `${val}`
-          });
-          console.log(data[0])
-          swal(data[0])
+        });
+        
+        var link = `<a href='https://testnet.bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
+        htmlContent.innerHTML = link
+
+        swal({
+          icon: "success",
+          success: true,
+          button: {
+            confirm: true,
+          },
+          title: 'Success',
+          dangerMode: false,
+          //text: `View Progress on Explorer: ${data[0]}`,
+          content: htmlContent
         })
+
+        refreshAccountContributionData(connectedAccount)
+        //const tx = await presaleContractInstance.claimContribution().then(async (response) => {
       }catch(error){
         swal(error.message)
         setError(error);
@@ -429,8 +443,8 @@ export const PresaleContextProvider = ({ children }) => {
       // }
       if (localStorage?.getItem('isWalletConnected') === 'true') {
         try {
-          //connectWallet();
-          setConnected(true);
+          connectWallet();
+          //setConnected(true);
           // if(chainId !== 56){
           //   setChainId(56);
           //   alert('Switch To Binance Smart Chain Mainnet')
@@ -455,9 +469,11 @@ export const PresaleContextProvider = ({ children }) => {
           const bnbAmount = await presaleContractInstance.totalBNBInvestmentsByIUser(account)
           const bnbValue = ethers.utils.formatEther(bnbAmount)
           setTotalWeiContributionByUser(bnbValue)
+
+          const _totalTokensClaimedByUser = await presaleContractInstance.totalTokenContributionsClaimedByUser()
+          const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
+          settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
     
-          console.log(bnbValue)
-          console.log(tokenValue)
         }catch(error){
           console.log(error)
         }
@@ -511,9 +527,11 @@ export const PresaleContextProvider = ({ children }) => {
           //console.log(chainId)
             const chain = parseInt(chainId)
             setChainId(chain);
-            setConnected(true);
+            //setConnected(true);
             //console.log(chain)
+            //localStorage.setItem('isWalletConnected',true) 
             window.location.reload()
+            //localStorage?.getItem('isWalletConnected') === 'true'
             //await getSignerOrProvider()
           }catch{
             console.log(error)
@@ -537,7 +555,7 @@ export const PresaleContextProvider = ({ children }) => {
           }
         };
       }
-    }, [connectionLibrary,library,presaleContract ]);
+    }, [connectionLibrary,library,presaleContract,localStorage,chainId]);
   
 
     return (
@@ -545,7 +563,8 @@ export const PresaleContextProvider = ({ children }) => {
             isConnected, provider, connectWallet, disconnectWallet, buyToken, library,
             connectedAccount, network, switchNetwork, chainId, presaleContract, tokenContract, tokenAirdropContract,
             accounts, account, disconnect, truncateAddress, toHex, claim, isLoading,
-            totalTokenContributionByUser, totalWeiContributionByUser
+            totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser, totalWeiRaised, totalContributors,
+            presalePhase1Price, presalePhase2Price
         }}>
             {children}
         </PresaleContext.Provider>

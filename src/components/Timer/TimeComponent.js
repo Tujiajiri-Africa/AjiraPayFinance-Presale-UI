@@ -11,6 +11,7 @@ const TimeComponent = () => {
 
   return (
     <>
+    
       <CountdownTimer targetDate={dateTimeAfterThreeDays} />
     </>
   );
