@@ -162,11 +162,14 @@ const CoinDescription = () => {
                 <br></br>
                 <br></br>
                 {
-                  isConnected && isPresaleStarted && isPresaleOpenForClaims && !isPresalePaused && isActiveInvestor &&
+                  isConnected && isPresaleStarted && isPresaleOpenForClaims && !isPresalePaused && isActiveInvestor ?
                     <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
                        Claim Contribution
                     </button>
                     
+                    :
+                    isConnected &&
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" disabled>Claim Contribution</button>
                     
                 }
                 {/* {
