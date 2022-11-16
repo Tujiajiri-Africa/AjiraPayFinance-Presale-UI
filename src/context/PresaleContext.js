@@ -381,7 +381,7 @@ export const PresaleContextProvider = ({ children }) => {
     const buyToken = async(amount) => {
       try{
         const presaleContractInstance = presaleContract
-        const txHash = await presaleContractInstance.contribute({value: amount, gasLimit: 200000}); //gasLimit: 300000
+        const txHash = await presaleContractInstance.contribute({value: amount}); //gasLimit: 300000
         await txHash.wait()
         const errorData = Object.entries(txHash);
         let data = errorData.map( ([key, val]) => {
