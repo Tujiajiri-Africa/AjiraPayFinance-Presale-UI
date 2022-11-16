@@ -23,7 +23,10 @@ import
     ajiraPayV1AirdropDistributorContractAddress,
     testNetAjiraPayAddress,
     testNetPresaleAddress,
-    testNetAirdropAddress 
+    testNetAirdropAddress ,
+    ajiraPayMainnetFinalPresaleAddress,
+    ajiraPayMainnetFinalAddress,
+    ajiraPayAirdropDitributorMainnetAddress
   } 
   from '../artifacts/contract_addresses';
 
@@ -45,6 +48,11 @@ const ajiraPayV1AirdropDistributorAbi = require('../artifacts/abis/AjiraPayV1Air
 //Testnets
 const testNetAjiraPayABI = require('../artifacts/abis/ajiraPayTestnest.json')
 const testNetPresaleABI = require('../artifacts/abis/testnetPrivateSale.json')
+
+//LOAD FINAL DEPLOYED CONTRACTS
+const ajiraPayPresaleFinalMainnetContractABI = require('../artifacts/abis/presaleFinalMainnetABI.json');
+const ajiraPayTokenFinalMainnetContractABI = require('../artifacts/abis/ajirapayFinanceFinalMainnetABI.json');
+const ajiraPayAirdropFinalMainnetContractABI = require('../artifacts/abis/airdropFinalMainnetABI.json');
 
 const { ethereum } = window
 
@@ -246,20 +254,20 @@ export const PresaleContextProvider = ({ children }) => {
             //console.log(network)
            
             if(provider){
-              const _tokenContract = new ethers.Contract(ajiraPayTokenV1ContractAddress, ajiraPayTokenV1Abi, signer);
-              const _presaleContract = new ethers.Contract(testNetPresaleAddress, testNetPresaleABI, signer);
-              const _airdropContract = new ethers.Contract(ajiraPayV1AirdropDistributorContractAddress, ajiraPayV1AirdropDistributorAbi, signer);
+              const _tokenContract = new ethers.Contract(ajiraPayMainnetFinalAddress, ajiraPayTokenFinalMainnetContractABI, signer);
+              const _presaleContract = new ethers.Contract(ajiraPayMainnetFinalPresaleAddress, ajiraPayPresaleFinalMainnetContractABI, signer);
+              const _airdropContract = new ethers.Contract(ajiraPayAirdropDitributorMainnetAddress, ajiraPayAirdropFinalMainnetContractABI, signer);
               setPresaleContract(_presaleContract)
               setTokenContract(_tokenContract)
               setTokenAirdropContract(_airdropContract)
               
               //LOAD CONTRACT DATA
+              const tokenSaleDuration = await _presaleContract.presaleDurationInSec();
+              setTokenSaleDuration(parseInt(tokenSaleDuration))
+          
               const _isActiveInvestor = await _presaleContract.isActiveInvestor(accounts[0]);
               setIsActiveInvestor(_isActiveInvestor)
-
-              const tokenSaleDuration = await _presaleContract.presaleDurationInSec();
-              setTokenSaleDuration(tokenSaleDuration)
-
+            
               const isOpenForClaims = await _presaleContract.isOpenForClaims()
               setIsPresaleOpenForClaims(isOpenForClaims)
     
@@ -495,7 +503,10 @@ export const PresaleContextProvider = ({ children }) => {
       if(library !== undefined){
         try{
           const presaleContractInstance = presaleContract
-                
+          
+          const tokenSaleDuration = await presaleContractInstance.presaleDurationInSec();
+          setTokenSaleDuration(parseInt(tokenSaleDuration))
+
           const _isActiveInvestor = await presaleContractInstance.isActiveInvestor(account);
           setIsActiveInvestor(_isActiveInvestor)
 

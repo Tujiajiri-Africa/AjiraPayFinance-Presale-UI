@@ -122,7 +122,7 @@ const Navbar = () => {
             <FontAwesomeIcon icon={solid('wallet')}/> Disconnect Wallet
           </button>
         }
-         { isConnected && chainId != null  && chainId != 56 ?
+         { isConnected && chainId != null  && chainId !== 56 ?
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={switchNetwork}>Switch BSC Network</button>
           :
           <></>

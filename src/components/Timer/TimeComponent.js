@@ -14,14 +14,14 @@ const TimeComponent = () => {
   //   daysToCount = THIRTY_DAYS_IN_MS;
   // }
   
-  const NOW_IN_MS = new Date().getTime();
+  const NOW_IN_MS = new Date().getTime() ;
 
-  const dateTimeAfterThreeDays = NOW_IN_MS + tokenSaleDuration;
-
+  const dateTimeAfterThirtyDays = NOW_IN_MS + tokenSaleDuration;
+  var delta = Math.abs(tokenSaleDuration - NOW_IN_MS) / 1000;
   return (
     <>
     {tokenSaleDuration  > 0 ?
-      <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+      <CountdownTimer targetDate={dateTimeAfterThirtyDays} />
       :
       ''
     }

@@ -59,7 +59,7 @@ const TokenomicsDescription = () => {
                 Contract Address
               </p>
               <p className="text-1xl py-2 text-white">
-                Comming Soon
+              0xC55b03dC07EC7Bb8B891100E927E982540f0d181
               </p>
               <p className="text-1xl py-2 text-orange-600 text-2xl">
                Security Audit Certficate

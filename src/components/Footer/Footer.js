@@ -17,11 +17,12 @@ const Footer = () => {
         <div>
           <h6 className="font-bold uppercase pt-2 text-center">Quick Links</h6>
           <ul className="text-center">
-            <li className="py-1">Whitepaper</li>
-            <li className="py-1">Github</li>
-            <li className="py-1">Blog</li>
-            <li className="py-1">Linkedln</li>
-            <li className="py-1">Platform Docs</li>
+            <li className="py-1"><a href="https://pitch.com/public/f266f4df-b857-4c82-a6a9-02051f75f35a">Whitepaper</a></li>
+            <li className="py-1"><a href="https://ajirapay.finance/">Website</a></li>
+            <li className="py-1"><a href="https://medium.com/@ajira_pay_finance">Blog</a></li>
+            <li className="py-1"><a href="https://angel.co/company/ajira-pay/jobs">Careers</a></li>
+            <li className="py-1"><a href="https://linktr.ee/ajira_pay_finance">General</a></li>
+            {/* <li className="py-1">Platform Docs</li> */}
           </ul>
         </div>
         {/* <div>
