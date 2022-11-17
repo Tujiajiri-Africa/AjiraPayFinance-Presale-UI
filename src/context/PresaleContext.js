@@ -388,7 +388,7 @@ export const PresaleContextProvider = ({ children }) => {
           return `${val}`
         });
         //console.log(data[0])
-        refreshAccountContributionData(connectedAccount)
+        
         var htmlContent = document.createElement("button");
         var link = `<a href='https://bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
         htmlContent.innerHTML = link
@@ -404,7 +404,7 @@ export const PresaleContextProvider = ({ children }) => {
           content: htmlContent,
         
         })
-        
+        refreshAccountContributionData(connectedAccount)
       }catch(error){
         const errorData = Object.entries(error);
           let data = errorData.map( ([key, val]) => {
@@ -504,55 +504,57 @@ export const PresaleContextProvider = ({ children }) => {
         try{
           const presaleContractInstance = presaleContract
           
-          const tokenSaleDuration = await presaleContractInstance.presaleDurationInSec();
-          setTokenSaleDuration(parseInt(tokenSaleDuration))
-
-          const _isActiveInvestor = await presaleContractInstance.isActiveInvestor(account);
-          setIsActiveInvestor(_isActiveInvestor)
-
-          const isOpenForClaims = await presaleContractInstance.isOpenForClaims()
-          setIsPresaleOpenForClaims(isOpenForClaims)
+              //LOAD CONTRACT DATA
+              const tokenSaleDuration = await presaleContractInstance.presaleDurationInSec();
+              setTokenSaleDuration(parseInt(tokenSaleDuration))
+          
+              const _isActiveInvestor = await presaleContractInstance.isActiveInvestor(account);
+              setIsActiveInvestor(_isActiveInvestor)
+            
+              const isOpenForClaims = await presaleContractInstance.isOpenForClaims()
+              setIsPresaleOpenForClaims(isOpenForClaims)
     
-          const isPresaleStarted = await presaleContractInstance.isPresaleOpen()
-          setIsPresaleStarted(isPresaleStarted)
+              const isPresaleStarted = await presaleContractInstance.isPresaleOpen()
+              setIsPresaleStarted(isPresaleStarted)
               
-          const isPresalePaused = await presaleContractInstance.isPresalePaused()
-          setIsPresalePaused(isPresalePaused)
+              const isPresalePaused = await presaleContractInstance.isPresalePaused()
+              setIsPresalePaused(isPresalePaused)
 
-          const tokenAmount = await presaleContractInstance.totalTokenContributionsByUser(account)
-          const tokenValue = ethers.utils.formatEther(tokenAmount)
-          setTotalTokenContributionByUser(tokenValue)
-    
-          const bnbAmount = await presaleContractInstance.totalBNBInvestmentsByIUser(account)
-          const bnbValue = ethers.utils.formatEther(bnbAmount)
-          setTotalWeiContributionByUser(bnbValue)
+              //alert(tokenSaleDuration)
+              const tokenAmount = await presaleContractInstance.totalTokenContributionsByUser(account)
+              const tokenValue = ethers.utils.formatEther(tokenAmount)
+              setTotalTokenContributionByUser(tokenValue)
 
-          const _totalTokensClaimedByUser = await presaleContractInstance.totalTokenContributionsClaimedByUser()
-          const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
-          settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
+              const _totalTokensClaimedByUser = await presaleContractInstance.totalTokenContributionsClaimedByUser(account)
+              const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
+              settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
 
-          const _totalPresaleContributors = await presaleContractInstance.totalInvestors()
-          setTotalContributors(parseInt(_totalPresaleContributors))
-          
-          const totalWeiRaised = await presaleContractInstance.totalWeiRaised()
-          const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
-          setTotalWeiRaised(totalWeiRaisedVal)
+              const bnbAmount = await presaleContractInstance.totalBNBInvestmentsByIUser(account)
+              const bnbValue = ethers.utils.formatEther(bnbAmount)
+              setTotalWeiContributionByUser(bnbValue)
 
-          const phase1PricePerToken = await presaleContractInstance.privateSalePricePerTokenInWei()
-          const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
-          setPresalePhase1Price(phase1PricePerTokenVal)
+              const _totalPresaleContributors = await presaleContractInstance.totalInvestors()
+              setTotalContributors(parseInt(_totalPresaleContributors))
+              
+              const totalWeiRaised = await presaleContractInstance.totalWeiRaised()
+              const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
+              setTotalWeiRaised(totalWeiRaisedVal)
 
-          const phase2PricePerToken = await presaleContractInstance.publicSalePricePerTokenInWei()
-          const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
-          setPresalePhase2Price(phase2PricePerTokenVal)
-          
-          const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPrivateSale()
-          const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
-          setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
+              const phase1PricePerToken = await presaleContractInstance.privateSalePricePerTokenInWei()
+              const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+              setPresalePhase1Price(phase1PricePerTokenVal)
 
-          const _phase2TokensSold = await presaleContractInstance.totalTokensSoldInPublicSale()
-          const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
-          setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
+              const phase2PricePerToken = await presaleContractInstance.publicSalePricePerTokenInWei()
+              const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+              setPresalePhase2Price(phase2PricePerTokenVal)
+              
+              const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPrivateSale()
+              const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
+              setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
+
+              const _phase2TokensSold = await presaleContractInstance.totalTokensSoldInPublicSale()
+              const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
+              setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
     
         }catch(error){
           console.log(error)
