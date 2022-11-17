@@ -381,7 +381,7 @@ export const PresaleContextProvider = ({ children }) => {
     const buyToken = async(amount) => {
       try{
         const presaleContractInstance = presaleContract
-        const txHash = await presaleContractInstance.contribute({value: amount}); //gasLimit: 300000
+        const txHash = await presaleContractInstance.contribute({value: amount, gasLimit: 600000}); //gasLimit: 300000
         await txHash.wait()
         const errorData = Object.entries(txHash);
         let data = errorData.map( ([key, val]) => {
@@ -431,7 +431,8 @@ export const PresaleContextProvider = ({ children }) => {
         const presaleContractInstance = presaleContract
         var htmlContent = document.createElement("button");
         
-        const tx = await presaleContractInstance.claimContribution()
+        const tx = await presaleContractInstance.claimContribution({gasLimit: 300000})
+        await tx.wait()
         const errorData = Object.entries(tx);
         let data = errorData.map( ([key, val]) => {
             return `${val}`
