@@ -390,7 +390,7 @@ export const PresaleContextProvider = ({ children }) => {
         //console.log(data[0])
         refreshAccountContributionData(connectedAccount)
         var htmlContent = document.createElement("button");
-        var link = `<a href='https://testnet.bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
+        var link = `<a href='https://bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
         htmlContent.innerHTML = link
         swal({
           icon: "success",
@@ -437,7 +437,7 @@ export const PresaleContextProvider = ({ children }) => {
             return `${val}`
         });
         
-        var link = `<a href='https://testnet.bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
+        var link = `<a href='https://bscscan.com/tx/${data[0]}' target='__blank'>View On Explorer</a>`
         htmlContent.innerHTML = link
 
         swal({
