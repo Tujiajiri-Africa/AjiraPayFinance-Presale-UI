@@ -57,6 +57,7 @@ const CoinDescription = () => {
                   <TimeComponent />
                   <br></br>
                   <hr></hr>
+                  { isConnected ?
                   <div>
                     <h4 className="text-white uppercase">PRESALE STATISTICS</h4>
                     <hr className="py-3"></hr>
@@ -65,6 +66,11 @@ const CoinDescription = () => {
                     <p className="text-white py-1">Phase #1 Total Token Sales: {phase1TotalTokensBought } </p>
                     <p className="text-white py-1">Phase #2 Total Token Sales: {phase2TotalTokensBought } </p>
                   </div>
+                  :
+                  <button className="bg-indigo-600 text-white px-4 py-3 rounded-xl" onClick={connectWallet}>
+                        <FontAwesomeIcon icon={solid('wallet')}/> Connect To View Statistics
+                  </button>
+                }
                 </div>
               </div>
             </div>
