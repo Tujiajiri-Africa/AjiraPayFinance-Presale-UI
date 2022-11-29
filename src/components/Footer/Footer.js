@@ -40,7 +40,7 @@ const Footer = () => {
           <ul className="text-center">
             <li className="py-1">Kasarani Mwiki Road,Nairobi,Kenya</li>
             <li className="py-1">+254 714 905 613</li>
-            <li className="py-1">support@ajirapay.finance</li>
+            <li className="py-1">hello@ajirapay.finance</li>
           </ul>
         </div>
       </div>
