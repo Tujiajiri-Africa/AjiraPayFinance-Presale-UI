@@ -53,7 +53,7 @@ const Footer = () => {
           <a href="https://www.facebook.com/ajirapay/">
             <FaFacebook />
           </a>
-          <a href="https://twitter.com/ajiraPayFinance">
+          <a href="https://twitter.com/ajiraPayDefi">
             <FaTwitter />
           </a>
           <a href="https://github.com/Tujiajiri-Africa">
