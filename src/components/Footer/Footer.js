@@ -22,24 +22,31 @@ const Footer = () => {
             <li className="py-1"><a href="https://medium.com/@ajira_pay_finance">Blog</a></li>
             <li className="py-1"><a href="https://angel.co/company/ajira-pay/jobs">Careers</a></li>
             <li className="py-1"><a href="https://linktr.ee/ajira_pay_finance">General</a></li>
-            {/* <li className="py-1">Platform Docs</li> */}
+            <li className="py-1">
+              <a href="https://bscscan.com/token/0xC55b03dC07EC7Bb8B891100E927E982540f0d181" target="_blank" rel="noreferrer">
+                View AJP Contract on Block Explorer
+              </a>
+            </li>
+            <li className="py-1">
+              <a href="https://bscscan.com/address/0x4A7c5A4EfB90D3CBD1C3c25b775b822EBA600081" target="_blank" rel="noreferrer">
+                View Presale Contract on Block Explorer
+              </a>
+            </li>
+            <li className="py-1">Platform Docs</li>
           </ul>
         </div>
-        {/* <div>
-          <h6 className="font-bold uppercase pt-2 text-center">Navigate</h6>
+        <div>
+          <h6 className="font-bold uppercase pt-2 text-center">We'd love to see you in our community</h6>
           <ul className="text-center">
-            <li className="py-1">Home</li>
-            <li className="py-1">Tokenomics</li>
-            <li className="py-1">Roadmap</li>
-            <li className="py-1">Team</li>
-            <li className="py-1">Contact</li>
+            <li className="py-1"><a href="https://t.me/ajiraPayOfficialChat" target="_blank" rel="noreferrer">Telegram Chat</a></li>
+            <li className="py-1"><a href="https://t.me/ajiraPayOfficialAnnouncements" target="_blank" rel="noreferrer">Telegram Announcements Channel</a></li>
+            <li className="py-1"><a href="https://discord.com/invite/Ts7CEYp8ss" target="_blank" rel="noreferrer">Discord</a></li>
+            <li className="py-1"><a href="https://twitter.com/ajiraPayDefi" target="_blank" rel="noreferrer">Twitter</a></li>
           </ul>
-        </div> */}
+        </div>
         <div>
           <h6 className="font-bold uppercase pt-2 text-center">Contact us</h6>
           <ul className="text-center">
-            <li className="py-1">Kasarani Mwiki Road,Nairobi,Kenya</li>
-            <li className="py-1">+254 714 905 613</li>
             <li className="py-1">hello@ajirapay.finance</li>
           </ul>
         </div>

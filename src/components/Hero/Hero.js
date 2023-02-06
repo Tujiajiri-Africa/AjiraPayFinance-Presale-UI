@@ -23,11 +23,13 @@ const Hero = () => {
             {/* A decentralized web3 protocol for secure and seamless crypto payments. */}
             A decentralized Web3.0 protocol for secure and seamless crypto payments
             </p>
-          
-          <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
+            <a href="https://pitch.com/public/f266f4df-b857-4c82-a6a9-02051f75f35a" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">Read Whitepaper</button>
+            </a>
+          {/* <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
           <button className="py-3 px-6 my-4 bg-transparent">Tokenomics</button>
                 
-            </Link>
+            </Link> */}
         </div>
         <div>
           <img className="w-full object-fill" src={bgImg} alt="/" />

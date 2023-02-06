@@ -16,4 +16,7 @@ export const ajiraPayMainnetFinalExplorer = 'https://bscscan.com/address/0xC55b0
 export const ajiraPayMainnetFinalPresaleExplorer = 'https://bscscan.com/address/0x70ab9C214818560f6Fd63d9AF9C38cF4D37Fe5A0#code'
 export const ajiraPayAirdropDitributorMainnetExplorer = 'https://bscscan.com/address/0x71d95cE2D219F9646fC646f94c9A2f62ED937066'
 
+//LATEST CONTRACTS
+export const ajiraPayPresaleLatestMainnetAddress = '0x4A7c5A4EfB90D3CBD1C3c25b775b822EBA600081'
+
 

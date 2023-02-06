@@ -21,14 +21,14 @@ const Navbar = () => {
     <div className="w-screen h-[80px] z-10 bg-slate-900 text-gray-300 fixed top-0 shadow-lg">
       <div className="px-2 flex justify-between items-center w-full h-full">
         <div className="flex items-center">
-          <h1 className="text-3xl font-bold mr-4 sm:text-4xl"><span className="text-orange-600">AJIRA</span> <span className="text-yellow-600">PAY</span></h1>
+          <h1 className="text-3xl font-bold mr-4 sm:text-4xl"><span className="text-orange-600">AJIRA</span> <span className="text-yellow-600">PAY FINANCE</span></h1>
           <ul className="hidden md:flex cursor-pointer">
             <li>
               <Link to="/" smooth={true} duration={500}>
                 Presale
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
                 Tokenomics
               </Link>
@@ -42,7 +42,7 @@ const Navbar = () => {
               <Link to="/staking" smooth={true} offset={-200} duration={500}>
                 Staking
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="hidden md:flex pr-4">
@@ -78,7 +78,7 @@ const Navbar = () => {
           Presale
           </Link>
         </li>
-        <li className="w-full ttext-white">
+        {/* <li className="w-full ttext-white">
           <Link
             onClick={handleClose}
             to="/tokenomics"
@@ -88,8 +88,8 @@ const Navbar = () => {
           >
             Tokenomics
           </Link>
-        </li>
-        <li className="w-full text-white">
+        </li> */}
+        {/* <li className="w-full text-white">
           <Link
             onClick={handleClose}
             to="/airdrop"
@@ -99,8 +99,8 @@ const Navbar = () => {
           >
             Airdrop
           </Link>
-        </li>
-        <li className="w-full text-white">
+        </li> */}
+        {/* <li className="w-full text-white">
           <Link
             onClick={handleClose}
             to="/staking"
@@ -110,7 +110,7 @@ const Navbar = () => {
           >
             Staking
           </Link>
-        </li>
+        </li> */}
         <div className="flex flex-col my-4">
         { !isConnected ?
           <button className="border bg-transparent px-2 py-2 text-white mr-4" onClick={connectWallet}>

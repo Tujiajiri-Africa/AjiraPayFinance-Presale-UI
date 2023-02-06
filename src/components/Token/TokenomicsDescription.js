@@ -56,17 +56,23 @@ const TokenomicsDescription = () => {
                 18
               </p>
               <p className="text-1xl py-2 text-orange-600 text-2xl">
-                Contract Address
+                AJP Contract Address
               </p>
               <p className="text-1xl py-2 text-white">
               0xC55b03dC07EC7Bb8B891100E927E982540f0d181
               </p>
               <p className="text-1xl py-2 text-orange-600 text-2xl">
+                Presale Contract Address
+              </p>
+              <p className="text-1xl py-2 text-white">
+                0x4A7c5A4EfB90D3CBD1C3c25b775b822EBA600081
+              </p>
+              {/* <p className="text-1xl py-2 text-orange-600 text-2xl">
                Security Audit Certficate
               </p>
               <p className="text-1xl py-2 text-white">
                 Comming Soon
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

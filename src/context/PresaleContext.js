@@ -26,13 +26,14 @@ import
     testNetAirdropAddress ,
     ajiraPayMainnetFinalPresaleAddress,
     ajiraPayMainnetFinalAddress,
-    ajiraPayAirdropDitributorMainnetAddress
+    ajiraPayAirdropDitributorMainnetAddress,
+    ajiraPayPresaleLatestMainnetAddress
   } 
   from '../artifacts/contract_addresses';
 
 import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 //import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
+//Latest Mainnet Presale Contract = https://bscscan.com/address/0x4A7c5A4EfB90D3CBD1C3c25b775b822EBA600081#readContract
 //Testnet AJP Contract: https://testnet.bscscan.com/address/0x82F25F3BDF94Bf9b67853C1CcE074Fd58B90416a#code
 //Testnet Presale Contract: https://testnet.bscscan.com/address/0xCb3972A14B6534aC27bb173928C4855Cb1ED7bA9#code
 //Testnet Airdrop Distributor Contract: https://testnet.bscscan.com/address/0xAEc7DAFBDF10c14F9705BAB9eb8753d7544877DF#code
@@ -53,6 +54,7 @@ const testNetPresaleABI = require('../artifacts/abis/testnetPrivateSale.json')
 const ajiraPayPresaleFinalMainnetContractABI = require('../artifacts/abis/presaleFinalMainnetABI.json');
 const ajiraPayTokenFinalMainnetContractABI = require('../artifacts/abis/ajirapayFinanceFinalMainnetABI.json');
 const ajiraPayAirdropFinalMainnetContractABI = require('../artifacts/abis/airdropFinalMainnetABI.json');
+const latestAjiraPayFinancePresaleMainnetContractABI = require('../artifacts/abis/latestAjiraPayPresaleABI.json');
 
 const { ethereum } = window
 
@@ -85,8 +87,10 @@ export const PresaleContextProvider = ({ children }) => {
     const [totalTokensClaimedByUser, settotalTokenContributionsClaimedByUser] = useState()
     const [presalePhase1Price, setPresalePhase1Price] = useState()
     const [presalePhase2Price, setPresalePhase2Price] = useState()
+    const [presalePhase3Price, setPresalePhase3Price] = useState()
     const [phase1TotalTokensBought, setPhase1TotalTokensBought] = useState()
     const [phase2TotalTokensBought, setPhase2TotalTokensBought] = useState()
+    const [phase3TotalTokensBought, setPhase3TotalTokensBought] = useState()
     const [totalWeiRaised, setTotalWeiRaised] = useState()
     const [totalContributors, setTotalContributors] = useState()
     const [tokenSaleDuration, setTokenSaleDuration] = useState()
@@ -94,6 +98,22 @@ export const PresaleContextProvider = ({ children }) => {
     const [isPresaleStarted,setIsPresaleStarted]  = useState()
     const [isPresalePaused,setIsPresalePaused]  = useState()
     const [isActiveInvestor, setIsActiveInvestor] = useState()
+
+    const [phase1TotalTokensToSell, setPhase1TotalTokensToSell] = useState()
+    const [phase2TotalTokensToSell, setPhase2TotalTokensToSell] = useState()
+    const [phase3TotalTokensToSell, setPhase3TotalTokensToSell] = useState()
+    const [isPhase1Active, setIsPhase1Active] = useState()
+    const [isPhase2Active, setIsPhase2Active] = useState()
+    const [isPhase3Active, setIsPhase3Active] = useState()
+    const [percentageSoldPhase1, setPercentageSoldPhase1] = useState(0)
+    const [percentageSoldPhase2, setPercentageSoldPhase2] = useState(0)
+    const [percentageSoldPhase3, setPercentageSoldPhase3] = useState(0)
+    const [totalTokensBoughtByUserInPhase1, settotalTokenContributionsBoughtByUserInPhase1] = useState()
+    const [totalTokensBoughtByUserInPhase2, settotalTokenContributionsBoughtByUserInPhase2] = useState()
+    const [totalTokensBoughtByUserInPhase3, settotalTokenContributionsBoughtByUserInPhase3] = useState()
+    const [totalBNBSpentByInvestorInPhase1, setTotalBNBSpentByUserInPhase1] = useState()
+    const [totalBNBSpentByInvestorInPhase2, setTotalBNBSpentByUserInPhase2] = useState()
+    const [totalBNBSpentByInvestorInPhase3, setTotalBNBSpentByUserInPhase3] = useState()
 
     const webModalConnection = useRef()
 
@@ -256,62 +276,127 @@ export const PresaleContextProvider = ({ children }) => {
             if(provider){
               const _tokenContract = new ethers.Contract(ajiraPayMainnetFinalAddress, ajiraPayTokenFinalMainnetContractABI, signer);
               const _presaleContract = new ethers.Contract(ajiraPayMainnetFinalPresaleAddress, ajiraPayPresaleFinalMainnetContractABI, signer);
+              const _latestPresaleContract = new ethers.Contract(ajiraPayPresaleLatestMainnetAddress, latestAjiraPayFinancePresaleMainnetContractABI, signer);
               const _airdropContract = new ethers.Contract(ajiraPayAirdropDitributorMainnetAddress, ajiraPayAirdropFinalMainnetContractABI, signer);
-              setPresaleContract(_presaleContract)
+              setPresaleContract(_latestPresaleContract)
+              //setPresaleContract(_presaleContract)
               setTokenContract(_tokenContract)
               setTokenAirdropContract(_airdropContract)
               
               //LOAD CONTRACT DATA
-              const tokenSaleDuration = await _presaleContract.presaleDurationInSec();
+              const tokenSaleDuration = await _latestPresaleContract.presaleDurationInSec();
               setTokenSaleDuration(parseInt(tokenSaleDuration))
           
-              const _isActiveInvestor = await _presaleContract.isActiveInvestor(accounts[0]);
+              const _isActiveInvestor = await _latestPresaleContract.isActiveInvestor(accounts[0]);
               setIsActiveInvestor(_isActiveInvestor)
             
-              const isOpenForClaims = await _presaleContract.isOpenForClaims()
+              const isOpenForClaims = await _latestPresaleContract.isOpenForClaims()
               setIsPresaleOpenForClaims(isOpenForClaims)
     
-              const isPresaleStarted = await _presaleContract.isPresaleOpen()
+              const isPresaleStarted = await _latestPresaleContract.isPresaleOpen()
               setIsPresaleStarted(isPresaleStarted)
               
-              const isPresalePaused = await _presaleContract.isPresalePaused()
+              const isPresalePaused = await _latestPresaleContract.isPresalePaused()
               setIsPresalePaused(isPresalePaused)
 
+              const presalePhase1Active = await _latestPresaleContract.isPhase1Active()
+              setIsPhase1Active(presalePhase1Active)
+
+              const presalePhase2Active = await _latestPresaleContract.isPhase2Active()
+              setIsPhase2Active(presalePhase2Active)
+
+              const presalePhase3Active = await _latestPresaleContract.isPhase3Active()
+              setIsPhase3Active(presalePhase3Active)
+
               //alert(tokenSaleDuration)
-              const tokenAmount = await _presaleContract.totalTokenContributionsByUser(accounts[0])
+              const tokenAmount = await _latestPresaleContract.totalTokenContributionsByUser(accounts[0])
               const tokenValue = ethers.utils.formatEther(tokenAmount)
               setTotalTokenContributionByUser(tokenValue)
 
-              const _totalTokensClaimedByUser = await _presaleContract.totalTokenContributionsClaimedByUser(accounts[0])
+              const _totalTokensClaimedByUser = await _latestPresaleContract.totalTokenContributionsClaimedByUser(accounts[0])
               const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
               settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
 
-              const bnbAmount = await _presaleContract.totalBNBInvestmentsByIUser(accounts[0])
+              const _totalTokensBoughtByUserInPhase1 = await _latestPresaleContract.totalPersonalTokenInvestmentPhase1(accounts[0])
+              const _totalTokensByUserInPhase1Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase1)
+              settotalTokenContributionsBoughtByUserInPhase1(_totalTokensByUserInPhase1Val)
+
+              const _totalTokensBoughtByUserInPhase2 = await _latestPresaleContract.totalPersonalTokenInvestmentPhase2(accounts[0])
+              const _totalTokensByUserInPhase2Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase2)
+              settotalTokenContributionsBoughtByUserInPhase2(_totalTokensByUserInPhase2Val)
+
+              const _totalTokensBoughtByUserInPhase3 = await _latestPresaleContract.totalPersonalTokenInvestmentPhase3(accounts[0])
+              const _totalTokensByUserInPhase3Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase3)
+              settotalTokenContributionsBoughtByUserInPhase3(_totalTokensByUserInPhase3Val)
+
+              const _totalBNBSpentUserInPhase1 = await _latestPresaleContract.totalPersonalWeiInvestmentPhase1(accounts[0])
+              const _totalBNBSpentUserInPhase1Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase1)
+              setTotalBNBSpentByUserInPhase1(_totalBNBSpentUserInPhase1Val)
+
+              const _totalBNBSpentUserInPhase2 = await _latestPresaleContract.totalPersonalWeiInvestmentPhase2(accounts[0])
+              const _totalBNBSpentUserInPhase2Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase2)
+              setTotalBNBSpentByUserInPhase2(_totalBNBSpentUserInPhase2Val)
+
+              const _totalBNBSpentUserInPhase3 = await _latestPresaleContract.totalPersonalWeiInvestmentPhase3(accounts[0])
+              const _totalBNBSpentUserInPhase3Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase3)
+              setTotalBNBSpentByUserInPhase3(_totalBNBSpentUserInPhase3Val)
+
+              const bnbAmount = await _latestPresaleContract.totalBNBInvestmentsByIUser(accounts[0])
               const bnbValue = ethers.utils.formatEther(bnbAmount)
               setTotalWeiContributionByUser(bnbValue)
 
-              const _totalPresaleContributors = await _presaleContract.totalInvestors()
+              const _totalPresaleContributors = await _latestPresaleContract.totalInvestors()
               setTotalContributors(parseInt(_totalPresaleContributors))
               
-              const totalWeiRaised = await _presaleContract.totalWeiRaised()
+              const _totalTokensToSellInPhase1 = await _latestPresaleContract.phase1TotalTokensToSell();
+              const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
+              setPhase1TotalTokensToSell(_totalTokensToSellInPhase1Val)
+
+              const _totalTokensToSellInPhase2 = await _latestPresaleContract.phase2TotalTokensToSell();
+              const _totalTokensToSellInPhase2Val = ethers.utils.formatEther(_totalTokensToSellInPhase2)
+              setPhase2TotalTokensToSell(_totalTokensToSellInPhase2Val)
+
+              const _totalTokensToSellInPhase3 = await _latestPresaleContract.phase3TotalTokensToSell();
+              const _totalTokensToSellInPhase3Val = ethers.utils.formatEther(_totalTokensToSellInPhase3)
+              setPhase3TotalTokensToSell(_totalTokensToSellInPhase3Val)
+
+              const totalWeiRaised = await _latestPresaleContract.totalWeiRaised()
               const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
               setTotalWeiRaised(totalWeiRaisedVal)
 
-              const phase1PricePerToken = await _presaleContract.privateSalePricePerTokenInWei()
+              const phase1PricePerToken = await _latestPresaleContract.phase1PricePerTokenInWei()
               const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
               setPresalePhase1Price(phase1PricePerTokenVal)
 
-              const phase2PricePerToken = await _presaleContract.publicSalePricePerTokenInWei()
+              const phase2PricePerToken = await _latestPresaleContract.phase2PricePerTokenInWei()
               const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
               setPresalePhase2Price(phase2PricePerTokenVal)
               
-              const _phase1TokensSold = await _presaleContract.totalTokensSoldInPrivateSale()
+              const phase3PricePerToken = await _latestPresaleContract.phase3PricePerTokenInWei()
+              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+              setPresalePhase3Price(phase3PricePerTokenVal)
+
+              const _phase1TokensSold = await _latestPresaleContract.totalTokensSoldInPhase1()
               const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
               setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
 
-              const _phase2TokensSold = await _presaleContract.totalTokensSoldInPublicSale()
+              const _phase2TokensSold = await _latestPresaleContract.totalTokensSoldInPhase2()
               const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
               setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
+
+              const _phase3TokensSold = await _latestPresaleContract.totalTokensSoldInPhase3()
+              const _phase3TokensSoldVal = ethers.utils.formatEther(_phase3TokensSold)
+              setPhase3TotalTokensBought(parseInt(_phase3TokensSoldVal))
+              //(Math.round(num * 100) / 100).toFixed(2);
+              const testPercentage = Math.round(90 * 100 / 100).toFixed(2)
+              const phase1PercentVal = _phase1TokensSoldVal / _totalTokensToSellInPhase1Val * 100;
+              const phase1SoldPercentage = Math.round(phase1PercentVal * 100 / 100).toFixed(2)
+              const phase2SoldPercentage = Math.round((parseInt(_phase2TokensSoldVal) / parseInt(_totalTokensToSellInPhase2Val) * 100) / 100).toFixed(2)
+              const phase3SoldPercentage = Math.round((parseInt(_phase3TokensSoldVal) / parseInt(_totalTokensToSellInPhase3Val) * 100) / 100).toFixed(2)
+              //setPercentageSoldPhase1(testPercentage)
+              setPercentageSoldPhase1(phase1SoldPercentage)
+              setPercentageSoldPhase2(phase2SoldPercentage)
+              setPercentageSoldPhase3(phase3SoldPercentage)
             }
           } catch (error) {
             setError(error)
@@ -648,7 +733,11 @@ export const PresaleContextProvider = ({ children }) => {
             accounts, account, disconnect, truncateAddress, toHex, claim, isLoading,
             totalTokenContributionByUser, totalWeiContributionByUser,totalTokensClaimedByUser, totalWeiRaised, totalContributors,
             presalePhase1Price, presalePhase2Price,tokenSaleDuration, phase1TotalTokensBought, phase2TotalTokensBought,
-            isPresaleOpenForClaims,isPresaleStarted,isPresalePaused,isActiveInvestor
+            isPresaleOpenForClaims,isPresaleStarted,isPresalePaused,isActiveInvestor, phase3TotalTokensBought, 
+            phase1TotalTokensToSell, phase2TotalTokensToSell, phase3TotalTokensToSell, isPhase1Active, isPhase2Active, isPhase3Active,
+            percentageSoldPhase1, percentageSoldPhase2, percentageSoldPhase3, 
+            totalTokensBoughtByUserInPhase1, totalTokensBoughtByUserInPhase2,totalTokensBoughtByUserInPhase3,
+            totalBNBSpentByInvestorInPhase1, totalBNBSpentByInvestorInPhase2, totalBNBSpentByInvestorInPhase3
         }}>
             {children}
         </PresaleContext.Provider>
