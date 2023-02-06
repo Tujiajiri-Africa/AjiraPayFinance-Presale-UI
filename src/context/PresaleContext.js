@@ -606,6 +606,15 @@ export const PresaleContextProvider = ({ children }) => {
               const isPresalePaused = await presaleContractInstance.isPresalePaused()
               setIsPresalePaused(isPresalePaused)
 
+              const presalePhase1Active = await presaleContractInstance.isPhase1Active()
+              setIsPhase1Active(presalePhase1Active)
+
+              const presalePhase2Active = await presaleContractInstance.isPhase2Active()
+              setIsPhase2Active(presalePhase2Active)
+
+              const presalePhase3Active = await presaleContractInstance.isPhase3Active()
+              setIsPhase3Active(presalePhase3Active)
+
               //alert(tokenSaleDuration)
               const tokenAmount = await presaleContractInstance.totalTokenContributionsByUser(account)
               const tokenValue = ethers.utils.formatEther(tokenAmount)
@@ -615,6 +624,30 @@ export const PresaleContextProvider = ({ children }) => {
               const _totalTokensClaimedByUserVal = ethers.utils.formatEther(_totalTokensClaimedByUser)
               settotalTokenContributionsClaimedByUser(_totalTokensClaimedByUserVal)
 
+              const _totalTokensBoughtByUserInPhase1 = await presaleContractInstance.totalPersonalTokenInvestmentPhase1(account)
+              const _totalTokensByUserInPhase1Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase1)
+              settotalTokenContributionsBoughtByUserInPhase1(_totalTokensByUserInPhase1Val)
+
+              const _totalTokensBoughtByUserInPhase2 = await presaleContractInstance.totalPersonalTokenInvestmentPhase2(account)
+              const _totalTokensByUserInPhase2Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase2)
+              settotalTokenContributionsBoughtByUserInPhase2(_totalTokensByUserInPhase2Val)
+
+              const _totalTokensBoughtByUserInPhase3 = await presaleContractInstance.totalPersonalTokenInvestmentPhase3(account)
+              const _totalTokensByUserInPhase3Val = ethers.utils.formatEther(_totalTokensBoughtByUserInPhase3)
+              settotalTokenContributionsBoughtByUserInPhase3(_totalTokensByUserInPhase3Val)
+
+              const _totalBNBSpentUserInPhase1 = await presaleContractInstance.totalPersonalWeiInvestmentPhase1(account)
+              const _totalBNBSpentUserInPhase1Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase1)
+              setTotalBNBSpentByUserInPhase1(_totalBNBSpentUserInPhase1Val)
+
+              const _totalBNBSpentUserInPhase2 = await presaleContractInstance.totalPersonalWeiInvestmentPhase2(account)
+              const _totalBNBSpentUserInPhase2Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase2)
+              setTotalBNBSpentByUserInPhase2(_totalBNBSpentUserInPhase2Val)
+
+              const _totalBNBSpentUserInPhase3 = await presaleContractInstance.totalPersonalWeiInvestmentPhase3(account)
+              const _totalBNBSpentUserInPhase3Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase3)
+              setTotalBNBSpentByUserInPhase3(_totalBNBSpentUserInPhase3Val)
+
               const bnbAmount = await presaleContractInstance.totalBNBInvestmentsByIUser(account)
               const bnbValue = ethers.utils.formatEther(bnbAmount)
               setTotalWeiContributionByUser(bnbValue)
@@ -622,25 +655,55 @@ export const PresaleContextProvider = ({ children }) => {
               const _totalPresaleContributors = await presaleContractInstance.totalInvestors()
               setTotalContributors(parseInt(_totalPresaleContributors))
               
+              const _totalTokensToSellInPhase1 = await presaleContractInstance.phase1TotalTokensToSell();
+              const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
+              setPhase1TotalTokensToSell(_totalTokensToSellInPhase1Val)
+
+              const _totalTokensToSellInPhase2 = await presaleContractInstance.phase2TotalTokensToSell();
+              const _totalTokensToSellInPhase2Val = ethers.utils.formatEther(_totalTokensToSellInPhase2)
+              setPhase2TotalTokensToSell(_totalTokensToSellInPhase2Val)
+
+              const _totalTokensToSellInPhase3 = await presaleContractInstance.phase3TotalTokensToSell();
+              const _totalTokensToSellInPhase3Val = ethers.utils.formatEther(_totalTokensToSellInPhase3)
+              setPhase3TotalTokensToSell(_totalTokensToSellInPhase3Val)
+
               const totalWeiRaised = await presaleContractInstance.totalWeiRaised()
               const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
               setTotalWeiRaised(totalWeiRaisedVal)
 
-              const phase1PricePerToken = await presaleContractInstance.privateSalePricePerTokenInWei()
+              const phase1PricePerToken = await presaleContractInstance.phase1PricePerTokenInWei()
               const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
               setPresalePhase1Price(phase1PricePerTokenVal)
 
-              const phase2PricePerToken = await presaleContractInstance.publicSalePricePerTokenInWei()
+              const phase2PricePerToken = await presaleContractInstance.phase2PricePerTokenInWei()
               const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
               setPresalePhase2Price(phase2PricePerTokenVal)
               
-              const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPrivateSale()
+              const phase3PricePerToken = await presaleContractInstance.phase3PricePerTokenInWei()
+              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+              setPresalePhase3Price(phase3PricePerTokenVal)
+
+              const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPhase1()
               const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
               setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
 
-              const _phase2TokensSold = await presaleContractInstance.totalTokensSoldInPublicSale()
+              const _phase2TokensSold = await presaleContractInstance.totalTokensSoldInPhase2()
               const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
               setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
+
+              const _phase3TokensSold = await presaleContractInstance.totalTokensSoldInPhase3()
+              const _phase3TokensSoldVal = ethers.utils.formatEther(_phase3TokensSold)
+              setPhase3TotalTokensBought(parseInt(_phase3TokensSoldVal))
+              //(Math.round(num * 100) / 100).toFixed(2);
+              const testPercentage = Math.round(90 * 100 / 100).toFixed(2)
+              const phase1PercentVal = _phase1TokensSoldVal / _totalTokensToSellInPhase1Val * 100;
+              const phase1SoldPercentage = Math.round(phase1PercentVal * 100 / 100).toFixed(2)
+              const phase2SoldPercentage = Math.round((parseInt(_phase2TokensSoldVal) / parseInt(_totalTokensToSellInPhase2Val) * 100) / 100).toFixed(2)
+              const phase3SoldPercentage = Math.round((parseInt(_phase3TokensSoldVal) / parseInt(_totalTokensToSellInPhase3Val) * 100) / 100).toFixed(2)
+              //setPercentageSoldPhase1(testPercentage)
+              setPercentageSoldPhase1(phase1SoldPercentage)
+              setPercentageSoldPhase2(phase2SoldPercentage)
+              setPercentageSoldPhase3(phase3SoldPercentage)
     
         }catch(error){
           console.log(error)
