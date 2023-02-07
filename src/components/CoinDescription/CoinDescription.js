@@ -273,8 +273,8 @@ const CoinDescription = () => {
                 <hr></hr>
                 <p className="text-white py-2">1. Ensure you are connected to the Binance Smart Chain mainnet network.</p>
                 <p className="text-white py-2">2. Click on any of the connection buttons above to connect to this site(ensure it is https://portal.ajirapay.finance).</p>
-                <p className="text-white py-2">2. Enter the amount of BNB to purchase with in the text box above.</p>
-                <p className="text-white py-2">2. Click on contribute and approve the transaction by paying for gas fees.</p> 
+                <p className="text-white py-2">3. Enter the amount of BNB to purchase with in the text box above.</p>
+                <p className="text-white py-2">4. Click on contribute and approve the transaction by paying for gas fees.</p> 
               </div>
             </div>
           </div>
