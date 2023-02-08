@@ -217,6 +217,79 @@ export const PresaleContextProvider = ({ children }) => {
           appName: 'web3Modal'
         }
       });
+    const loadBlockchainData = async() => {
+      const provider_url = 'https://bsc-dataseed.binance.org/'
+
+      const loadedProvider = new ethers.providers.JsonRpcProvider(provider_url);
+      const signer_ = loadedProvider.getSigner();
+
+      const presaleContract = new ethers.Contract(ajiraPayPresaleLatestMainnetAddress,latestAjiraPayFinancePresaleMainnetContractABI,loadedProvider);
+
+      const totaContributors = await presaleContract.callStatic.totalInvestors();
+      setTotalContributors(parseInt(totaContributors))
+
+      const totalWeiRaised = await presaleContract.totalWeiRaised()
+      const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
+      setTotalWeiRaised(totalWeiRaisedVal)
+
+      const presalePhase1Active = await presaleContract.isPhase1Active()
+      setIsPhase1Active(presalePhase1Active)
+
+      const presalePhase2Active = await presaleContract.isPhase2Active()
+      setIsPhase2Active(presalePhase2Active)
+
+      const presalePhase3Active = await presaleContract.isPhase3Active()
+      setIsPhase3Active(presalePhase3Active)
+
+      const _totalTokensToSellInPhase1 = await presaleContract.phase1TotalTokensToSell();
+      const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
+      setPhase1TotalTokensToSell(_totalTokensToSellInPhase1Val)
+
+      const _totalTokensToSellInPhase2 = await presaleContract.phase2TotalTokensToSell();
+      const _totalTokensToSellInPhase2Val = ethers.utils.formatEther(_totalTokensToSellInPhase2)
+      setPhase2TotalTokensToSell(_totalTokensToSellInPhase2Val)
+
+      const _totalTokensToSellInPhase3 = await presaleContract.phase3TotalTokensToSell();
+      const _totalTokensToSellInPhase3Val = ethers.utils.formatEther(_totalTokensToSellInPhase3)
+      setPhase3TotalTokensToSell(_totalTokensToSellInPhase3Val)
+
+      const _phase1TokensSold = await presaleContract.totalTokensSoldInPhase1()
+      const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
+      setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
+
+      const _phase2TokensSold = await presaleContract.totalTokensSoldInPhase2()
+      const _phase2TokensSoldVal = ethers.utils.formatEther(_phase2TokensSold)
+      setPhase2TotalTokensBought(parseInt(_phase2TokensSoldVal))
+
+      const _phase3TokensSold = await presaleContract.totalTokensSoldInPhase3()
+      const _phase3TokensSoldVal = ethers.utils.formatEther(_phase3TokensSold)
+      setPhase3TotalTokensBought(parseInt(_phase3TokensSoldVal))
+
+      const phase1PercentVal = _phase1TokensSoldVal / _totalTokensToSellInPhase1Val * 100;
+      const phase2PercentVal = _phase2TokensSoldVal / _totalTokensToSellInPhase2Val * 100;
+      const phase3PercentVal = _phase3TokensSoldVal / _totalTokensToSellInPhase3Val * 100;
+
+      const phase1SoldPercentage = Math.round(phase1PercentVal * 100 / 100).toFixed(2)
+      const phase2SoldPercentage = Math.round(phase2PercentVal * 100 / 100).toFixed(2)
+      const phase3SoldPercentage = Math.round(phase3PercentVal * 100 / 100).toFixed(2)
+      //setPercentageSoldPhase1(testPercentage)
+      setPercentageSoldPhase1(phase1SoldPercentage)
+      setPercentageSoldPhase2(phase2SoldPercentage)
+      setPercentageSoldPhase3(phase3SoldPercentage)
+      
+      const phase1PricePerToken = await presaleContract.phase1PricePerTokenInWei()
+      const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+      setPresalePhase1Price(phase1PricePerTokenVal)
+
+      const phase2PricePerToken = await presaleContract.phase2PricePerTokenInWei()
+      const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+      setPresalePhase2Price(phase2PricePerTokenVal)
+      
+      const phase3PricePerToken = await presaleContract.phase3PricePerTokenInWei()
+      const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+      setPresalePhase3Price(phase3PricePerTokenVal)
+      //console.log(parseInt(totaContributors));
+    }
 
     const connectWallet = async() =>{
         try {
@@ -388,11 +461,12 @@ export const PresaleContextProvider = ({ children }) => {
               const _phase3TokensSoldVal = ethers.utils.formatEther(_phase3TokensSold)
               setPhase3TotalTokensBought(parseInt(_phase3TokensSoldVal))
               //(Math.round(num * 100) / 100).toFixed(2);
-              const testPercentage = Math.round(90 * 100 / 100).toFixed(2)
               const phase1PercentVal = _phase1TokensSoldVal / _totalTokensToSellInPhase1Val * 100;
+              const phase2PercentVal = _phase2TokensSoldVal / _totalTokensToSellInPhase2Val * 100;
+              const phase3PercentVal = _phase3TokensSoldVal / _totalTokensToSellInPhase3Val * 100;
               const phase1SoldPercentage = Math.round(phase1PercentVal * 100 / 100).toFixed(2)
-              const phase2SoldPercentage = Math.round((parseInt(_phase2TokensSoldVal) / parseInt(_totalTokensToSellInPhase2Val) * 100) / 100).toFixed(2)
-              const phase3SoldPercentage = Math.round((parseInt(_phase3TokensSoldVal) / parseInt(_totalTokensToSellInPhase3Val) * 100) / 100).toFixed(2)
+              const phase2SoldPercentage = Math.round(phase2PercentVal * 100 / 100).toFixed(2)
+              const phase3SoldPercentage = Math.round(phase3PercentVal * 100 / 100).toFixed(2)
               //setPercentageSoldPhase1(testPercentage)
               setPercentageSoldPhase1(phase1SoldPercentage)
               setPercentageSoldPhase2(phase2SoldPercentage)
@@ -695,11 +769,13 @@ export const PresaleContextProvider = ({ children }) => {
               const _phase3TokensSoldVal = ethers.utils.formatEther(_phase3TokensSold)
               setPhase3TotalTokensBought(parseInt(_phase3TokensSoldVal))
               //(Math.round(num * 100) / 100).toFixed(2);
-              const testPercentage = Math.round(90 * 100 / 100).toFixed(2)
+              
               const phase1PercentVal = _phase1TokensSoldVal / _totalTokensToSellInPhase1Val * 100;
+              const phase2PercentVal = _phase2TokensSoldVal / _totalTokensToSellInPhase2Val * 100;
+              const phase3PercentVal = _phase3TokensSoldVal / _totalTokensToSellInPhase3Val * 100;
               const phase1SoldPercentage = Math.round(phase1PercentVal * 100 / 100).toFixed(2)
-              const phase2SoldPercentage = Math.round((parseInt(_phase2TokensSoldVal) / parseInt(_totalTokensToSellInPhase2Val) * 100) / 100).toFixed(2)
-              const phase3SoldPercentage = Math.round((parseInt(_phase3TokensSoldVal) / parseInt(_totalTokensToSellInPhase3Val) * 100) / 100).toFixed(2)
+              const phase2SoldPercentage = Math.round(phase2PercentVal * 100 / 100).toFixed(2)
+              const phase3SoldPercentage = Math.round(phase3PercentVal * 100 / 100).toFixed(2)
               //setPercentageSoldPhase1(testPercentage)
               setPercentageSoldPhase1(phase1SoldPercentage)
               setPercentageSoldPhase2(phase2SoldPercentage)
@@ -713,6 +789,10 @@ export const PresaleContextProvider = ({ children }) => {
       }
 
     }
+
+    useEffect(() => {
+      loadBlockchainData();
+    })
 
     useEffect(() => {
       webModalConnection.current = new Web3Modal({

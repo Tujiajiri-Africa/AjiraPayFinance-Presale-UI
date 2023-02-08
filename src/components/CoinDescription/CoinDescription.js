@@ -63,7 +63,7 @@ const CoinDescription = () => {
                   {/* <TimeComponent /> */}
                   <br></br>
                   {/* <hr></hr> */}
-                  { isConnected ?
+                  {/* { isConnected ? */}
                   <div>
                     <hr className="py-1"></hr>
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
@@ -95,11 +95,12 @@ const CoinDescription = () => {
                     </div>
                     }
                   </div>
-                  :
-                  <button className="bg-indigo-600 text-white px-4 py-3 rounded-xl" onClick={connectWallet}>
-                        <FontAwesomeIcon icon={solid('wallet')}/> Connect To View Statistics
-                  </button>
-                }
+                  {/* :
+                  'p'
+                  // <button className="bg-indigo-600 text-white px-4 py-3 rounded-xl" onClick={connectWallet}>
+                  //       <FontAwesomeIcon icon={solid('wallet')}/> Connect To View Statistics
+                  // </button>
+                } */}
                 </div>
               </div>
             </div>
