@@ -24,12 +24,17 @@ const Footer = () => {
             <li className="py-1"><a href="https://linktr.ee/ajira_pay_finance">General</a></li>
             <li className="py-1">
               <a href="https://bscscan.com/token/0xC55b03dC07EC7Bb8B891100E927E982540f0d181" target="_blank" rel="noreferrer">
-                View AJP Contract on Block Explorer
+                Ajira Pay Finance smart contract
               </a>
             </li>
             <li className="py-1">
               <a href="https://bscscan.com/address/0x4A7c5A4EfB90D3CBD1C3c25b775b822EBA600081" target="_blank" rel="noreferrer">
-                View Presale Contract on Block Explorer
+                BNB Presale smart contract
+              </a>
+            </li>
+            <li className="py-1">
+              <a href="https://bscscan.com/address/0x1dd6f0610b42f09048913b525b112d6984452e5c" target="_blank" rel="noreferrer">
+                Stablecoin Presale smart contract
               </a>
             </li>
             <li className="py-1">Platform Docs</li>
