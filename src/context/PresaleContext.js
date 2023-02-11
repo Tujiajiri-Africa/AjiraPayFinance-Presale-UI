@@ -828,7 +828,8 @@ export const PresaleContextProvider = ({ children }) => {
           })
           //const t = ethers.utils.parseEther(amount)
           executeStableCoinPurchase(USDT_ADDRESS, amount);
-          setCanShowProgressBar(false)
+          //setCanShowProgressBar(false)
+          refreshAccountContributionData(connectedAccount)
           //setCanShowProgressBar(false)
          
           //console.log(data[0])
@@ -911,7 +912,9 @@ export const PresaleContextProvider = ({ children }) => {
             content: htmlContent,
           
           })
-          //refreshAccountContributionData(connectedAccount)
+          executeStableCoinPurchase(BUSD_ADDRESS, amount);
+          //setCanShowProgressBar(false)
+          refreshAccountContributionData(connectedAccount)
         }
         
       }catch(error){
@@ -973,6 +976,8 @@ export const PresaleContextProvider = ({ children }) => {
             content: htmlContent,
           
           })
+          executeStableCoinPurchase(USDC_ADDRESS, amount);
+          //setCanShowProgressBar(false)
           refreshAccountContributionData(connectedAccount)
         }
           
@@ -1035,6 +1040,8 @@ export const PresaleContextProvider = ({ children }) => {
             content: htmlContent,
           
           })
+          executeStableCoinPurchase(DAI_ADDRESS, amount);
+          //setCanShowProgressBar(false)
           refreshAccountContributionData(connectedAccount)
           }
         
@@ -1109,27 +1116,12 @@ export const PresaleContextProvider = ({ children }) => {
     const buyTokenWithStableCoin = async(address, amount)=>{
       const t = ethers.utils.parseEther(amount)
       if (address === USDT_ADDRESS){
-        executeStableCoinPurchase(address, t);
-        //approveUSDTStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,amount);
-        // let success = approveUSDTStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t);
-        // if(success){
-        //   executeStableCoinPurchase(USDT_ADDRESS, t);
-        // }
-        // approveUSDTStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t).then((data) =>{
-        //   console.log(data)
-        //   if(data){
-        //     executeStableCoinPurchase(USDT_ADDRESS, t);
-        //   }
-        // })
-        
+        executeStableCoinPurchase(address, t); 
       }else if(address === BUSD_ADDRESS){
-        //approveBUSDStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t)
         executeStableCoinPurchase(BUSD_ADDRESS, t);
       }else if(address === USDC_ADDRESS){
-        //approveUSDCStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t)
         executeStableCoinPurchase(USDC_ADDRESS, t);
       }else{
-        //approveDAIStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t)
         executeStableCoinPurchase(DAI_ADDRESS, t);
       }
     }

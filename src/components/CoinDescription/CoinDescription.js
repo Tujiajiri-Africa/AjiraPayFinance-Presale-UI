@@ -108,37 +108,20 @@ const CoinDescription = () => {
     const coin = event.target.stableCoinName.value;
     const t = ethers.utils.parseEther(amount)
     if(coin === USDT_ADDRESS){
-      approveUSDTStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t)  
+      approveUSDTStableCoin(ajiraPayFinanceFinalStableCoinContractAddress,t) 
+      event.target.stableCoinAmount.value = "" 
     }else if(coin === BUSD_ADDRESS){
       approveBUSDStableCoin(ajiraPayFinanceFinalStableCoinContractAddress, t)
+      event.target.stableCoinAmount.value = ""
     }else if(coin === USDC_ADDRESS){
       approveUSDCStableCoin(ajiraPayFinanceFinalStableCoinContractAddress, t)
+      event.target.stableCoinAmount.value = ""
     }else if(coin === DAI_ADDRESS){
       approveDAIStableCoin(ajiraPayFinanceFinalStableCoinContractAddress, t)
+      event.target.stableCoinAmount.value = ""
     }else{ 
       return false
     }  
-  }
-
-  const performBuyTokenWithStableCoin = async(event) =>{
-    event.preventDefault()
-    try{
-      if(isApprovalComplete){
-        const amount = event.target.stableCoinAmount.value;
-        const coin = event.target.stableCoinName.value;
-        const t = ethers.utils.parseEther(amount)
-        buyTokenWithStableCoin(coin, t.toString())
-        event.target.stableCoinAmount.value = ""
-        setApprovalComplete(false)
-      }
-    }catch(error){
-      console.log(error)
-    }
-  }
-
-  const checkUserBalanceByStableCoin = async(event)=>{
-    event.preventDefault()
-    
   }
   
   return (
@@ -203,7 +186,7 @@ const CoinDescription = () => {
                       }
                       {
                   isConnected && isPresaleStarted && isPresaleOpenForClaims && !isPresalePaused && isActiveInvestor &&
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={claim}> 
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl"> 
                        Claim From Stablecoin Contribution
                     </button>  
                 }
