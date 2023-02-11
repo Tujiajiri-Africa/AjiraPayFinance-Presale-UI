@@ -144,7 +144,7 @@ const CoinDescription = () => {
                 <hr></hr>
                 <form onSubmit={performApproveStableCoin}>
                  <p className="py-6"> 
-                <span className="text-white" >Select preferred stable coin</span>
+                <span className="text-white" >Select preferred stable coin:     </span>
                  <select name="stableCoinName" className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2">
                           <option value="0x55d398326f99059fF775485246999027B3197955">USDT</option>
                           <option value="0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56">BUSD</option>
