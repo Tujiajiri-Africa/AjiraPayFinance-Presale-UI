@@ -191,7 +191,9 @@ const CoinDescription = () => {
                        Claim From Stablecoin Contribution
                     </button>  
                 }
-                
+                <p className="text-white py-1">SPECIAL OFFER(STABLECOINs ONLY)</p>
+                <p className="text-white py-1">1 AJP = $0.03 USD</p>
+                <p className="text-white py-0">Minimum Contribution: $3 USD</p>
                       {/* {
                       canShowProgressBar &&
                         <div className="text-center">
