@@ -66,7 +66,8 @@ const CoinDescription = () => {
     totalTokenContributionsBoughtByUserInPhase2FromStableCoin,
     totalTokenContributionsBoughtByUserInPhase3FromStableCoin,
     totalTokensBoughtByInvestorInPhase2Aggregated,
-    totalTokensBoughtByInvestorInPhase3Aggregated
+    totalTokensBoughtByInvestorInPhase3Aggregated,
+    totalUsdRaised
   } = useContext(PresaleContext);
 
     const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955'
@@ -373,10 +374,11 @@ const CoinDescription = () => {
                   <div>
                     <hr className="py-1"></hr>
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
-                    <p className="text-white py-1">Total Funding Raised:  { totalWeiRaised } BNB</p>
+                    <p className="text-white py-1">Total BNB Raised:  { totalWeiRaised } BNB</p>
                     <p className="text-white py-1">Phase #1 Sold: {totalTokensBoughtInPhase1InBothContracts } / { phase1TotalTokensToSell } $AJP </p>
                     <p className="text-white py-1">Phase #2 Sold: {totalTokensBoughtInPhase2InBothContracts } / { phase2TotalTokensToSell } $AJP</p>
                     <p className="text-white py-1">Phase #3 Sold: {totalTokensBoughtInPhase3InBothContracts } / { phase3TotalTokensToSell } $ AJP</p>
+                    <p className="text-white py-1">Total USD Raised: ${ totalUsdRaised } </p>
                     <br></br>
                     <hr></hr>
                     <p className="text-white py-5"> 

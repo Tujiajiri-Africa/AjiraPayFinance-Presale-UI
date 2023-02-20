@@ -175,6 +175,7 @@ export const PresaleContextProvider = ({ children }) => {
     const [totalTokensBoughtByInvestorInPhase2Aggregated, setTotalTokensBoughtByInvestorInPhase2Aggregated] = useState(0)
     const [totalTokensBoughtByInvestorInPhase3Aggregated, setTotalTokensBoughtByInvestorInPhase3Aggregated] = useState(0)
 
+    const [totalUsdRaised, setTotalUsdRaised] = useState(0)
 
     const webModalConnection = useRef()
 
@@ -280,6 +281,10 @@ export const PresaleContextProvider = ({ children }) => {
       const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
       setTotalWeiRaised(totalWeiRaisedVal)
 
+      const totalUsdRaisedFromStableCoinPurchase = await stableCoinPresaleContract.totalUsdRaised();
+      const totalUsdRaisedFromStableCoinPurchaseVal = ethers.utils.formatEther(totalUsdRaisedFromStableCoinPurchase)
+      setTotalUsdRaised(parseInt(totalUsdRaisedFromStableCoinPurchaseVal))
+
       const presalePhase1Active = await presaleContract.isPhase1Active()
       const presalePhase1ActiveFromStableCoin = await stableCoinPresaleContract.isPhase1Active()
       setIsPhase1Active(presalePhase1Active)
@@ -297,27 +302,27 @@ export const PresaleContextProvider = ({ children }) => {
 
       const _totalTokensToSellInPhase1 = await presaleContract.phase1TotalTokensToSell();
       const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
-      setPhase1TotalTokensToSell(_totalTokensToSellInPhase1Val)
+      setPhase1TotalTokensToSell(parseInt(parseInt(_totalTokensToSellInPhase1Val)))
 
       const _totalTokensToSellInPhase1FromStableCoin = await stableCoinPresaleContract.phase1TotalTokensToSell();
       const _totalTokensToSellInPhase1ValFromStableCoin = ethers.utils.formatEther(_totalTokensToSellInPhase1FromStableCoin)
-      setPhase1TotalTokensToSellInStableCoin(_totalTokensToSellInPhase1ValFromStableCoin)
+      setPhase1TotalTokensToSellInStableCoin(parseInt(_totalTokensToSellInPhase1ValFromStableCoin))
 
       const _totalTokensToSellInPhase2 = await presaleContract.phase2TotalTokensToSell();
       const _totalTokensToSellInPhase2Val = ethers.utils.formatEther(_totalTokensToSellInPhase2)
-      setPhase2TotalTokensToSell(_totalTokensToSellInPhase2Val)
+      setPhase2TotalTokensToSell(parseInt(_totalTokensToSellInPhase2Val))
 
       const _totalTokensToSellInPhase2FromStableCoin = await stableCoinPresaleContract.phase2TotalTokensToSell();
       const _totalTokensToSellInPhase2ValFromStableCoin = ethers.utils.formatEther(_totalTokensToSellInPhase2FromStableCoin)
-      setPhase2TotalTokensToSellInStableCoin(_totalTokensToSellInPhase2ValFromStableCoin)
+      setPhase2TotalTokensToSellInStableCoin(parseInt(_totalTokensToSellInPhase2ValFromStableCoin))
 
       const _totalTokensToSellInPhase3 = await presaleContract.phase3TotalTokensToSell();
       const _totalTokensToSellInPhase3Val = ethers.utils.formatEther(_totalTokensToSellInPhase3)
-      setPhase3TotalTokensToSell(_totalTokensToSellInPhase3Val)
+      setPhase3TotalTokensToSell(parseInt(_totalTokensToSellInPhase3Val))
 
       const _totalTokensToSellInPhase3FromStableCoin = await stableCoinPresaleContract.phase3TotalTokensToSell();
       const _totalTokensToSellInPhase3ValFromStableCoin = ethers.utils.formatEther(_totalTokensToSellInPhase3FromStableCoin)
-      setPhase3TotalTokensToSellInStableCoin(_totalTokensToSellInPhase3ValFromStableCoin)
+      setPhase3TotalTokensToSellInStableCoin(parseInt(_totalTokensToSellInPhase3ValFromStableCoin))
 
       const _phase1TokensSold = await presaleContract.totalTokensSoldInPhase1()
       const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
@@ -538,15 +543,15 @@ export const PresaleContextProvider = ({ children }) => {
 
               const _totalTokensToSellInPhase1 = await _latestPresaleContract.phase1TotalTokensToSell();
               const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
-              setPhase1TotalTokensToSell(_totalTokensToSellInPhase1Val)
+              setPhase1TotalTokensToSell(parseInt(_totalTokensToSellInPhase1Val))
 
               const _totalTokensToSellInPhase2 = await _latestPresaleContract.phase2TotalTokensToSell();
               const _totalTokensToSellInPhase2Val = ethers.utils.formatEther(_totalTokensToSellInPhase2)
-              setPhase2TotalTokensToSell(_totalTokensToSellInPhase2Val)
+              setPhase2TotalTokensToSell(parseInt(_totalTokensToSellInPhase2Val))
 
               const _totalTokensToSellInPhase3 = await _latestPresaleContract.phase3TotalTokensToSell();
               const _totalTokensToSellInPhase3Val = ethers.utils.formatEther(_totalTokensToSellInPhase3)
-              setPhase3TotalTokensToSell(_totalTokensToSellInPhase3Val)
+              setPhase3TotalTokensToSell(parseInt(_totalTokensToSellInPhase3Val))
 
               const _totalBNBSpentUserInPhase1 = await _latestPresaleContract.totalPersonalWeiInvestmentPhase1(accounts[0])
               const _totalBNBSpentUserInPhase1Val = ethers.utils.formatEther(_totalBNBSpentUserInPhase1)
@@ -567,6 +572,10 @@ export const PresaleContextProvider = ({ children }) => {
               const totalWeiRaised = await _latestPresaleContract.totalWeiRaised()
               const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
               setTotalWeiRaised(totalWeiRaisedVal)
+
+              const totalUsdRaised = await stableCoinPresaleContract.totalUsdRaised()
+              const totalUsdRaisedVal = ethers.utils.formatEther(totalUsdRaised)
+              setTotalUsdRaised(parseInt(totalUsdRaisedVal))
 
               const _phase1TokensSold = await _latestPresaleContract.totalTokensSoldInPhase1()
               const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
@@ -1273,6 +1282,10 @@ export const PresaleContextProvider = ({ children }) => {
               const totalWeiRaisedVal = ethers.utils.formatEther(totalWeiRaised)
               setTotalWeiRaised(totalWeiRaisedVal)
 
+              const totalUsdRaised = await stableCoinPresaleContract.totalUsdRaised()
+              const totalUsdRaisedVal = ethers.utils.formatEther(totalUsdRaised)
+              setTotalUsdRaised(parseInt(totalUsdRaisedVal))
+
               const _phase1TokensSold = await presaleContractInstance.totalTokensSoldInPhase1()
               const _phase1TokensSoldVal = ethers.utils.formatEther(_phase1TokensSold)
               setPhase1TotalTokensBought(parseInt(_phase1TokensSoldVal))
@@ -1437,7 +1450,8 @@ export const PresaleContextProvider = ({ children }) => {
             totalTokenContributionsBoughtByUserInPhase3FromStableCoin,
             totalTokenContributionsBoughtByUserInPhase2FromStableCoin,
             totalTokensBoughtByInvestorInPhase2Aggregated,
-            totalTokensBoughtByInvestorInPhase3Aggregated
+            totalTokensBoughtByInvestorInPhase3Aggregated,
+            totalUsdRaised
         }}>
             {children}
         </PresaleContext.Provider>
