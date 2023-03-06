@@ -300,6 +300,18 @@ export const PresaleContextProvider = ({ children }) => {
       setIsPhase3Active(presalePhase3Active)
       setIsPhase3ActiveInStablecoin(presalePhase3ActiveFromStableCoin)
 
+      const phase1PricePerToken = await presaleContract.phase1PricePerTokenInWei()
+      const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+      setPresalePhase1Price(phase1PricePerTokenVal)
+
+      const phase2PricePerToken = await presaleContract.phase2PricePerTokenInWei()
+      const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+      setPresalePhase2Price(phase2PricePerTokenVal)
+      
+      const phase3PricePerToken = await presaleContract.phase3PricePerTokenInWei()
+      const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+      setPresalePhase3Price(phase3PricePerTokenVal)
+
       const _totalTokensToSellInPhase1 = await presaleContract.phase1TotalTokensToSell();
       const _totalTokensToSellInPhase1Val = ethers.utils.formatEther(_totalTokensToSellInPhase1)
       setPhase1TotalTokensToSell(parseInt(parseInt(_totalTokensToSellInPhase1Val)))
@@ -389,17 +401,7 @@ export const PresaleContextProvider = ({ children }) => {
       setOveralPercentageSoldPhase2(totalPercentageSoldInPhase2)
       setOveralPercentageSoldPhase3(totalPercentageSoldInPhase3)
 
-      const phase1PricePerToken = await presaleContract.phase1PricePerTokenInWei()
-      const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
-      setPresalePhase1Price(phase1PricePerTokenVal)
 
-      const phase2PricePerToken = await presaleContract.phase2PricePerTokenInWei()
-      const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
-      setPresalePhase2Price(phase2PricePerTokenVal)
-      
-      const phase3PricePerToken = await presaleContract.phase3PricePerTokenInWei()
-      const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
-      setPresalePhase3Price(phase3PricePerTokenVal)
       //console.log(parseInt(totaContributors));
 
       //STABLECOIN PURCHASE FUNCTIONALITY
@@ -480,6 +482,18 @@ export const PresaleContextProvider = ({ children }) => {
 
               const presalePhase3Active = await _latestPresaleContract.isPhase3Active()
               setIsPhase3Active(presalePhase3Active)
+
+              const phase1PricePerToken = await _latestPresaleContract.phase1PricePerTokenInWei()
+              const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+              setPresalePhase1Price(phase1PricePerTokenVal)
+
+              const phase2PricePerToken = await _latestPresaleContract.phase2PricePerTokenInWei()
+              const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+              setPresalePhase2Price(phase2PricePerTokenVal)
+              
+              const phase3PricePerToken = await _latestPresaleContract.phase3PricePerTokenInWei()
+              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+              setPresalePhase3Price(phase3PricePerTokenVal)
 
               const _totalPresaleContributors = await _latestPresaleContract.totalInvestors()
               setTotalContributors(parseInt(_totalPresaleContributors))
@@ -612,17 +626,7 @@ export const PresaleContextProvider = ({ children }) => {
               setPercentageSoldPhase2(phase2SoldPercentage)
               setPercentageSoldPhase3(phase3SoldPercentage)
 
-              const phase1PricePerToken = await _latestPresaleContract.phase1PricePerTokenInWei()
-              const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
-              setPresalePhase1Price(phase1PricePerTokenVal)
 
-              const phase2PricePerToken = await _latestPresaleContract.phase2PricePerTokenInWei()
-              const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
-              setPresalePhase2Price(phase2PricePerTokenVal)
-              
-              const phase3PricePerToken = await _latestPresaleContract.phase3PricePerTokenInWei()
-              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
-              setPresalePhase3Price(phase3PricePerTokenVal)
 
             }
           } catch (error) {
@@ -1190,6 +1194,18 @@ export const PresaleContextProvider = ({ children }) => {
               const presalePhase3Active = await presaleContractInstance.isPhase3Active()
               setIsPhase3Active(presalePhase3Active)
 
+              const phase1PricePerToken = await presaleContractInstance.phase1PricePerTokenInWei()
+              const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
+              setPresalePhase1Price(phase1PricePerTokenVal)
+
+              const phase2PricePerToken = await presaleContractInstance.phase2PricePerTokenInWei()
+              const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
+              setPresalePhase2Price(phase2PricePerTokenVal)
+              
+              const phase3PricePerToken = await presaleContractInstance.phase3PricePerTokenInWei()
+              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
+              setPresalePhase3Price(phase3PricePerTokenVal)
+              
               const _totalPresaleContributors = await presaleContractInstance.totalInvestors()
               setTotalContributors(parseInt(_totalPresaleContributors))
 
@@ -1321,17 +1337,7 @@ export const PresaleContextProvider = ({ children }) => {
               setPercentageSoldPhase2(phase2SoldPercentage)
               setPercentageSoldPhase3(phase3SoldPercentage)
 
-              const phase1PricePerToken = await presaleContractInstance.phase1PricePerTokenInWei()
-              const phase1PricePerTokenVal = ethers.utils.formatEther(phase1PricePerToken)
-              setPresalePhase1Price(phase1PricePerTokenVal)
 
-              const phase2PricePerToken = await presaleContractInstance.phase2PricePerTokenInWei()
-              const phase2PricePerTokenVal = ethers.utils.formatEther(phase2PricePerToken)
-              setPresalePhase2Price(phase2PricePerTokenVal)
-              
-              const phase3PricePerToken = await presaleContractInstance.phase3PricePerTokenInWei()
-              const phase3PricePerTokenVal = ethers.utils.formatEther(phase3PricePerToken)
-              setPresalePhase3Price(phase3PricePerTokenVal)
     
         }catch(error){
           console.log(error)
@@ -1451,7 +1457,7 @@ export const PresaleContextProvider = ({ children }) => {
             totalTokenContributionsBoughtByUserInPhase2FromStableCoin,
             totalTokensBoughtByInvestorInPhase2Aggregated,
             totalTokensBoughtByInvestorInPhase3Aggregated,
-            totalUsdRaised
+            totalUsdRaised, presalePhase3Price
         }}>
             {children}
         </PresaleContext.Provider>

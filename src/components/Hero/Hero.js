@@ -21,11 +21,19 @@ const Hero = () => {
           <p className="text-2xl text-white">
             {/* We leverage on the power of blockchain technology and decentralization to power crypto payments  */}
             {/* A decentralized web3 protocol for secure and seamless crypto payments. */}
-            A decentralized Web3.0 protocol for secure and seamless crypto payments
+            A decentralized Web3.0 protocol for secure and seamless crypto payments.
             </p>
-            <a href="https://pitch.com/public/f266f4df-b857-4c82-a6a9-02051f75f35a" target="_blank" rel="noreferrer">
-            <button className="py-3 px-6 my-4 bg-transparent">Read Whitepaper</button>
+            <p>
+            <a href="https://linktr.ee/ajira_pay_finance" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">About</button>
             </a>
+            {/* <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/Audit-Report/blob/main/Full%20Audit%20Report%20For%20Ajira%20Pay%20Finance.pdf" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">Audit</button>
+            </a>
+            <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/KYC-Report/tree/main/Aijira-Pay-Finance" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">KYC</button>
+            </a> */}
+            </p>
           {/* <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
           <button className="py-3 px-6 my-4 bg-transparent">Tokenomics</button>
                 
