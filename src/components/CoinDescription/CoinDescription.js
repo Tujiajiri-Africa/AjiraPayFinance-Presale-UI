@@ -441,7 +441,7 @@ const CoinDescription = () => {
           <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               {/* account profile and balcnce here  */}
               <div className="justify-center">
-                <p className="text-2xl font-bold text-white uppercase py-0">Buy with BEP-20 Stablecoins</p>
+                <p className="text-2xl font-bold text-white uppercase py-0">Buy with BEP20 Stablecoins</p>
                 {/* <hr></hr> */}
                 <form onSubmit={performApproveStableCoin}>
                  <p className="py-6"> 
@@ -826,6 +826,8 @@ const CoinDescription = () => {
                     <p className="text-white py-1">Phase #1 Sold: {totalTokensBoughtInPhase1InBothContracts } / { phase1TotalTokensToSell } $AJP </p>
                     <p className="text-white py-1">Phase #2 Sold: {totalTokensBoughtInPhase2InBothContracts } / { phase2TotalTokensToSell } $AJP</p>
                     <p className="text-white py-1">Phase #3 Sold: {totalTokensBoughtInPhase3InBothContracts } / { phase3TotalTokensToSell } $ AJP</p>
+                    <p className="text-white py-1">DEX Listing: April 16th 2023</p>
+                    <p className="text-white py-1">Claims Date: TBA before DEX Listing:</p>
                     
                     <br></br>
                     {/* <hr></hr> */}
