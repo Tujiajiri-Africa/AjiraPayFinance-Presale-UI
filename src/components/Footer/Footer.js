@@ -33,6 +33,11 @@ const Footer = () => {
               </a>
             </li>
             <li className="py-1">
+              <a href="https://bscscan.com/address/0xe8d9401250ccd8c8e662fd0c33239b908d2227b3" target="_blank" rel="noreferrer">
+                Vesting Presale smart contract
+              </a>
+            </li>
+            <li className="py-1">
               <a href="https://bscscan.com/address/0x1dd6f0610b42f09048913b525b112d6984452e5c" target="_blank" rel="noreferrer">
                 Stablecoin Presale smart contract
               </a>

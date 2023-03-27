@@ -21,6 +21,7 @@ export const ajiraPayFinanceStablecoinPresaleAddress = '0x80F81420DF8b9d7DFBa925
 export const ajiraPayMainnetFinalAddress = '0xC55b03dC07EC7Bb8B891100E927E982540f0d181'
 export const ajiraPayMainnetFinalPresaleAddress = '0x70ab9C214818560f6Fd63d9AF9C38cF4D37Fe5A0'
 export const ajiraPayFinanceFinalStableCoinContractAddress = '0x1dd6f0610B42f09048913B525B112d6984452E5C'
+export const ajiraPayFinanceVestingv1Presale = '0xE8D9401250ccD8C8e662FD0C33239B908D2227B3'
 
 //STABLE COINS
 export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955'

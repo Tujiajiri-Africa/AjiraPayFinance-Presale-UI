@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { PresaleContext }  from '../../context/PresaleContext';
+
 
 const useCountdown = (targetDate) => {
-  const countDownDate = new Date(targetDate).getTime();
+  const { tokenSaleDuration } = useContext(PresaleContext);
+  const presaleTimer = new Date(parseInt(tokenSaleDuration) * 1000)
+  const countDownDate = presaleTimer.getTime(); //targetDate //March 21, 2023 00:00:00
 
   const [countDown, setCountDown] = useState(
     countDownDate - new Date().getTime()

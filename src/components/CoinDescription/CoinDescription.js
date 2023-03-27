@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { BigNumber, ethers } from 'ethers';
 import { Audio, Oval, ColorRing } from  'react-loader-spinner'
+import TokenomicsDescription from "../Token/TokenomicsDescription";
+
 //import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import kycAuditImage from "../../assets/securi_kyc_audit.jpg"
@@ -17,7 +19,7 @@ import poocoinLogo from "../../assets/partners/poocoin.png"
 import pancakeswapLogo from "../../assets/partners/pancakeswap_1.png"
 import dickensTeam from "../../assets/team/dickens.jpg"
 import dickensTeam2 from "../../assets/team/dickens_2.jpg"
-import davidLeon from "../../assets/team/david_leon_meyo.jpeg"
+import davidLeon from "../../assets/team/david_leon.jpg"
 import zakari from "../../assets/team/centrine_zakari.jpg"
 import basil from '../../assets/team/download_1.jpg'
 import xander from '../../assets/team/xander.jpg'
@@ -25,6 +27,7 @@ import cryptoqueen1 from '../../assets/team/team_female_1.jpg'
 import cryptoqueen2 from '../../assets/team/team_female_2.jpg'
 import ntfmale1 from '../../assets/team/nft_1.jpg'
 import agesa from '../../assets/team/agesa_collins.jpg'
+import ladyTori from '../../assets/team/lady_tori.jpg'
 import securiAudit1 from '../../assets/partners/securi_audit_1.png'
 import securiAudit2 from '../../assets/partners/securi_kyc_1.png'
 import securiAudit3 from '../../assets/partners/securi_kyc_black.png'
@@ -94,7 +97,9 @@ const CoinDescription = () => {
     totalUsdRaised,
     presalePhase1Price,
     presalePhase2Price,
-    presalePhase3Price
+    presalePhase3Price,
+    buyTokenWithVesting,
+    tokenSaleDuration
   } = useContext(PresaleContext);
 
     const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955'
@@ -119,7 +124,7 @@ const CoinDescription = () => {
     />
 
   }
-
+  //buyTokenWithVesting
   const handleSubmit = async(event) => {
     event.preventDefault()
     const amount = event.target.amount.value;
@@ -127,6 +132,17 @@ const CoinDescription = () => {
     //console.log(t)
     buyToken(t);
     event.target.amount.value = ""
+  }
+
+  const handleVestingSubmit = async(event) => {
+    event.preventDefault()
+    const amount = event.target.amount.value;
+    const period = event.target.lock_period.value;
+    const t = ethers.utils.parseEther(amount)
+    //console.log(t)
+    buyTokenWithVesting(period,t);
+    event.target.amount.value = ""
+    event.target.lock_period.value = ""
   }
 
   const performApproveStableCoin = async(event) =>{
@@ -259,7 +275,7 @@ const CoinDescription = () => {
                         <div class="bg-white shadow rounded p-8 mt-8">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h2 class="text-base font-semibold leading-none text-gray-800">What payment method I can use at the presale?</h2>
+                                    <h2 class="text-base font-semibold leading-none text-gray-800">What payment method can I use at the presale?</h2>
                                 </div>
                                 <button
                                     onClick={() => {
@@ -282,7 +298,7 @@ const CoinDescription = () => {
                             {box2 && (
                                 <ul>
                                     <li>
-                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">You can contribute to the presale with BNB, BEP-20 USDT, BEP-20 BUSD, BEP-20 USDC or BEP-20 DAI.</p>
+                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">You can contribute to the presale with BNB or BEP20 USDT, BUSD or DAI.</p>
                                     </li>
                                 </ul>
                             )}
@@ -314,7 +330,7 @@ const CoinDescription = () => {
                                 <ul>
                                     <li>
                                         <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">Yes.</p>
-                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">The Ajira Pay Finance smart contract has been publicly auditted by the Securi Cyber Security Firm. The team is also KYC verified and a certficate issued to that effect.</p>
+                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">The Ajira Pay Finance smart contract has been publicly auditted by the Securi Lab Cyber Security Firm. The team is also KYC verified and a certficate issued to that effect.</p>
                                     </li>
                                 </ul>
                             )}
@@ -339,7 +355,7 @@ const CoinDescription = () => {
                             {box4 && (
                                 <ul>
                                     <li>
-                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">Public Launch Price on the Pancakeswap DEX is $0.4 USD per $AJP</p>
+                                        <p class="text-base leading-normal text-gray-600 mt-4 lg:w-96">Public Launch Price on the Pancakeswap DEX is $0.1 USD per $AJP</p>
                                     </li>
                                 </ul>
                             )}
@@ -347,7 +363,7 @@ const CoinDescription = () => {
                         <div class="bg-white shadow rounded p-8 mt-8">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h2 class="text-base font-semibold leading-none text-gray-800">What is the Launch Date?</h2>
+                                    <h2 class="text-base font-semibold leading-none text-gray-800">When is the Launch Date?</h2>
                                 </div>
                                 <button onClick={() => setBox4(!box4)} data-menu class="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 ring-offset-white cursor-pointer">
                                     {box4 ? (
@@ -383,30 +399,23 @@ const CoinDescription = () => {
         <div className="max-w-[1240px] mx-auto">
           <div className="text-center">
             <h2 className="text-5xl font-bold text-orange-600">Ajira Pay Finance(AJP) Presale</h2>
-            
-            <br></br>
-            {/* <p className="text-1xl py-2 text-white">
-              To help fund the project, we humbly invite you to take part in our first ICO by purchasing some $AJP tokens
-            </p> */}
-          </div>
-          <div className="grid md:grid-cols-1 gap-1 px-2 text-center rounded-full">
-              {/* <div className="border py-7 m-5 rounded-xl1 shadow-xl h-96"> */}
-                <div className="justify-center">
-                <p className="text-white py-1"> 
-                      {isPhase1Active && 'Current Phase: Phase 1' } 
-                      <br></br>
-                      {isPhase1Active && 'Current Price: 1 $AJP =  '}{ isPhase1Active && presalePhase1Price ? presalePhase1Price /100 : '' }{'    '}{ isPhase1Active && 'USD'}
-                      {isPhase2Active && 'Current Phase: Phase 2'}
-                      <br></br>
-                      {isPhase2Active && 'Current Price: 1 $AJP = '}{isPhase2Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPhase2Active && 'USD'}
-                      {isPhase3Active && 'Current Phase: Phase 3'}
-                      <br></br>
-                      {isPhase3Active && 'Current Price: 1 $AJP = '}{ isPhase3Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'     '}{ isPhase3Active && 'USD'}
+            <div className="border py-1 m-5 rounded-xl shadow-xl h-96">
+              <div className="countdown-timer-card">
+              {
+              isPhase1Active && <h2 className="text-white">PHASE 1 ENDS IN...</h2>
+            }
+            {
+              isPhase2Active && <h2 className="text-white">PHASE 2 ENDS IN...</h2>
+            }
+            {
+              isPhase3Active && <h2 className="text-white">PHASE 3 ENDS IN...</h2>
+            }
+              {
+                tokenSaleDuration &&
 
-            </p>
-            <p className="text-white">25% bonus to the 1st 100 investors with over $300 purchases.</p>
-                      
-                    { isPhase1Active && 
+                <TimeComponent />
+              }
+              { isPhase1Active && 
                       <div class="w-full bg-gray-200 rounded-full">
                       <div class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: percentageSoldPhase1 + '%'}}>{percentageSoldPhase1 + '% '}</div>
                     </div>
@@ -421,9 +430,50 @@ const CoinDescription = () => {
                       <div class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: percentageSoldPhase3 + '%'}}>{percentageSoldPhase3 + '%'}</div>
                     </div>
                     }
+                       <div className="grid md:grid-cols-1 gap-1 px-2 text-center rounded-full">
+              {/* <div className="border py-7 m-5 rounded-xl1 shadow-xl h-96"> */}
+                <div className="justify-center">
+                <p className="text-white py-1"> 
+                      {isPhase1Active && 'Current Phase: Phase 1' } 
+                      <br></br>
+                      {isPhase1Active && 'Current Price: 1 $AJP =  '}{ isPhase1Active && presalePhase1Price ? presalePhase1Price /100 : '' }{'    '}{ isPhase1Active && 'USD'}
+                      <br></br>
+                      {isPhase1Active && 'Next Price: 1 $AJP =  '}{ isPhase1Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPhase1Active && 'USD'}
+                      <br></br>
+                      {/* {isPhase1Active && 'Final Phase: 1 $AJP =  '}{ isPhase1Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase1Active && 'USD'} */}
+                      {isPhase2Active && 'Current Phase: Phase 2'}
+                      <br></br>
+                      {isPhase2Active && 'Current Price: 1 $AJP = '}{isPhase2Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPhase2Active && 'USD'}
+                      <br></br>
+                      {isPhase2Active && 'Next Price: 1 $AJP =  '}{ isPhase2Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase2Active && 'USD'}
+                      <br></br>
+                      {/* {isPhase1Active && 'Final Phase: 1 $AJP =  '}{ isPhase2Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase2Active && 'USD'} */}
+
+                      {isPhase3Active && 'Current Phase: Phase 3'}
+                      <br></br>
+                      {isPhase3Active && 'Current Price: 1 $AJP = '}{ isPhase3Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'     '}{ isPhase3Active && 'USD'}
+
+                </p>
+                  
+                  <p className="text-white py-0">DEX Listing Price: 1 $AJP = $0.1 USD</p>
+                  <p className="text-white py-0">DEX Listing Date: April 16th 2023.</p>
+                  <p className="text-white">Unvested tokens will be claimed from 1st May 2023.</p>
+                  <p className="text-white">Vested(locked) tokens to be claimed with respective bonuses after lock period elapses.</p>
+                  
+
+                    
                 </div>
               {/* </div> */}
           </div>
+              </div>
+            </div>
+              
+            <br></br>
+            {/* <p className="text-1xl py-2 text-white">
+              To help fund the project, we humbly invite you to take part in our first ICO by purchasing some $AJP tokens
+            </p> */}
+          </div>
+       
           
           
                   {
@@ -439,6 +489,78 @@ const CoinDescription = () => {
                    */}
           <div className="grid md:grid-cols-3 gap-1 px-2 text-center">
           <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
+              <div className="countdown-timer-card">
+                <div>
+                  <h2 className="text-3xl font-bold uppercase py-1 text-white">
+                    Buy With BNB
+                  </h2>
+                  {/* <hr></hr> */}
+                  {/* <p className="text-white">Min Contribution: $10</p>
+                  <p className="text-white">Max Contribution: $10,000</p>
+                  <p className="text-white">Phase #1 Price: 1 $AJP = $0.1</p>
+                  <p className="text-white">Phase #2 Price: 1 $AJP = $0.2</p>
+                  <p className="text-white">Phase #3 Price: 1 $AJP = $0.3</p>
+                  <p className="text-white">Pancakeswap Listing Rate: 1 $AJP = $0.4</p> */}
+
+                  {/* <hr></hr> */}
+                  <br></br>
+                 
+                </div>
+              </div>
+              <div className="countdown-timer-card">
+                <div className="countdown-timer-card__timer">
+                  <form onSubmit={handleVestingSubmit}>
+                    <p className="py-3">
+                    <span className="text-white">Enter BNB Amount: </span>
+                    <input
+                      type="text"
+                      name="amount"
+                      required
+                      placeholder="Enter BNB Amount"
+                      className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
+                    />
+                    </p>
+                    
+                    <p className="py-3"> 
+                      <span className="text-white">Select Lock(Vesting) Period to qualify for bonus:</span>
+                      <select name="stableCoinName" className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2">
+                            <option value="0">0 weeks(zero lock bonus)</option>
+                            <option value="1">4 weeks(15% Bonus)</option>
+                            <option value="2">8 weeks(20% Bonus)</option>
+                            <option value="3">12 weeks(25% Bonus)</option>
+                            <option value="4">16 weeks(30% Bonus)</option>
+                            <option value="5">20 weeks(35% Bonus)</option>
+                            <option value="6">24 weeks(40% Bonus)</option>
+                      </select>
+                  </p>
+                      {
+                        isConnected && isPresaleStarted && !isPresalePaused &&
+                        <p className="py-2">
+                        <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                          Contribute
+                        </button>
+                        </p>
+                      }
+                      
+                  </form>
+                  {
+                        !isConnected &&
+                        <p className="py-2">
+                        <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
+                        <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Buy
+                        </button>
+                        </p>
+                      }
+                 {/* <p className="text-white">
+                      Unvested tokens to be claimed a week after DEX Listing on the 16th of April.
+                 </p>
+                 <p className="text-white">
+                      Vested tokens will be claimed after lock duration ends.
+                 </p> */}
+                </div>
+              </div>
+            </div>
+          <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               {/* account profile and balcnce here  */}
               <div className="justify-center">
                 <p className="text-2xl font-bold text-white uppercase py-0">Buy with BEP20 Stablecoins</p>
@@ -449,8 +571,8 @@ const CoinDescription = () => {
                  <select name="stableCoinName" className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2">
                           <option value="0x55d398326f99059fF775485246999027B3197955">USDT</option>
                           <option value="0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56">BUSD</option>
-                          <option value="0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d">USDC</option>
-                          <option value="0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3">DAI</option>
+                          {/* <option value="0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d">USDC</option> */}
+                          {/* <option value="0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3">DAI</option> */}
                           
                     </select>
                   </p>
@@ -516,57 +638,7 @@ const CoinDescription = () => {
               */
             }
             
-            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
-              <div className="countdown-timer-card">
-                <div>
-                  <h2 className="text-3xl font-bold uppercase py-1 text-white">
-                    Buy With BNB
-                  </h2>
-                  {/* <hr></hr> */}
-                  <p className="text-white">Min Contribution: $10</p>
-                  <p className="text-white">Max Contribution: $10,000</p>
-                  <p className="text-white">Phase #1 Price: 1 $AJP = $0.1</p>
-                  <p className="text-white">Phase #2 Price: 1 $AJP = $0.2</p>
-                  <p className="text-white">Phase #3 Price: 1 $AJP = $0.3</p>
-                  <p className="text-white">Pancakeswap Listing Rate: 1 $AJP = $0.4</p>
-
-                  {/* <hr></hr> */}
-                  <br></br>
-                 
-                </div>
-              </div>
-              <div className="countdown-timer-card">
-                <div className="countdown-timer-card__timer">
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      type="text"
-                      name="amount"
-                      required
-                      placeholder="Enter BNB Amount"
-                      className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
-                    />
-                      {
-                        isConnected && isPresaleStarted && !isPresalePaused &&
-                        <p className="py-3">
-                        <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
-                          Contribute
-                        </button>
-                        </p>
-                      }
-                      
-                  </form>
-                  {
-                        !isConnected &&
-                        <p className="py-3">
-                        <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" onClick={connectWallet}>
-                        <FontAwesomeIcon icon={solid('wallet')}/> Connect Wallet To Buy
-                        </button>
-                        </p>
-                      }
-                 
-                </div>
-              </div>
-            </div>
+         
 
             <div className="border py-1 m-5 rounded-xl shadow-xl h-96">
              
@@ -621,18 +693,17 @@ const CoinDescription = () => {
                     isConnected &&
                     <>
                     
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl" disabled>Claims Closed</button>
-                    {/* <p className="text-white">Claims date TBA after DEX Listing</p> */}
+                    <button className="bg-indigo-600 text-white px-4 py-1 rounded-xl" disabled>Claims Closed</button>
                     
                     </>
                 }
                 {
                   !isConnected &&
                   <>
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl">
+                    <button className="bg-indigo-600 text-white px-4 py-1 rounded-xl">
                       <FontAwesomeIcon icon={solid('wallet')}/> Claims Closed
                   </button>
-                  <p className="text-white">Claims date TBA after DEX Listing</p>
+                 
                   </>
                 }
                 
@@ -823,12 +894,11 @@ const CoinDescription = () => {
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
                     <p className="text-white py-1">Total BNB Raised:  { totalWeiRaised } BNB</p>
                     <p className="text-white py-1">Total USDT Raised: ${ totalUsdRaised } USDT</p>
-                    <p className="text-white py-1">Phase #1 Sold: {totalTokensBoughtInPhase1InBothContracts } / { phase1TotalTokensToSell } $AJP </p>
-                    <p className="text-white py-1">Phase #2 Sold: {totalTokensBoughtInPhase2InBothContracts } / { phase2TotalTokensToSell } $AJP</p>
-                    <p className="text-white py-1">Phase #3 Sold: {totalTokensBoughtInPhase3InBothContracts } / { phase3TotalTokensToSell } $ AJP</p>
-                    <p className="text-white py-1">DEX Listing: April 16th 2023</p>
-                    <p className="text-white py-1">Claims Date: TBA before DEX Listing:</p>
-                    
+                    <p className="text-white py-1">Phase #1 Sold: {phase1TotalTokensBought } / { phase1TotalTokensToSell } $AJP </p>
+                    <p className="text-white py-1">Phase #2 Sold: {phase2TotalTokensBought } / { phase2TotalTokensToSell } $AJP</p>
+                    <p className="text-white py-1">Phase #3 Sold: {phase3TotalTokensBought } / { phase3TotalTokensToSell } $ AJP</p>
+                    <p className="text-white py-0">Minimum Contribution: $10 USD</p>
+                    <p className="text-white py-0">Maximum Contribution: $10,000 USD</p>
                     <br></br>
                     {/* <hr></hr> */}
                     
@@ -986,6 +1056,126 @@ const CoinDescription = () => {
              {/**
               * END FEATURES/ECOSYSTEM SECTION
               */}
+
+              {/**
+               * 
+               * START OF ECOSYSTEM FEATURES SECTION
+               */}
+
+                
+    <div class="dark:bg-gray-900">
+      <section class="mx-auto container py-20">
+        <div class="flex justify-center items-center flex-col">
+          <div class="lg:text-6xl md:text-5xl text-4xl font-white leading-10 text-center text-white-800 dark:text-white">
+            <h1 className="text-yellow-200">Ecosystem and Utilities</h1>
+          </div>
+          <div class="pt-24 grid lg:grid-cols-3 md:grid-cols-2 justify-center items-center xl:gap-y-16 gap-y-20 gap-x-16 lg:gap-x-20 xl:gap-x-0 lg:px-10 xl:px-0">
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg1.svg" alt="arrow-1"></img>
+              </div> 
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Crypto On-ramp and Off-ramp Exchanges Platform</h2>
+              </div>
+              <div class="text-white-600 dark:text-white-300 mt-2 text-lg text-center">
+                <p className="text-white">With our on-ramp/off-ramp platform, crypto holders will be able to swap between crypto and fiat at minimla costs to help in platform growth.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg1.svg" alt="arrow-1"></img>
+              </div> 
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Staking</h2>
+              </div>
+              <div class="text-white-600 dark:text-white-300 mt-2 text-lg text-center">
+                <p className="text-white">Earn more by HODLing $AJP.</p>
+                <p className="text-white">Staking APY rates to be shared with the community before launch on the 16th of April, kindly join the community to stay updated.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg2.svg" alt="3 bars"></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Crypto Payments API Gateway</h2>
+              </div>
+              <div class="text-white-600 dark:text-gray-300 mt-2 text-lg text-center">
+                <p className="text-white">Plug and pay developer-friendly features of our crypto payment systems will enable developers to tap into crypto payments with us much easily.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg3.svg" alt="bars"></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">E-commerce crypto payments plugins.</h2>
+              </div>
+              <div class="text-white-600 dark:text-white-300 mt-2 text-lg text-center">
+                <p className="text-white">Integrate Ajira Pay Finance into your wordpress or woocommerce website and begin receiving crypto payments in simple steps.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg4.svg" alt="bars"></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Crypto Payment Buttons</h2>
+              </div>
+              <div class="text-white-600 dark:text-white-300 mt-2 text-lg text-center">
+                <p className="text-white">Accept donations/receive crypto from your clients right from your website with our simple and easy to integrate crypto payment buttons.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+                <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg5.svg" alt="bars"></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Ajira Pay DAO.</h2>
+              </div>
+              <div class="text-gray-600 dark:text-gray-300 mt-2 text-lg text-center">
+                <p className="text-white">Ajira Pay Finance will be community governed by $AJP holders from 2025.</p>
+              </div>
+            </div>
+            
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+              <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg6.svg" alt=""></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Ajira Swap</h2>
+              </div>
+              <div class="text-white-600 dark:text-white-300 mt-2 text-lg text-center">
+                <p className="text-white">Ajira swap will enable crypto holders to swap between multiple tokens while at the same time enjoying the swap fees accrued from the transactions.</p>
+              </div>
+            </div>
+            <div class="cursor-pointer hover:shadow py-6 xl:px-4 rounded xl:w-96 w-60 flex justify-center items-center flex-col">
+              <div class="mb-6">
+                <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/feature_7-svg5.svg" alt="bars"></img>
+              </div>
+              <div class="text-white-800 dark:text-white text-2xl font-semibold text-center">
+                <h2 className="text-orange-600">Crypto Subscription Payments.</h2>
+              </div>
+              <div class="text-gray-600 dark:text-gray-300 mt-2 text-lg text-center">
+                <p className="text-white">Our platform will enable companies/businesses or enterperizes to set up and accept either subscription based or one-time crypto payments from their clients.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  
+               {/**
+                * END OF ECOSYSTEM SECTION
+                */}
+                {/**
+                    * TOKENOMICS
+                    */}
+
+                        <TokenomicsDescription/>
+                    {/**
+                     * END OF TOKENOMICS
+                     */}
               {/**
                * START OF COMMUNITY SECTION
                */}
@@ -1148,7 +1338,7 @@ const CoinDescription = () => {
               </ul>
           </div>
           <div class="text-center text-gray-500 dark:text-gray-400">
-              <img class="mx-auto mb-4 w-36 h-36 rounded-full" src={cryptoqueen1} alt="Adiaunam Avatar"></img>
+              <img class="mx-auto mb-4 w-36 h-36 rounded-full" src={ladyTori} alt="Adiaunam Avatar"></img>
               <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   <a href="#">Victoria Adiaunam</a>
               </h3>
@@ -1261,6 +1451,7 @@ const CoinDescription = () => {
                    * 
                    * END OF TEAM SECTION
                    */}
+                   
                             {/**
                  * START OF PARTNERS SECTION
                  */}
