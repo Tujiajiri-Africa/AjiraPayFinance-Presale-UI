@@ -24,16 +24,26 @@ const Hero = () => {
             A decentralized Web3.0 protocol for secure and seamless crypto payments.
             </p>
             <p>
-            <a href="https://linktr.ee/ajira_pay_finance" target="_blank" rel="noreferrer">
-            <button className="py-3 px-6 my-4 bg-transparent">About</button>
+            {/* <a href="https://linktr.ee/ajira_pay_finance" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">Explore and Find Out More About Us</button>
+            </a> */}
+            <a href="https://ajirapay.finance" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">Visit Main Website</button>
             </a>
+            {/* <a href="https://www.pinksale.finance/launchpad/0xda45eD1958a6cEBAc3a07d715aCeC13CbE6fC762?chain=BSC" target="_blank" rel="noreferrer">
+            <button className="py-3 px-6 my-4 bg-transparent">Buy $AJP on Pinksale</button>
+            </a> */}
+            </p>
+            <p>
+           
+            </p>
             {/* <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/Audit-Report/blob/main/Full%20Audit%20Report%20For%20Ajira%20Pay%20Finance.pdf" target="_blank" rel="noreferrer">
             <button className="py-3 px-6 my-4 bg-transparent">Audit</button>
             </a>
             <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/KYC-Report/tree/main/Aijira-Pay-Finance" target="_blank" rel="noreferrer">
             <button className="py-3 px-6 my-4 bg-transparent">KYC</button>
             </a> */}
-            </p>
+           
           {/* <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
           <button className="py-3 px-6 my-4 bg-transparent">Tokenomics</button>
                 

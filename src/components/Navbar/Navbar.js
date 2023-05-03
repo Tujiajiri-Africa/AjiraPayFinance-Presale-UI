@@ -23,11 +23,12 @@ const Navbar = () => {
         <div className="flex items-center">
           <h1 className="text-3xl font-bold mr-4 sm:text-4xl"><span className="text-orange-600">AJIRA</span> <span className="text-yellow-600">PAY FINANCE</span></h1>
           <ul className="hidden md:flex cursor-pointer">
-            <li>
-              <Link to="/" smooth={true} duration={500}>
-                Presale
+          {/* smooth={true} duration={500} */}
+            {/* <li>
+              <Link to="https://www.pinksale.finance/launchpad/0x940C7295d1b96FA1098fc60e5A7820B6428aB045?chain=BSC"> 
+                Buy $AJP on Presale
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               <Link to="/tokenomics" smooth={true} offset={-200} duration={500}>
                 Tokenomics

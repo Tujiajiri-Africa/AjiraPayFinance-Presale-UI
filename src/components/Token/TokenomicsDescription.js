@@ -56,10 +56,10 @@ const TokenomicsDescription = () => {
                 18
               </p>
               <p className="text-1xl py-2 text-orange-600 text-2xl">
-                AJP Contract Address
+                Official AJP Contract Address 
               </p>
               <p className="text-1xl py-2 text-white">
-              0xC55b03dC07EC7Bb8B891100E927E982540f0d181
+              0x9DBC0Ad09184226313FbDe094E7c3DD75c94f997 on Binance Smart Chain, KAVA, Arbitrum One and Polygon networks.
               </p>
               <p className="text-1xl py-2 text-orange-600 text-2xl">
                 Buy Fee

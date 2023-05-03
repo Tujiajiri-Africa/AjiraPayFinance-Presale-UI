@@ -18,12 +18,14 @@ const Footer = () => {
           <h6 className="font-bold uppercase pt-2 text-center">Quick Links</h6>
           <ul className="text-center">
             <li className="py-1"><a href="https://pitch.com/public/f266f4df-b857-4c82-a6a9-02051f75f35a">Whitepaper</a></li>
+            <li className="py-1"><a href="https://github.com/Coinsult/solidity/blob/main/Coinsult_AjiraPay_0x9D...f997_Audit.pdf">Audit</a></li>
+            <li className="py-1"><a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/KYC-Report/tree/main/Aijira-Pay-Finance">KYC</a></li>
             <li className="py-1"><a href="https://ajirapay.finance/">Main Website</a></li>
             <li className="py-1"><a href="https://medium.com/@ajira_pay_finance">Blog</a></li>
             <li className="py-1"><a href="https://angel.co/company/ajira-pay/jobs">Careers</a></li>
             <li className="py-1"><a href="https://linktr.ee/ajira_pay_finance">General</a></li>
             <li className="py-1">
-              <a href="https://bscscan.com/token/0xC55b03dC07EC7Bb8B891100E927E982540f0d181" target="_blank" rel="noreferrer">
+              <a href="https://bscscan.com/token/0x9DBC0Ad09184226313FbDe094E7c3DD75c94f997" target="_blank" rel="noreferrer">
                 Ajira Pay Finance smart contract
               </a>
             </li>

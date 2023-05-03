@@ -8,7 +8,7 @@ import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/
 import { BigNumber, ethers } from 'ethers';
 import { Audio, Oval, ColorRing } from  'react-loader-spinner'
 import TokenomicsDescription from "../Token/TokenomicsDescription";
-
+import Roadmap  from "../Timeline/Roadmap";
 //import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import kycAuditImage from "../../assets/securi_kyc_audit.jpg"
@@ -34,7 +34,7 @@ import securiAudit3 from '../../assets/partners/securi_kyc_black.png'
 import binanceSmartChain from '../../assets/partners/binance-smart-chain.png'
 import coinSniper from '../../assets/partners/coinsniper.png'
 import coinCarp from '../../assets/partners/coincarp.png'
-
+import coinsultAuditImg from '../../assets/ajp_coinsult_audit.png'
 
 const CoinDescription = () => {
   const { 
@@ -398,74 +398,93 @@ const CoinDescription = () => {
       <div name="about" className="w-full bg-slate-900">
         <div className="max-w-[1240px] mx-auto">
           <div className="text-center">
-            <h2 className="text-5xl font-bold text-orange-600">Ajira Pay Finance(AJP) Presale</h2>
-            <div className="border py-1 m-5 rounded-xl shadow-xl h-96">
-              <div className="countdown-timer-card">
-              {
-              isPhase1Active && <h2 className="text-white">PHASE 1 ENDS IN...</h2>
+            {/* <h2 className="text-5xl font-bold text-orange-600">Ajira Pay Finance(AJP) Presale</h2> */}
+            {/* <div className="border py-0 m-5 rounded-xl shadow-xl h-96">
+              <div className="countdown-timer-card"> */}
+              
+                {/* <h4 className="text-2xl font-bold text-orange-600">
+                  Hello there!, this presale has been closed and instead moved to Pinksale Finance
+                </h4> */}
+                {/* <p className="text-white">
+                  <button className="py-3 px-6 my-4 bg-transparent">
+                    <a href="https://www.pinksale.finance/launchpad/0x940C7295d1b96FA1098fc60e5A7820B6428aB045?chain=BSC">
+                      Please Click Here To Buy $AJP From The Official Ajira Pay Finance Pinksale Presale
+                    </a>
+                  </button>
+                </p> */}
+              
+              { 
+              isPresaleStarted && isPhase1Active && <h2 className="text-white">PHASE 1 ENDS IN...</h2>
             }
             {
-              isPhase2Active && <h2 className="text-white">PHASE 2 ENDS IN...</h2>
+              isPresaleStarted && isPhase2Active && <h2 className="text-white">PHASE 2 ENDS IN...</h2>
             }
             {
-              isPhase3Active && <h2 className="text-white">PHASE 3 ENDS IN...</h2>
+              isPresaleStarted && isPhase3Active && <h2 className="text-white">FINAL PHASE OF PRESALE ENDS IN...</h2>
             }
               {
-                tokenSaleDuration &&
+                isPresaleStarted && tokenSaleDuration &&
 
                 <TimeComponent />
-              }
-              { isPhase1Active && 
+              }  
+              {/* { isPresaleStarted && isPhase1Active && 
                       <div class="w-full bg-gray-200 rounded-full">
                       <div class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: percentageSoldPhase1 + '%'}}>{percentageSoldPhase1 + '% '}</div>
                     </div>
                     }
-                    { isPhase2Active && 
+                    { isPresaleStarted && isPhase2Active && 
                       <div class="w-full bg-gray-200 rounded-full">
                       <div class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: percentageSoldPhase2 + '%'}}>{percentageSoldPhase2 + '%'}</div>
                     </div>
                     }
-                    { isPhase3Active && 
+                    { isPresaleStarted && isPhase3Active && 
                       <div class="w-full bg-gray-200 rounded-full">
                       <div class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{width: percentageSoldPhase3 + '%'}}>{percentageSoldPhase3 + '%'}</div>
                     </div>
-                    }
-                       <div className="grid md:grid-cols-1 gap-1 px-2 text-center rounded-full">
+                    } */}
+                    {/* gap-1 px-2  */}
+                       <div className="grid md:grid-cols-1 text-center rounded-full"> 
               {/* <div className="border py-7 m-5 rounded-xl1 shadow-xl h-96"> */}
                 <div className="justify-center">
-                <p className="text-white py-1"> 
-                      {isPhase1Active && 'Current Phase: Phase 1' } 
+                <p className="text-white py-0"> 
+                      { isPresaleStarted && isPhase1Active && 'Current Phase: Phase 1' } 
                       <br></br>
-                      {isPhase1Active && 'Current Price: 1 $AJP =  '}{ isPhase1Active && presalePhase1Price ? presalePhase1Price /100 : '' }{'    '}{ isPhase1Active && 'USD'}
+                      {isPresaleStarted && isPhase1Active && 'Current Price: 1 $AJP =  '}{ isPresaleStarted && isPhase1Active && presalePhase1Price ? presalePhase1Price /100 : '' }{'    '}{ isPresaleStarted && isPhase1Active && 'USD'}
                       <br></br>
-                      {isPhase1Active && 'Next Price: 1 $AJP =  '}{ isPhase1Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPhase1Active && 'USD'}
+                      {isPresaleStarted && isPhase1Active && 'Next Price: 1 $AJP =  '}{ isPresaleStarted && isPhase1Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPresaleStarted && isPhase1Active && 'USD'}
                       <br></br>
-                      {/* {isPhase1Active && 'Final Phase: 1 $AJP =  '}{ isPhase1Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase1Active && 'USD'} */}
-                      {isPhase2Active && 'Current Phase: Phase 2'}
+                      {isPresaleStarted && isPhase2Active && 'Current Phase: Phase 2'}
                       <br></br>
-                      {isPhase2Active && 'Current Price: 1 $AJP = '}{isPhase2Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPhase2Active && 'USD'}
+                      {isPresaleStarted && isPhase2Active && 'Current Price: 1 $AJP = '}{isPresaleStarted && isPhase2Active && presalePhase2Price ? presalePhase2Price /100 : '' }{'    '}{ isPresaleStarted && isPhase2Active && 'USD'}
                       <br></br>
-                      {isPhase2Active && 'Next Price: 1 $AJP =  '}{ isPhase2Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase2Active && 'USD'}
+                      {isPresaleStarted && isPhase2Active && 'Next Price: 1 $AJP =  '}{ isPresaleStarted && isPhase2Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{isPresaleStarted &&  isPhase2Active && 'USD'}
                       <br></br>
-                      {/* {isPhase1Active && 'Final Phase: 1 $AJP =  '}{ isPhase2Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'    '}{ isPhase2Active && 'USD'} */}
 
-                      {isPhase3Active && 'Current Phase: Phase 3'}
+                      {isPresaleStarted && isPhase3Active && 'Current Phase: Phase 3'}
                       <br></br>
-                      {isPhase3Active && 'Current Price: 1 $AJP = '}{ isPhase3Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'     '}{ isPhase3Active && 'USD'}
+                      {isPresaleStarted && isPhase3Active && 'Current Price: 1 $AJP = '}{ isPresaleStarted && isPhase3Active && presalePhase3Price ? presalePhase3Price /100 : '' }{'     '}{isPresaleStarted &&  isPhase3Active && 'USD'}
 
                 </p>
+               
+                  {/* <p className="text-white">
+                  <button className="py-2 px-1 my-1 bg-transparent">
+                    <a href="https://twitter.com/ajiraPayDefi/status/1642092207820914688?s=20">
+                    Please click here to check the official announcement on twitter
+                    </a>
+                  </button>
+                </p> */}
+                {/* <p className="text-orange-600 py-0">Thank you so much for your continued support, please buy $AJP from Pinksale</p> */}
+
                   
-                  <p className="text-white py-0">DEX Listing Price: 1 $AJP = $0.1 USD</p>
-                  <p className="text-white py-0">DEX Listing Date: April 16th 2023.</p>
-                  <p className="text-white">Unvested tokens will be claimed from 1st May 2023.</p>
-                  <p className="text-white">Vested(locked) tokens to be claimed with respective bonuses after lock period elapses.</p>
+                  {/* <p className="text-white py-0">Unvested tokens will be claimed from 1st May 2023.</p>
+                  <p className="text-white">Vested(locked) tokens to be claimed with respective bonuses after lock period elapses.</p> */}
                   
 
                     
                 </div>
               {/* </div> */}
-          </div>
-              </div>
+          {/* </div>
+              </div> */}
             </div>
               
             <br></br>
@@ -487,6 +506,44 @@ const CoinDescription = () => {
                    * 
                    * END OF KYC AND AUDIT SECTION
                    */}
+                    <div name="about" className="w-full bg-slate-900">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="text-center">
+           
+            <h2 className="text-5xl font-bold text-orange-600">Join Ajira Pay Finance(AJP) Presale</h2>
+                   {/* <p className='text-white'>Dear investor, this presale has been moved to pinksale...</p> */}
+            {/* <p className="text-white">
+            
+                  <button className="py-3 px-6 my-4 bg-transparent">
+                    <a href="https://www.pinksale.finance/launchpad/0xda45eD1958a6cEBAc3a07d715aCeC13CbE6fC762?chain=BSC">
+                      Please Click Here To Buy $AJP From The Official Ajira Pay Finance Presale on Pinksale
+                    </a>
+                  </button>
+                </p> */}
+           
+            <br></br>
+            
+          </div>
+          </div>
+          </div>
+                         {/* <div name="about" className="w-full bg-slate-900">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="text-center">
+            <h2 className="text-5xl font-bold text-orange-600">A NOTE TO OUR BELOVED INVESTORS</h2>
+                  <p className="text-white py-1">1. Round 1 of this presale on Pinksale is underway, please click the above button to buy $AJP from Pinksale.</p>
+                  <p className="text-white py-1">2. Public Launch Date: 12th May 2023.</p>
+                  <p className="text-white py-2">3. Token Withdrawals date to be activated from 13th May 2023</p>
+                  <p className="text-white py-1">4. Pancakeswap DEX Listing Price: 1 $AJP = $0.1 USD.</p>
+                  <p className="text-white py-1">5. Pancakeswap DEX Listing Date: 12th May 2023 at 14:00 PM UTC</p>
+                  <p className="text-white py-1">6. First CEX Listing TBA</p>
+
+            <br></br>
+          </div>
+          </div>
+          </div> */}
+          <div className="grid md:grid-cols-3 gap-1 px-2 text-center">
+
+          </div>
           <div className="grid md:grid-cols-3 gap-1 px-2 text-center">
           <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               <div className="countdown-timer-card">
@@ -494,15 +551,7 @@ const CoinDescription = () => {
                   <h2 className="text-3xl font-bold uppercase py-1 text-white">
                     Buy With BNB
                   </h2>
-                  {/* <hr></hr> */}
-                  {/* <p className="text-white">Min Contribution: $10</p>
-                  <p className="text-white">Max Contribution: $10,000</p>
-                  <p className="text-white">Phase #1 Price: 1 $AJP = $0.1</p>
-                  <p className="text-white">Phase #2 Price: 1 $AJP = $0.2</p>
-                  <p className="text-white">Phase #3 Price: 1 $AJP = $0.3</p>
-                  <p className="text-white">Pancakeswap Listing Rate: 1 $AJP = $0.4</p> */}
-
-                  {/* <hr></hr> */}
+                 
                   <br></br>
                  
                 </div>
@@ -521,7 +570,7 @@ const CoinDescription = () => {
                     />
                     </p>
                     
-                    <p className="py-3"> 
+                     <p className="py-3"> 
                       <span className="text-white">Select Lock(Vesting) Period to qualify for bonus:</span>
                       <select name="stableCoinName" className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2">
                             <option value="0">0 weeks(zero lock bonus)</option>
@@ -532,7 +581,7 @@ const CoinDescription = () => {
                             <option value="5">20 weeks(35% Bonus)</option>
                             <option value="6">24 weeks(40% Bonus)</option>
                       </select>
-                  </p>
+                  </p> 
                       {
                         isConnected && isPresaleStarted && !isPresalePaused &&
                         <p className="py-2">
@@ -551,28 +600,20 @@ const CoinDescription = () => {
                         </button>
                         </p>
                       }
-                 {/* <p className="text-white">
-                      Unvested tokens to be claimed a week after DEX Listing on the 16th of April.
-                 </p>
-                 <p className="text-white">
-                      Vested tokens will be claimed after lock duration ends.
-                 </p> */}
+                <p className="text-white">NOTE: Select the 0 weeks(zero lock bonus) option to continue purchase without vesting.</p>
                 </div>
               </div>
             </div>
-          <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
-              {/* account profile and balcnce here  */}
+         <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
               <div className="justify-center">
                 <p className="text-2xl font-bold text-white uppercase py-0">Buy with BEP20 Stablecoins</p>
-                {/* <hr></hr> */}
+               
                 <form onSubmit={performApproveStableCoin}>
                  <p className="py-6"> 
                 <span className="text-white" >Select preferred stable coin:     </span>
                  <select name="stableCoinName" className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2">
                           <option value="0x55d398326f99059fF775485246999027B3197955">USDT</option>
                           <option value="0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56">BUSD</option>
-                          {/* <option value="0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d">USDC</option> */}
-                          {/* <option value="0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3">DAI</option> */}
                           
                     </select>
                   </p>
@@ -585,7 +626,7 @@ const CoinDescription = () => {
                       className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none p-2"
                     />
                  </p>
-                 {/* isApprovalComplete */}
+                 
                       <p>
                       {
                         isConnected && isPresaleStarted && !isPresalePaused && 
@@ -613,32 +654,9 @@ const CoinDescription = () => {
                        Claim From Stablecoin Contribution
                     </button>  
                 }
-                {/* <p className="text-white py-1">SPECIAL OFFER(STABLECOINs ONLY)</p>
-                <p className="text-white py-1">1 AJP = $0.03 USD</p>
-                <p className="text-white py-0">Minimum Contribution: $3 USD</p> */}
-                      {/* {
-                      canShowProgressBar &&
-                        <div className="text-center">
-                           <ColorRing
-                            visible={true}
-                            height="80"
-                            width="80"
-                            ariaLabel="blocks-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="blocks-wrapper"
-                            colors={['#b8c480', '#B2A3B5', '#F4442E', '#51E5FF', '#429EA6']}
-                        />
-                        </div>
-                     } */}
+               
               </div>
-            </div>
-            {
-              /*
-                PRESALE STATISTICS TAKEN OVER BY STABLECOIN PURCHASE
-              */
-            }
-            
-         
+            </div> 
 
             <div className="border py-1 m-5 rounded-xl shadow-xl h-96">
              
@@ -647,7 +665,7 @@ const CoinDescription = () => {
                 <p className="text-2xl font-bold text-white uppercase py-0">My Contribution</p>
                 <p></p>
                 <hr></hr>
-                <p className="text-white">
+                <p className="text-white py-2">
                   Account: 
                       { isConnected && connectedAccount !== null &&
                       
@@ -656,30 +674,30 @@ const CoinDescription = () => {
                       }
                 </p>
                 
-                <p className="text-white py-1">Total $AJP Purchased: { isConnected && totalTokenContributionAggredated != null ? totalTokenContributionAggredated : '' } $AJP </p>
-                <p className="text-white py-1">Total BNB Spent: { isConnected && totalWeiContributionByUser != null ? totalWeiContributionByUser: '' } BNB</p>
-                <p className="text-white py-1">Total $AJP Claimed: { isConnected && totalTokensClaimedByUser != null ? totalTokensClaimedByUser : '' } $AJP </p>
-                {isConnected && isPhase1Active && 
+                <p className="text-white py-2">Total $AJP Purchased: { isConnected && totalTokenContributionAggredated != null ? totalTokenContributionAggredated : '' } $AJP </p>
+                <p className="text-white py-2">Total BNB Spent: { isConnected && totalWeiContributionByUser != null ? totalWeiContributionByUser: '' } BNB</p>
+                <p className="text-white py-2">Total $AJP Claimed: { isConnected && totalTokensClaimedByUser != null ? totalTokensClaimedByUser : '' } $AJP </p>
+                {/* {isConnected && 
                   <p className="text-white py-1">Phase #1 $AJP Bought: { totalTokensBoughtByInvestorInPhase1Aggregated }
                     <br></br>
                     Phase #1 BNB Contributed: { totalBNBSpentByInvestorInPhase1 }
                   </p>
                   
-                }
-                {isConnected && isPhase2Active && 
+                } */}
+                {/* {isConnected && 
                   <p className="text-white py-1">Phase #2 $AJP Bought: { totalTokensBoughtByInvestorInPhase2Aggregated }
                     <br></br>
                     Phase #2 BNB Contributed: { totalBNBSpentByInvestorInPhase2 }
                   </p>
                   
-                }
-                {isConnected && isPhase3Active && 
+                } */}
+                {/* {isConnected && 
                   <p className="text-white py-1">Phase #3 $AJP Bought: { totalTokensBoughtByInvestorInPhase3Aggregated }
                     <br></br>
                     Phase #3 BNB Contributed: { totalBNBSpentByInvestorInPhase3 }
                   </p>
                   
-                }
+                } */}
                 
                 <br></br>
                 <br></br>
@@ -776,22 +794,22 @@ const CoinDescription = () => {
           <div class="flex justify-center py-3">
                 <div
                   class="block max-w-sm rounded-lg bg-white shadow-lg dark:bg-neutral-700">
-                  <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/Audit-Report/blob/main/Full%20Audit%20Report%20For%20Ajira%20Pay%20Finance.pdf">
+                  <a href="https://github.com/Coinsult/solidity/blob/main/Coinsult_AjiraPay_0x9D...f997_Audit.pdf">
                     <img
                       class="rounded-t-lg"
-                      src={kycAuditImage}
+                      src={coinsultAuditImg}
                       alt="/" />
                   </a>
                   <div class="p-6">
                     <h5
                       class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                      Security Audit by Securi Lab cyber security experts
+                      Security Audit by Coinsult
                     </h5>
                     <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
                       We believe that the core of any blockchain project is it's security and the safety measures it's developers and team put in place to protect investors from potential attacks or security risks.
                     </p>
                     <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                      The Ajira Pay Finance token smart contract has been auditted by the Securi Lab cyber security experts and this is proof that we mean good for the community and that you can trust us to be part of your financial success. As always DYOR.
+                      The Ajira Pay Finance token smart contract has been auditted by the Coinsult cyber security experts and this is proof that we mean good for the community and that you can trust us to be part of your financial success. As always DYOR.
                     </p>
                     <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
                       As you invest in Ajira Pay Finance, rest assured that you are in the right place and in the right project and community to invest in. Be part of our journey today.
@@ -802,7 +820,7 @@ const CoinDescription = () => {
                       // data-te-ripple-init
                       // data-te-ripple-color="light"
                       >
-                        <a href="https://github.com/SECURI-Cybersecurity-Audit-KYC/Audit-Report/blob/main/Full%20Audit%20Report%20For%20Ajira%20Pay%20Finance.pdf" target="_blank" rel="noreferrer">
+                        <a href="https://github.com/Coinsult/solidity/blob/main/Coinsult_AjiraPay_0x9D...f997_Audit.pdf" target="_blank" rel="noreferrer">
                         View Audit Report
                         </a>
                       
@@ -861,34 +879,23 @@ const CoinDescription = () => {
       { /*
           SECOND SECTION ON HOW TO BUY TOKEN
               */}
-              <div name="about" className="w-full bg-slate-900">
-        <div className="max-w-[1240px] mx-auto">
-          <div className="text-center">
-            {/* <hr></hr> */}
-            <h2 className="text-5xl font-bold text-orange-600">HOW TO BUY</h2>
-            {/* <hr></hr> */}
-            <br></br>
-            {/* <p className="text-1xl py-2 text-white">
-              To help fund the project, we humbly invite you to take part in our first ICO by purchasing some $AJP tokens
-            </p> */}
-          </div>
+             
 
-          <div className="grid md:grid-cols-3 gap-1 px-2 text-center">
-          <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
-              {/* card with countdown timer */}
+          <div className="grid md:grid-cols-2 gap-1 px-2 text-center">
+          {/* <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
+             
               <div className="countdown-timer-card">
                 <div>
                   <p className="text-3xl font-bold uppercase py-2 text-white">
-                    {/* Token Sale ends in */}
+                    
                     PRESALE STATISTICS
                   </p>
                 </div>
                 <div className="countdown-timer-card__timer py-1">
                   
-                  {/* <TimeComponent /> */}
+                 
                   <br></br>
-                  {/* <hr></hr> */}
-                  {/* { isConnected ? */}
+                  
                   <div>
                     <hr className="py-1"></hr>
                     <p className="text-white py-1">Total Contributors: { totalContributors }</p>
@@ -900,33 +907,28 @@ const CoinDescription = () => {
                     <p className="text-white py-0">Minimum Contribution: $10 USD</p>
                     <p className="text-white py-0">Maximum Contribution: $10,000 USD</p>
                     <br></br>
-                    {/* <hr></hr> */}
+                   
                     
                   </div>
-                  {/* :
-                  'p'
-                  // <button className="bg-indigo-600 text-white px-4 py-3 rounded-xl" onClick={connectWallet}>
-                  //       <FontAwesomeIcon icon={solid('wallet')}/> Connect To View Statistics
-                  // </button>
-                } */}
+                 
                 </div>
               </div>
-            </div>
-            <div className="border py-2 m-5 rounded-xl shadow-xl h-96">
-              {/* card with countdown timer */}
+            </div> */}
+            {/* <div className="border py-2 m-5 rounded-xl shadow-xl h-96">
+             
               <div className="countdown-timer-card">
                 <div>
                   <p className="text-3xl font-bold uppercase py-0 text-white">
-                    {/* Token Sale ends in */}
+                   
                     Getting Started
                   </p>
                   <hr></hr>
                 </div>
                 <div className="countdown-timer-card__timer py-1">
                   
-                  {/* <TimeComponent /> */}
+                 
                   <br></br>
-                  {/* <hr></hr> */}
+                
                   
                   <p className="text-white py-1">To get started you’ll need your very own crypto wallet. 
                     If you don’t have a wallet already then you can download MetaMask <a href="https://metamask.io/download/" target="_blank" rel="noreferrer">here</a> from 
@@ -937,30 +939,77 @@ const CoinDescription = () => {
                   <p className="text-white py-1">If you’re on mobile you can use Wallet Connect to connect one of the supported 
                     wallets - we’d recommend Trust Wallet.
                   </p>
-                  <p className="text-white py-1">Token claims will be activated after DEX listing: Exact date TBA</p>
+                  
                 </div>
               </div>
-            </div>
-            
+            </div> */}
+             
 
-            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
-              {/* account profile and balcnce here  */}
+            {/* <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
+              
               <div className="justify-center">
                 <p className="text-2xl font-bold text-white uppercase py-5">Buying $AJP</p>
                 <hr></hr>
                 <p className="text-white py-2">1. Ensure you are connected to the Binance Smart Chain mainnet network.</p>
                 <p className="text-white py-2">2. Click on any of the connection buttons above to connect to this site(ensure it is https://portal.ajirapay.finance).</p>
-                <p className="text-white py-2">3. Enter the amount of BNB to purchase with in the text box above.</p>
-                <p className="text-white py-2">4. Click on contribute and approve the transaction by paying for gas fees.</p> 
+                <p className="text-white py-2">3. Enter the amount of USDT or BUSD to purchase with in the text box above.</p>
+                <p className="text-white py-2">4. Click on approve and buy to approve the transaction by paying for gas fees.</p> 
               </div>
-            </div>
-          {
-            /*
-              STABLECOIN PURCHASE
-            */
-          }
+            </div> */}
           
             
+          </div>
+          <div className="grid md:grid-cols-2 gap-1 px-2 text-center">
+            <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
+              
+            <div name="about" className="w-full bg-slate-900">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="text-center">
+            <p className="text-3xl font-bold uppercase py-2 text-white">A NOTE TO OUR BELOVED INVESTORS</p>
+                  {/* <p className="text-white py-1">1. Round 1 of this presale on Pinksale is underway, please click the above button to buy $AJP from Pinksale.</p> */}
+                  <p className="text-white py-1">1. Public Launch Date: 12th May 2023.</p>
+                  <p className="text-white py-2">2. Token Withdrawals date to be activated from 13th May 2023</p>
+                  <p className="text-white py-1">3. Pancakeswap DEX Listing Price: 1 $AJP = $0.1 USD.</p>
+                  <p className="text-white py-1">4. Pancakeswap DEX Listing Date: 12th May 2023 at 14:00 PM UTC</p>
+                  <p className="text-white py-1">5. First CEX Listing TBA</p>
+
+            <br></br>
+          </div>
+          </div>
+          </div>
+            </div>
+          <div className="border py-7 m-5 rounded-xl shadow-xl h-96">
+             
+             <div className="countdown-timer-card">
+               <div>
+                 <p className="text-3xl font-bold uppercase py-2 text-white">
+                   
+                   PRESALE STATISTICS
+                 </p>
+               </div>
+               <div className="countdown-timer-card__timer py-1">
+                 
+                
+                 <br></br>
+                 
+                 <div>
+                   <hr className="py-1"></hr>
+                   <p className="text-white py-1">Total Contributors: { totalContributors }</p>
+                   <p className="text-white py-1">Total BNB Raised:  { totalWeiRaised } BNB</p>
+                   <p className="text-white py-1">Total USDT Raised: ${ totalUsdRaised } USDT</p>
+                   <p className="text-white py-1">Phase #1 Sold: {phase1TotalTokensBought } / { phase1TotalTokensToSell } $AJP </p>
+                   <p className="text-white py-1">Phase #2 Sold: {phase2TotalTokensBought } / { phase2TotalTokensToSell } $AJP</p>
+                   <p className="text-white py-1">Phase #3 Sold: {phase3TotalTokensBought } / { phase3TotalTokensToSell } $ AJP</p>
+                   <p className="text-white py-0">Minimum Contribution: $10 USD</p>
+                   <p className="text-white py-0">Maximum Contribution: $10,000 USD</p>
+                   <br></br>
+                  
+                   
+                 </div>
+                
+               </div>
+             </div>
+           </div>
           </div>
     {/**
              * FEATURES/ECOSYSTEM SECTION
@@ -1189,14 +1238,21 @@ const CoinDescription = () => {
                             <div class="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6 flex-col md:block flex items-center justify-center md:pt-0 pt-4">
                                 <div >
                                     <h1 role="heading" class="py-4 text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-10/12 text-white font-black leading-6 lg:leading-10 md:text-left text-center">
-                                      Come join the Ajira Pay Finance community and be part of one of the greatest innovations in Decentralized Finance(DEfi)
+                                      Come join the Ajira Pay Finance community and be part of one of the greatest innovations in Decentralized Finance(DeFi)
                                     </h1>
                                 </div>
-                                <button role="button" aria-label="Join the community" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 hover:opacity-90 w-48 h-12 text-lg text-white bg-gradient-to-l from-indigo-600 to-indigo-700 rounded">
-                                  <a href="https://linktr.ee/ajira_pay_finance" target="_blank" rel="noreferrer">
-                                    View Platforms
+                               <p>
+                               <button role="button" aria-label="Join the community" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 hover:opacity-90 w-48 h-12 text-lg text-white bg-gradient-to-l from-indigo-600 to-indigo-700 rounded">
+                                  <a href="https://discord.com/invite/Ts7CEYp8ss" target="_blank" rel="noreferrer">
+                                    Join Our Discord
                                   </a>
                                 </button>
+                                <button role="button" aria-label="Join the community" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 hover:opacity-90 w-48 h-12 text-lg text-white bg-gradient-to-l from-indigo-600 to-indigo-700 rounded">
+                                  <a href="https://t.me/ajiraPayOfficialChat" target="_blank" rel="noreferrer">
+                                    Join Telegram Chat
+                                  </a>
+                                </button>
+                               </p>
                                 {/* <button role="button" aria-label="Join the community" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-800 hover:opacity-90 w-48 h-12 text-lg text-white bg-gradient-to-l from-indigo-600 to-indigo-700 rounded">
                                   <a href="https://discord.com/invite/Ts7CEYp8ss" target="_blank" rel="noreferrer">
                                   Join us on discord
@@ -1241,6 +1297,26 @@ const CoinDescription = () => {
     </div>
   
                    </div>
+                   {
+                    /*
+                      TEST ON ROADMAP
+                    */
+                   }
+                        {/* <div class="dark:bg-gray-900">
+      <section class="mx-auto container w-full py-36">
+        <div class="flex flex-col justify-center items-center">
+          <div class="md:text-5xl text-4xl font-black text-center text-orange-500 dark:text-white leading-snug lg:w-3/4">
+            <h2>Our Roadmap</h2>
+            <Roadmap />
+           
+          </div>
+         
+        </div>
+      </section> 
+    </div> */}
+                   {/*
+                    END ROADMAP TEST
+                   */ }
                    {/**
                     * END OF WHITEPAPER SECTION
                     */}
@@ -1253,7 +1329,9 @@ const CoinDescription = () => {
   <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
           <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Our team</h2>
-          {/* <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind</p> */}
+          <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+            We are a dedicated team of professionals in the blockchain industry leveraging on the power of blockchain technology and decentralization to democratize digital finance.
+          </p>
       </div> 
       <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <div class="text-center text-gray-500 dark:text-gray-400">
@@ -1589,9 +1667,9 @@ const CoinDescription = () => {
                     */}
                     
 
-        </div>
+      
         
-      </div>
+
       
     </>
   );

@@ -7,8 +7,13 @@ import './Time.css';
 const ExpiredNotice = () => {
     return (
       <div className="expired-notice">
-        <span>Presale Ended!!!</span>
-        <p className='text-white'>Please Visit Pancakeswap to purchase $AJP.</p>
+        <span>Presale Closed!!!</span>
+        <p className='text-white'>Presale Moved To Pinksale</p>
+        <p className='text-white'>
+          <a href="https://www.pinksale.finance/launchpad/0x940C7295d1b96FA1098fc60e5A7820B6428aB045?chain=BSC">
+            Click here to buy $AJP from Pinksale Presale
+          </a>
+        </p>
       </div>
     );
   }
